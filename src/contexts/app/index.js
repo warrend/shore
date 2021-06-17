@@ -8,15 +8,26 @@ export function useApp() {
 }
 
 const AppContextProvider = ({ children }) => {
-  const [data, setData] = useState({});
+  const [user, setUser] = useState({});
+  const [lessons, setLessons] = useState({});
 
   const services = {
+    getLessons: () => {
+      const res = localServices.getData("lessons");
+
+      setLessons(res);
+      return res;
+    },
+    getUser: () => {
+      const res = localServices.getData("user");
+
+      setUser(res);
+      return res;
+    },
     getData: (key) => {
       const res = localServices.getData(key);
-      console.log("resss", res);
-      // const parsedData = JSON.parse(res);
 
-      setData(JSON.parse(res, 2, null));
+      return res;
     },
     setData: (key, data) => {
       return localServices.setData(key, data);
@@ -24,7 +35,8 @@ const AppContextProvider = ({ children }) => {
   };
 
   const selectors = {
-    data,
+    user,
+    lessons,
   };
 
   const context = {

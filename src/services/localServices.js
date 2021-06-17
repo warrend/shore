@@ -1,8 +1,8 @@
 export const localServices = {
   getData: (item) => {
     try {
-      const res = localStorage.getItem(item);
-      return JSON.parse(res);
+      return localStorage.getItem(item);
+      // return JSON.parse(res);
     } catch (error) {
       console.error(error);
     }
