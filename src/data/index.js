@@ -1,4 +1,4 @@
-export const data = {
+export const lessons = {
   0: {
     lesson: "First lesson",
     body: "Some body copy",
@@ -10,6 +10,6 @@ export const data = {
 };
 
 export const user = {
-  hasOnboarded: false,
-  lastLesson: null,
+  currentLesson: 0,
+  finishedLesson: [],
 };
