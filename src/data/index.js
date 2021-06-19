@@ -11,5 +11,5 @@ export const lessons = {
 
 export const user = {
   currentLesson: 0,
-  finishedLesson: [],
+  finished: [],
 };

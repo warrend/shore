@@ -9,6 +9,8 @@ const Main = lazy(() => import("./screens/Main"));
 function App() {
   const { services, selectors } = useApp();
 
+  console.log("seletors", selectors);
+
   useEffect(() => {
     const appInit = async () => {
       const res = await services.getData(USER);
