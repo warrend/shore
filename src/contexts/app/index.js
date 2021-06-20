@@ -34,9 +34,11 @@ const AppContextProvider = ({ children }) => {
       return localServices.setData(key, data);
     },
     updateFinishedLessons: (finishedLesson) => {
-      console.log("user", selectors.user);
       const updatedLessonArray = selectors.user.finished.concat(finishedLesson);
       services.setData(USER, { ...user, finished: updatedLessonArray });
+    },
+    registerUser: () => {
+      services.setData(USER, { ...user, isNewUser: false });
     },
   };
 

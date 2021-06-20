@@ -1,15 +1,22 @@
 import React, { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import { useApp } from "./contexts/app";
 import { user, lessons } from "./data";
 import { USER, LESSONS } from "./constants";
 
 const Main = lazy(() => import("./screens/Main"));
+const Welcome = lazy(() => import("./screens/Welcome"));
 
 function App() {
   const { services, selectors } = useApp();
-
-  console.log("seletors", selectors);
+  const history = useHistory();
+  console.log("selectors", selectors);
 
   useEffect(() => {
     const appInit = async () => {
@@ -33,7 +40,10 @@ function App() {
       <Suspense fallback={<div>Loading</div>}>
         <Switch>
           <Route exact path="/">
-            <Main />
+            <Welcome />
+          </Route>
+          <Route exact path="/main">
+            <div>MAIN</div>
           </Route>
         </Switch>
       </Suspense>

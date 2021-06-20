@@ -8,4 +8,5 @@ export const lessons = {
 export const user = {
   currentLesson: 0,
   finished: [],
+  isNewUser: true,
 };
