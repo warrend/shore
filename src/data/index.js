@@ -1,11 +1,7 @@
 export const lessons = {
   0: {
-    lesson: "First lesson",
-    body: "Some body copy",
-  },
-  1: {
-    lesson: "First lesson",
-    body: "Some body copy",
+    id: 0,
+    path: "0.md",
   },
 };
 
