@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import { useApp } from "../../contexts/app";
-import useMarkdown from "../../utils/useMarkdown";
+import LessonCard from "../../components/LessonCard";
 
 function Main() {
-  const { services, selectors } = useApp();
+  const { selectors } = useApp();
   // const lesson = useMarkdown();
+  const lessonArray = Object.keys(selectors.lessons);
 
   return (
     <div>
       Main page
-      {/* <button onClick={() => services.updateFinishedLessons(2)}>ADD</button> */}
-      {/* <ReactMarkdown children={lesson} /> */}
+      {lessonArray.map((item) => (
+        <LessonCard lesson={selectors.lessons[item]} />
+      ))}
     </div>
   );
 }
