@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useApp } from "../../contexts/app";
 import LessonCard from "../../components/LessonCard";
-import { LESSONS, TOKEN } from "../../constants";
+import { LESSONS, TOKEN, USER } from "../../constants";
 
 function Main() {
   const history = useHistory();
   const {
     selectors,
-    services: { getData, setLessons },
+    services: { setUser, setLessons },
   } = useApp();
 
   useEffect(() => {
@@ -24,7 +24,8 @@ function Main() {
   return (
     <div>
       Main page
-      {selectors.lessons &&
+      {selectors &&
+        selectors.lessons &&
         selectors.lessons.map((item) => <LessonCard lesson={item} />)}
     </div>
   );

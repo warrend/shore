@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
 import { USER, LESSONS, TOKEN } from "../../constants";
-import { lessons as lessonData } from "../../data";
+import { lessons as lessonData, user as userData } from "../../data";
 
 export const AppContext = createContext();
 
@@ -49,6 +49,11 @@ const AppContextProvider = ({ children }) => {
       localServices.setData(LESSONS, lessonData);
 
       setLessons(lessonData);
+    },
+    setUser: () => {
+      localServices.setData(USER, userData);
+
+      setLessons(userData);
     },
     setData: (key, data) => {
       return localServices.setData(key, data);

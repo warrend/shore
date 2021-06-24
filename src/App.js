@@ -14,14 +14,19 @@ const Welcome = lazy(() => import("./screens/Welcome"));
 const Lesson = lazy(() => import("./screens/Lesson"));
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { services } = useApp();
 
   useEffect(() => {
     const appInit = async () => {
+      setLoading(true);
       if (!localStorage.getItem(TOKEN)) {
         await services.setData(USER, user);
         await services.setData(LESSONS, lessons);
+      }
+
+      if (!localStorage.getItem(USER)) {
+        services.setUser();
       }
 
       await services.getUser();
