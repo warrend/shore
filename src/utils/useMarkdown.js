@@ -7,8 +7,10 @@ function useMarkdown(id) {
 
   useEffect(() => {
     const getLesson = async () => {
-      const path = selectors.lessons[id].path;
-      const file = await import(`../data/${path}`);
+      // const path = selectors.lessons[id].path;
+      const path = selectors.lessons.find((item) => `${item.id}` === id);
+      console.log("path", path);
+      const file = await import(`../data/${path.path}`);
       const res = await fetch(file.default);
       const markdownFile = await res.text();
       setLesson(markdownFile);

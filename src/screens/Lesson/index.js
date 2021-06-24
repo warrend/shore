@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { useApp } from "../../contexts/app";
 import useMarkdown from "../../utils/useMarkdown";
+import { LESSONS_URL, BACK_BUTTON, NEXT_BUTTON } from "../../constants";
 
 function Lesson() {
   const { services, selectors } = useApp();
@@ -12,17 +13,17 @@ function Lesson() {
   const nextLesson = parseInt(id) + 1;
 
   const checkNextLesson = () => {
-    const allLessons = Object.keys(selectors.lessons);
+    const allLessons = selectors.lessons;
 
     if (nextLesson > allLessons.length) {
       return console.log("Last lesson");
     }
 
-    history.push(`/main/lesson/${nextLesson}`);
+    history.push(`${LESSONS_URL}/${nextLesson}`);
   };
 
   const handleGoBack = () => {
-    history.push("/main");
+    history.push(LESSONS_URL);
   };
 
   const handleFinishLesson = () => {
@@ -32,8 +33,8 @@ function Lesson() {
 
   return (
     <div>
-      <button onClick={handleGoBack}>BACK</button>
-      <button onClick={handleFinishLesson}>Next</button>
+      <button onClick={handleGoBack}>{BACK_BUTTON}</button>
+      <button onClick={handleFinishLesson}>{NEXT_BUTTON}</button>
       <ReactMarkdown children={lesson} />
     </div>
   );

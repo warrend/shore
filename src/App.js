@@ -1,50 +1,61 @@
-import React, { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { lazy, Suspense, useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import { useApp } from "./contexts/app";
 import { user, lessons } from "./data";
-import { USER, LESSONS } from "./constants";
+import { USER, LESSONS, LESSONS_URL, TOKEN } from "./constants";
 
 const Main = lazy(() => import("./screens/Main"));
 const Welcome = lazy(() => import("./screens/Welcome"));
 const Lesson = lazy(() => import("./screens/Lesson"));
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const { services } = useApp();
 
   useEffect(() => {
     const appInit = async () => {
-      const res = await services.getData(USER);
-
-      if (res) {
-        await services.getUser();
-        await services.getLessons();
-      } else {
+      if (!localStorage.getItem(TOKEN)) {
         await services.setData(USER, user);
         await services.setData(LESSONS, lessons);
       }
+
+      await services.getUser();
+      return await services.getLessons();
     };
 
     appInit();
+    setLoading(false);
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    // <ThemeProvider theme={theme}>
     <Router>
-      <Suspense fallback={<div>Loading</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route exact path="/">
-            <Welcome />
+            {!localStorage.getItem(TOKEN) ? (
+              <Welcome />
+            ) : (
+              <Redirect to={LESSONS_URL} />
+            )}
           </Route>
-          <Route exact path="/main">
+          <Route exact path={LESSONS_URL}>
             <Main />
           </Route>
-          <Route exact path="/main/lesson/:id">
+          <Route exact path={`${LESSONS_URL}/:id`}>
             <Lesson />
           </Route>
         </Switch>
       </Suspense>
     </Router>
-    // </ThemeProvider>
   );
 }
 

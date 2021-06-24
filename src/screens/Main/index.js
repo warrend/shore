@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useApp } from "../../contexts/app";
 import LessonCard from "../../components/LessonCard";
+import { LESSONS, TOKEN } from "../../constants";
 
 function Main() {
-  const { selectors } = useApp();
-  // const lesson = useMarkdown();
-  const lessonArray = Object.keys(selectors.lessons);
+  const history = useHistory();
+  const {
+    selectors,
+    services: { getData, setLessons },
+  } = useApp();
+
+  useEffect(() => {
+    if (!localStorage.getItem(TOKEN)) {
+      history.push("/");
+    }
+
+    if (!localStorage.getItem(LESSONS)) {
+      setLessons();
+    }
+  }, []);
 
   return (
     <div>
       Main page
-      {lessonArray.map((item) => (
-        <LessonCard lesson={selectors.lessons[item]} />
-      ))}
+      {selectors.lessons &&
+        selectors.lessons.map((item) => <LessonCard lesson={item} />)}
     </div>
   );
 }

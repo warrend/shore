@@ -1,30 +1,22 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { LESSONS_URL, WELCOME_COPY } from "../../constants";
 import { useApp } from "../../contexts/app";
 
 function Welcome() {
   const history = useHistory();
   const {
     services: { registerUser },
-    selectors: {
-      user: { isNewUser },
-    },
   } = useApp();
-
-  useEffect(() => {
-    if (!isNewUser) {
-      history.push("/main");
-    }
-  }, []);
 
   const handleRegisterUser = () => {
     registerUser();
-    history.push("/main");
+    history.push(LESSONS_URL);
   };
 
   return (
     <div>
-      Welcome to Raft. Get started with your first lesson
+      {WELCOME_COPY}
       <button onClick={handleRegisterUser}>START</button>
     </div>
   );

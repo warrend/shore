@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, LESSONS } from "../../constants";
+import { USER, LESSONS, TOKEN } from "../../constants";
+import { lessons as lessonData } from "../../data";
 
 export const AppContext = createContext();
 
@@ -9,12 +10,26 @@ export function useApp() {
 }
 
 const AppContextProvider = ({ children }) => {
-  const [user, setUser] = useState({});
-  const [lessons, setLessons] = useState({});
+  const [user, setUser] = useState({ isNewUser: null });
+  const [lessons, setLessons] = useState([]);
+  const [token, setToken] = useState("");
+
+  const checkIfCompleted = (lesson) => {
+    const computedValues = { isCompleted: false };
+
+    if (user.finished.includes(lesson.id)) {
+      computedValues.isCompleted = true;
+    }
+
+    return { ...lesson, ...computedValues };
+  };
 
   const services = {
     getLessons: () => {
       const res = localServices.getData(LESSONS);
+      // const updatedLessons = res.map((item) => checkIfCompleted(item));
+
+      // console.log("update", updatedLessons);
 
       setLessons(res);
       return res;
@@ -30,6 +45,11 @@ const AppContextProvider = ({ children }) => {
 
       return res;
     },
+    setLessons: () => {
+      localServices.setData(LESSONS, lessonData);
+
+      setLessons(lessonData);
+    },
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
@@ -44,12 +64,15 @@ const AppContextProvider = ({ children }) => {
     },
     registerUser: () => {
       services.setData(USER, { ...user, isNewUser: false });
+      services.setData(TOKEN, true);
+      setToken(true);
     },
   };
 
   const selectors = {
     user,
     lessons,
+    token,
   };
 
   const context = {
