@@ -58,17 +58,19 @@ const AppContextProvider = ({ children }) => {
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
-    updateFinishedLessons: (finishedLesson) => {
-      const finishedArray = selectors.user.finished;
+    updateFinishedLessons: async (finishedLesson) => {
+      const finishedArray = await services.getUser();
 
-      if (finishedArray.includes(finishedLesson)) {
+      if (finishedArray.finished.includes(finishedLesson)) {
         return;
       }
-      const updatedLessonArray = [...selectors.user.finished, finishedLesson];
-      services.setData(USER, { ...user, finished: updatedLessonArray });
+      finishedArray.finished.push(finishedLesson);
+      console.log("finished array", finishedArray);
+      setUser(user);
+      services.setData(USER, finishedArray);
     },
     registerUser: () => {
-      services.setData(USER, { ...user, isNewUser: false });
+      services.setData(USER, user);
       services.setData(TOKEN, true);
       setToken(true);
     },
