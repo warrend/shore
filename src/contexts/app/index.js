@@ -15,9 +15,10 @@ const AppContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
 
   const checkIfCompleted = (lesson) => {
+    const user = services.getUser();
     const computedValues = { isCompleted: false };
 
-    if (user.finished.includes(lesson.id)) {
+    if (user.finished.includes(`${lesson.id}`)) {
       computedValues.isCompleted = true;
     }
 
@@ -27,12 +28,10 @@ const AppContextProvider = ({ children }) => {
   const services = {
     getLessons: () => {
       const res = localServices.getData(LESSONS);
-      // const updatedLessons = res.map((item) => checkIfCompleted(item));
+      const updatedLessons = res.map((item) => checkIfCompleted(item));
 
-      // console.log("update", updatedLessons);
-
-      setLessons(res);
-      return res;
+      setLessons(updatedLessons);
+      return updatedLessons;
     },
     getUser: () => {
       const res = localServices.getData(USER);
@@ -58,16 +57,31 @@ const AppContextProvider = ({ children }) => {
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
-    updateFinishedLessons: async (finishedLesson) => {
-      const finishedArray = await services.getUser();
+    updateFinishedLessons: async (lessonId) => {
+      const user = await services.getUser();
 
-      if (finishedArray.finished.includes(finishedLesson)) {
+      if (user.finished.includes(lessonId)) {
         return;
       }
-      finishedArray.finished.push(finishedLesson);
-      console.log("finished array", finishedArray);
+      user.finished.push(lessonId);
       setUser(user);
-      services.setData(USER, finishedArray);
+      services.setData(USER, user);
+    },
+    removeFinishedLesson: async (lessonId) => {
+      const user = await services.getUser();
+
+      if (!user.finished.includes(lessonId)) {
+        return;
+      }
+
+      const updatedFinished = user.finished.filter(
+        (id) => `${id}` !== lessonId
+      );
+
+      const updatedLesson = { ...user, finished: updatedFinished };
+
+      setUser(updatedLesson);
+      services.setData(USER, updatedLesson);
     },
     registerUser: () => {
       services.setData(USER, user);

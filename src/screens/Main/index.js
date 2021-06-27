@@ -6,19 +6,18 @@ import { LESSONS, TOKEN, USER } from "../../constants";
 
 function Main() {
   const history = useHistory();
-  const {
-    selectors,
-    services: { setUser, setLessons },
-  } = useApp();
+  const { selectors, services } = useApp();
 
   useEffect(() => {
     if (!localStorage.getItem(TOKEN)) {
-      history.push("/");
+      return history.push("/");
     }
 
     if (!localStorage.getItem(LESSONS)) {
-      setLessons();
+      return services.setLessons();
     }
+
+    services.getLessons();
   }, []);
 
   return (

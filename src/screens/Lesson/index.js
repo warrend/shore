@@ -3,7 +3,13 @@ import { useParams, useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { useApp } from "../../contexts/app";
 import useMarkdown from "../../utils/useMarkdown";
-import { LESSONS_URL, BACK_BUTTON, NEXT_BUTTON } from "../../constants";
+import {
+  LESSONS_URL,
+  BACK_BUTTON,
+  NEXT_BUTTON,
+  FINISH_LESSON_BUTTON,
+  UNFINISH_LESSON_BUTTON,
+} from "../../constants";
 
 function Lesson() {
   const { services, selectors } = useApp();
@@ -31,11 +37,22 @@ function Lesson() {
     checkNextLesson();
   };
 
+  const handleRemoveFinishedLesson = () => {
+    services.removeFinishedLesson(id);
+  };
+
   return (
     <div>
       <button onClick={handleGoBack}>{BACK_BUTTON}</button>
-      <button onClick={handleFinishLesson}>{NEXT_BUTTON}</button>
-      <ReactMarkdown children={lesson} />
+      <button onClick={checkNextLesson}>{NEXT_BUTTON}</button>
+      <button
+        onClick={
+          lesson.isCompleted ? handleRemoveFinishedLesson : handleFinishLesson
+        }
+      >
+        {lesson.isCompleted ? UNFINISH_LESSON_BUTTON : FINISH_LESSON_BUTTON}
+      </button>
+      <ReactMarkdown children={lesson.markdown} />
     </div>
   );
 }
