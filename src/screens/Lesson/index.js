@@ -11,6 +11,7 @@ import {
   FINISH_LESSON_BUTTON,
   UNFINISH_LESSON_BUTTON,
 } from "../../constants";
+import styles from "./Lesson.module.scss";
 
 function Lesson() {
   const context = useApp();
@@ -52,7 +53,7 @@ function Lesson() {
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <button onClick={handleGoBack}>{BACK_BUTTON}</button>
       <button onClick={checkNextLesson}>{NEXT_BUTTON}</button>
       <button
