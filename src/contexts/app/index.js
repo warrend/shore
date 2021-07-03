@@ -12,6 +12,7 @@ export function useApp() {
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({ isNewUser: null });
   const [lessons, setLessons] = useState([]);
+  const [currentLesson, setCurrentLesson] = useState({ isComplete: null });
   const [token, setToken] = useState("");
 
   const checkIfCompleted = (lesson) => {
@@ -66,6 +67,7 @@ const AppContextProvider = ({ children }) => {
       user.finished.push(lessonId);
       setUser(user);
       services.setData(USER, user);
+      await services.getLesson(lessonId);
     },
     removeFinishedLesson: async (lessonId) => {
       const user = await services.getUser();
@@ -82,11 +84,19 @@ const AppContextProvider = ({ children }) => {
 
       setUser(updatedLesson);
       services.setData(USER, updatedLesson);
+      services.getLesson(lessonId);
     },
     registerUser: () => {
       services.setData(USER, user);
       services.setData(TOKEN, true);
       setToken(true);
+    },
+    getLesson: (id) => {
+      const lessons = services.getLessons();
+      const lesson = lessons.find((item) => `${item.id}` === id);
+
+      setCurrentLesson(lesson);
+      return lesson;
     },
   };
 
@@ -94,6 +104,7 @@ const AppContextProvider = ({ children }) => {
     user,
     lessons,
     token,
+    currentLesson,
   };
 
   const context = {

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { useApp } from "../../contexts/app";
 import useMarkdown from "../../utils/useMarkdown";
+import useLesson from "../../utils/useLesson";
 import {
   LESSONS_URL,
   BACK_BUTTON,
@@ -12,14 +13,19 @@ import {
 } from "../../constants";
 
 function Lesson() {
-  const { services, selectors } = useApp();
+  const context = useApp();
+  const [isCompleted, setIsCompleted] = useState(null);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { id } = useParams();
-  const lesson = useMarkdown(id);
+
+  useLesson(id);
+
+  const markdown = useMarkdown(id);
   const nextLesson = parseInt(id) + 1;
 
   const checkNextLesson = () => {
-    const allLessons = selectors.lessons;
+    const allLessons = context.selectors.lessons;
 
     if (nextLesson > allLessons.length) {
       return console.log("Last lesson");
@@ -33,13 +39,17 @@ function Lesson() {
   };
 
   const handleFinishLesson = () => {
-    services.updateFinishedLessons(id);
-    checkNextLesson();
+    context.services.updateFinishedLessons(id);
+    // checkNextLesson();
   };
 
   const handleRemoveFinishedLesson = () => {
-    services.removeFinishedLesson(id);
+    context.services.removeFinishedLesson(id);
   };
+
+  if (loading) {
+    return <div>Loading</div>;
+  }
 
   return (
     <div>
@@ -47,12 +57,16 @@ function Lesson() {
       <button onClick={checkNextLesson}>{NEXT_BUTTON}</button>
       <button
         onClick={
-          lesson.isCompleted ? handleRemoveFinishedLesson : handleFinishLesson
+          context.selectors.currentLesson.isCompleted
+            ? handleRemoveFinishedLesson
+            : handleFinishLesson
         }
       >
-        {lesson.isCompleted ? UNFINISH_LESSON_BUTTON : FINISH_LESSON_BUTTON}
+        {context.selectors.currentLesson.isCompleted
+          ? UNFINISH_LESSON_BUTTON
+          : FINISH_LESSON_BUTTON}
       </button>
-      <ReactMarkdown children={lesson.markdown} />
+      <ReactMarkdown children={markdown} />
     </div>
   );
 }
