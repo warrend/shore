@@ -1,0 +1,18 @@
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 90%;
+  background: #fff;
+  overflow: hidden;
+  height: 100%;
+  transform: translateX(0%);
+  transition: transform 175ms ease-in;
+  border: 1px solid #ccc;
+  border-left: none;
+  padding: var(--normal);
+}
+
+.closed {
+  transform: translateX(100%);
+}
