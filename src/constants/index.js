@@ -20,3 +20,5 @@ export const SLIDER_MESSAGE_LAST_LESSON =
   "This is the last lesson but you still have unfinished lessons";
 export const RESET_MESSAGE = "This will reset all data. This cannot be undone.";
 export const RESET_DATA_BUTTON = "Reset my data";
+
+export const MENU_RESET = "Reset";

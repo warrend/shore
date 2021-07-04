@@ -1,18 +1,19 @@
 .wrapper {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 90%;
-  background: #fff;
+  background: #ededed;
   overflow: hidden;
   height: 100%;
   transform: translateX(0%);
-  transition: transform 175ms ease-in;
+  transition: transform 5s ease-in;
   border: 1px solid #ccc;
   border-left: none;
   padding: var(--normal);
+  z-index: 9999;
 }
 
 .closed {
-  transform: translateX(100%);
+  transform: translateX(-100%);
 }

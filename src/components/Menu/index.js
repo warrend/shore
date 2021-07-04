@@ -1,9 +1,12 @@
 import React from "react";
 import cn from "classnames";
-import { useApp } from "contexts/app";
-import styles from "./Slider.module.scss";
+import { useHistory } from "react-router-dom";
+import { useApp } from "../../contexts/app";
+import styles from "./Menu.module.scss";
+import { options } from "./options";
 
-function Menu({ children }) {
+function Menu() {
+  const history = useHistory();
   const {
     selectors: { menuState },
     services: { changeMenuState },
@@ -14,10 +17,19 @@ function Menu({ children }) {
     [styles.closed]: !menuState,
   });
 
+  const handleMenuClick = (path) => {
+    history.push(path);
+    changeMenuState(false);
+  };
+
   return (
     <div className={btnClass}>
       <button onClick={() => changeMenuState(false)}>Close</button>
-      {children}
+      <ul>
+        {options.map(({ text, path }) => (
+          <li onClick={() => handleMenuClick(path)}>{text}</li>
+        ))}
+      </ul>
     </div>
   );
 }

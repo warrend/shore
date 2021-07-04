@@ -1,5 +1,5 @@
 .wrapper {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -7,7 +7,7 @@
   overflow: hidden;
   height: 66%;
   transform: translateY(0%);
-  transition: transform 175ms ease-in;
+  transition: transform 2s ease-in;
   border: 1px solid #ccc;
   border-bottom: none;
   border-radius: 16px 16px 0 0;
