@@ -57,8 +57,8 @@ function App() {
     <>
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
-          <Nav />
           <div className={styles.wrapper}>
+            <Nav />
             <Switch>
               <Route exact path="/">
                 {!localStorage.getItem(TOKEN) ? (
@@ -80,11 +80,11 @@ function App() {
                 <div>404</div>
               </Route>
             </Switch>
+            <Slider>
+              <div>{SLIDER_MESSAGE_ALL_COMPLETE}</div>
+            </Slider>
+            <Menu />
           </div>
-          <Menu />
-          <Slider>
-            <div>{SLIDER_MESSAGE_ALL_COMPLETE}</div>
-          </Slider>
         </Suspense>
       </Router>
     </>
