@@ -14,6 +14,7 @@ const AppContextProvider = ({ children }) => {
   const [lessons, setLessons] = useState([]);
   const [currentLesson, setCurrentLesson] = useState({ isComplete: null });
   const [token, setToken] = useState("");
+  const [sliderState, setSliderState] = useState(null);
 
   const checkIfCompleted = (lesson) => {
     const user = services.getUser();
@@ -98,6 +99,12 @@ const AppContextProvider = ({ children }) => {
       setCurrentLesson(lesson);
       return lesson;
     },
+    changeSliderState: (state) => {
+      setSliderState(state);
+    },
+    resetData: () => {
+      localStorage.clear();
+    },
   };
 
   const selectors = {
@@ -105,6 +112,7 @@ const AppContextProvider = ({ children }) => {
     lessons,
     token,
     currentLesson,
+    sliderState,
   };
 
   const context = {

@@ -7,11 +7,12 @@ import {
 } from "react-router-dom";
 import { useApp } from "./contexts/app";
 import { user, lessons } from "./data";
-import { USER, LESSONS, LESSONS_URL, TOKEN } from "./constants";
+import { USER, LESSONS, LESSONS_URL, TOKEN, RESET_URL } from "./constants";
+import ResetScreen from "screens/ResetScreen";
 
 const Main = lazy(() => import("./screens/Main"));
 const Welcome = lazy(() => import("./screens/Welcome"));
-const Lesson = lazy(() => import("./screens/Lesson"));
+const LessonScreen = lazy(() => import("./screens/LessonScreen"));
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -55,8 +56,11 @@ function App() {
           <Route exact path={LESSONS_URL}>
             <Main />
           </Route>
+          <Route exact path={RESET_URL}>
+            <ResetScreen />
+          </Route>
           <Route exact path={`${LESSONS_URL}/:id`}>
-            <Lesson />
+            <LessonScreen />
           </Route>
         </Switch>
       </Suspense>
