@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useApp } from "../../contexts/app";
 import LessonCard from "../../components/LessonCard";
-import { LESSONS, TOKEN, USER } from "../../constants";
+import { LESSONS, TOKEN } from "../../constants";
 
 function Main() {
   const history = useHistory();
   const { selectors, services } = useApp();
 
   useEffect(() => {
-    if (!localStorage.getItem(TOKEN)) {
+    if (localStorage.getItem(TOKEN) === null) {
       return history.push("/");
     }
 
@@ -19,6 +19,8 @@ function Main() {
 
     services.getLessons();
   }, []);
+
+  console.log(selectors);
 
   return (
     <div>

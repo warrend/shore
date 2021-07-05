@@ -15,6 +15,7 @@ const AppContextProvider = ({ children }) => {
   const [currentLesson, setCurrentLesson] = useState({ isComplete: null });
   const [token, setToken] = useState("");
   const [sliderState, setSliderState] = useState(null);
+  const [menuState, setMenuState] = useState(false);
 
   const checkIfCompleted = (lesson) => {
     const user = services.getUser();
@@ -102,8 +103,16 @@ const AppContextProvider = ({ children }) => {
     changeSliderState: (state) => {
       setSliderState(state);
     },
+    changeMenuState: (state) => {
+      setMenuState(state);
+    },
     resetData: () => {
-      localStorage.clear();
+      try {
+        localStorage.removeItem(TOKEN);
+        services.setUser();
+      } catch (error) {
+        console.error(error);
+      }
     },
   };
 
@@ -113,6 +122,7 @@ const AppContextProvider = ({ children }) => {
     token,
     currentLesson,
     sliderState,
+    menuState,
   };
 
   const context = {

@@ -4,8 +4,8 @@ import { useApp } from "../../contexts/app";
 import {
   RESET_MESSAGE,
   GO_BACK_BUTTON,
-  LESSONS_URL,
   RESET_DATA_BUTTON,
+  LESSONS_URL,
   ROOT_URL,
 } from "../../constants";
 

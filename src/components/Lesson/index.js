@@ -2,8 +2,6 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { useHistory, useParams } from "react-router";
 import { useApp } from "contexts/app";
-import useMarkdown from "../../utils/useMarkdown";
-
 import {
   LESSONS_URL,
   BACK_BUTTON,
@@ -28,8 +26,6 @@ function Lesson({ id, markdown, checkNextLesson }) {
   const handleRemoveFinishedLesson = () => {
     context.services.removeFinishedLesson(id);
   };
-
-  console.log(context.selectors.currentLesson);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { LESSONS_URL, BACK_BUTTON } from "../../constants";
+import { BACK_BUTTON, LESSONS_URL } from "../../constants";
 
 function NoLesson() {
   const history = useHistory();
