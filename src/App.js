@@ -57,8 +57,8 @@ function App() {
     <>
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
+          <Nav />
           <div className={styles.wrapper}>
-            <Nav />
             <Switch>
               <Route exact path="/">
                 {!localStorage.getItem(TOKEN) ? (

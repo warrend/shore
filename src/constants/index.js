@@ -22,3 +22,6 @@ export const RESET_MESSAGE = "This will reset all data. This cannot be undone.";
 export const RESET_DATA_BUTTON = "Reset my data";
 
 export const MENU_RESET = "Reset";
+
+// Icons
+export const MENU_ICON = "menuIcon";
