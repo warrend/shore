@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { LESSONS_URL, WELCOME_COPY } from "../../constants";
+import { WELCOME_COPY, LESSONS_URL } from "../../constants";
 import { useApp } from "../../contexts/app";
 
 function Welcome() {

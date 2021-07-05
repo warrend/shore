@@ -10,8 +10,8 @@ import { user, lessons } from "./data";
 import {
   USER,
   LESSONS,
-  LESSONS_URL,
   TOKEN,
+  LESSONS_URL,
   RESET_URL,
   SLIDER_MESSAGE_ALL_COMPLETE,
 } from "./constants";

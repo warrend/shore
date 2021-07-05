@@ -1,4 +1,4 @@
-import { RESET_URL, MENU_RESET } from "../../constants";
+import { MENU_RESET, RESET_URL } from "../../constants";
 
 export const options = [
   {
