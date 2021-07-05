@@ -33,8 +33,12 @@ function App() {
     const appInit = async () => {
       setLoading(true);
       if (!localStorage.getItem(TOKEN)) {
-        await services.setData(USER, user);
-        await services.setData(LESSONS, lessons);
+        try {
+          await services.setData(USER, user);
+          await services.setData(LESSONS, lessons);
+        } catch (error) {
+          console.error(error);
+        }
       }
 
       if (!localStorage.getItem(USER)) {

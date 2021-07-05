@@ -107,7 +107,12 @@ const AppContextProvider = ({ children }) => {
       setMenuState(state);
     },
     resetData: () => {
-      localStorage.clear();
+      try {
+        localStorage.removeItem(TOKEN);
+        services.setUser();
+      } catch (error) {
+        console.error(error);
+      }
     },
   };
 

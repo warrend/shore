@@ -9,7 +9,7 @@ function Main() {
   const { selectors, services } = useApp();
 
   useEffect(() => {
-    if (!localStorage.getItem(TOKEN)) {
+    if (localStorage.getItem(TOKEN) === null) {
       return history.push("/");
     }
 
@@ -19,6 +19,8 @@ function Main() {
 
     services.getLessons();
   }, []);
+
+  console.log(selectors);
 
   return (
     <div>
