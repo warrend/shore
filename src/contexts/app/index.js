@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, LESSONS, TOKEN } from "../../constants";
+import { USER, LESSONS, TOKEN, TOKEN_VALUE } from "../../constants";
 import { lessons as lessonData, user as userData } from "../../data";
 
 export const AppContext = createContext();
@@ -55,7 +55,7 @@ const AppContextProvider = ({ children }) => {
     setUser: () => {
       localServices.setData(USER, userData);
 
-      setLessons(userData);
+      setUser(userData);
     },
     setData: (key, data) => {
       return localServices.setData(key, data);
@@ -89,8 +89,9 @@ const AppContextProvider = ({ children }) => {
       services.getLesson(lessonId);
     },
     registerUser: () => {
-      services.setData(USER, user);
-      services.setData(TOKEN, true);
+      services.setUser();
+      services.setLessons();
+      services.setData(TOKEN, TOKEN_VALUE);
       setToken(true);
     },
     getLesson: (id) => {

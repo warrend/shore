@@ -9,7 +9,7 @@ function Main() {
   const { selectors, services } = useApp();
 
   useEffect(() => {
-    if (localStorage.getItem(TOKEN) === null) {
+    if (!localStorage.getItem(TOKEN)) {
       return history.push("/");
     }
 
