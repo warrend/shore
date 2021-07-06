@@ -22,7 +22,7 @@ const Welcome = lazy(() => import("./screens/Welcome"));
 const LessonScreen = lazy(() => import("./screens/LessonScreen"));
 const NotFound = lazy(() => import("./screens/NotFound"));
 const ResetScreen = lazy(() => import("./screens/ResetScreen"));
-const Nav = lazy(() => import("./components/Nav"));
+// const Nav = lazy(() => import("./components/Nav"));
 const Menu = lazy(() => import("./components/Menu"));
 const Slider = lazy(() => import("./components/Slider"));
 
@@ -62,7 +62,6 @@ function App() {
     <>
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
-          <Nav />
           <div className={styles.wrapper}>
             <Switch>
               <Route exact path="/">

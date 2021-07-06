@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useApp } from "../../contexts/app";
 import LessonCard from "../../components/LessonCard";
 import { LESSONS, TOKEN } from "../../constants";
+import Nav from "../../components/Nav";
 
 function Main() {
   const history = useHistory();
@@ -24,10 +25,13 @@ function Main() {
 
   return (
     <div>
-      Main page
-      {selectors &&
-        selectors.lessons &&
-        selectors.lessons.map((item) => <LessonCard lesson={item} />)}
+      <Nav />
+      <div>
+        Main page
+        {selectors &&
+          selectors.lessons &&
+          selectors.lessons.map((item) => <LessonCard lesson={item} />)}
+      </div>
     </div>
   );
 }
