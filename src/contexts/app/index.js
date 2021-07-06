@@ -30,7 +30,7 @@ const AppContextProvider = ({ children }) => {
 
   const services = {
     getLessons: () => {
-      const res = localServices.getData(LESSONS);
+      const res = localServices.getData(LESSONS) || [];
       const updatedLessons = res.map((item) => checkIfCompleted(item));
 
       setLessons(updatedLessons);
@@ -101,11 +101,20 @@ const AppContextProvider = ({ children }) => {
       setCurrentLesson(lesson);
       return lesson;
     },
+    updatePageScroll: (state) => {
+      if (state) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+    },
     changeSliderState: (state) => {
       setSliderState(state);
+      services.updatePageScroll(state);
     },
     changeMenuState: (state) => {
       setMenuState(state);
+      services.updatePageScroll(state);
     },
     resetData: () => {
       try {

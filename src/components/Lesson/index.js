@@ -9,6 +9,7 @@ import {
   FINISH_LESSON_BUTTON,
   UNFINISH_LESSON_BUTTON,
 } from "../../constants";
+import Button from "../../components/interactions/Button";
 
 function Lesson({ id, markdown, checkNextLesson }) {
   const history = useHistory();
@@ -29,7 +30,7 @@ function Lesson({ id, markdown, checkNextLesson }) {
 
   return (
     <div>
-      <button onClick={handleGoBack}>{BACK_BUTTON}</button>
+      <Button onClick={handleGoBack} name={BACK_BUTTON} />
       <button onClick={checkNextLesson}>{NEXT_BUTTON}</button>
       <button
         onClick={
