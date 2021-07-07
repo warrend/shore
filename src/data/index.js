@@ -11,18 +11,17 @@ export const lessons = [
   },
   {
     id: 3,
-    title: "Lesson One",
+    title: "Lesson Three",
     path: "3.md",
   },
   {
     id: 4,
-    title: "Lesson Two",
+    title: "Lesson Four",
     path: "4.md",
   },
 ];
 
 export const user = {
-  currentLesson: 1,
   finished: [],
   isNewUser: true,
 };

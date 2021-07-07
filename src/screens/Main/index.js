@@ -19,15 +19,38 @@ function Main() {
     }
 
     services.getLessons();
+    services.getFurthestLesson();
   }, []);
 
-  console.log(selectors);
+  const renderNextLesson = () => {
+    if (!selectors.nextUp) {
+      return null;
+    }
+    if (selectors.nextUp >= selectors.lessons.length) {
+      return (
+        <>
+          <h2>Next up</h2>
+          <div>You have finished the last lesson.</div>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <h2>Next up</h2>
+        <div>
+          <LessonCard lesson={selectors.lessons[selectors.nextUp]} />
+        </div>
+      </>
+    );
+  };
 
   return (
     <div>
       <Nav />
       <div>
-        Main page
+        {renderNextLesson()}
+        <h2>Lessons</h2>
         {selectors &&
           selectors.lessons &&
           selectors.lessons.map((item) => <LessonCard lesson={item} />)}
