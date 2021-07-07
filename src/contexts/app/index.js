@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, LESSONS, TOKEN } from "../../constants";
+import { USER, LESSONS, TOKEN, TOKEN_VALUE } from "../../constants";
 import { lessons as lessonData, user as userData } from "../../data";
 
 export const AppContext = createContext();
@@ -16,6 +16,7 @@ const AppContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [sliderState, setSliderState] = useState(null);
   const [menuState, setMenuState] = useState(false);
+  const [nextUp, setNextUp] = useState(undefined);
 
   const checkIfCompleted = (lesson) => {
     const user = services.getUser();
@@ -30,7 +31,7 @@ const AppContextProvider = ({ children }) => {
 
   const services = {
     getLessons: () => {
-      const res = localServices.getData(LESSONS);
+      const res = localServices.getData(LESSONS) || [];
       const updatedLessons = res.map((item) => checkIfCompleted(item));
 
       setLessons(updatedLessons);
@@ -55,7 +56,7 @@ const AppContextProvider = ({ children }) => {
     setUser: () => {
       localServices.setData(USER, userData);
 
-      setLessons(userData);
+      setUser(userData);
     },
     setData: (key, data) => {
       return localServices.setData(key, data);
@@ -89,8 +90,9 @@ const AppContextProvider = ({ children }) => {
       services.getLesson(lessonId);
     },
     registerUser: () => {
-      services.setData(USER, user);
-      services.setData(TOKEN, true);
+      services.setUser();
+      services.setLessons();
+      services.setData(TOKEN, TOKEN_VALUE);
       setToken(true);
     },
     getLesson: (id) => {
@@ -100,11 +102,20 @@ const AppContextProvider = ({ children }) => {
       setCurrentLesson(lesson);
       return lesson;
     },
+    updatePageScroll: (state) => {
+      if (state) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+    },
     changeSliderState: (state) => {
       setSliderState(state);
+      services.updatePageScroll(state);
     },
     changeMenuState: (state) => {
       setMenuState(state);
+      services.updatePageScroll(state);
     },
     resetData: () => {
       try {
@@ -113,6 +124,14 @@ const AppContextProvider = ({ children }) => {
       } catch (error) {
         console.error(error);
       }
+    },
+    getFurthestLesson: () => {
+      const res = services.getUser();
+
+      const sorted = res.finished.sort((a, b) => parseInt(a) - parseInt(b));
+      const lastFinished = sorted[sorted.length - 1];
+
+      setNextUp(lastFinished);
     },
   };
 
@@ -123,6 +142,7 @@ const AppContextProvider = ({ children }) => {
     currentLesson,
     sliderState,
     menuState,
+    nextUp,
   };
 
   const context = {

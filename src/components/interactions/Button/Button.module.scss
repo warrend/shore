@@ -1,0 +1,25 @@
+.button {
+  background: var(--primary);
+  border: none;
+  color: var(--button-color);
+  height: 45px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  font-size: var(--button-font-size);
+  font-weight: 500;
+  padding: 0 var(--normal);
+
+  &:active {
+    background: var(--button-active);
+  }
+
+  &:hover {
+    background: var(--button-hover);
+  }
+
+  &:visited {
+    background: var(--button-visited);
+  }
+}

@@ -1,7 +1,7 @@
 .wrapper {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 0;
+  right: 0;
   width: 90%;
   background: #ededed;
   overflow: hidden;
@@ -15,5 +15,6 @@
 }
 
 .closed {
-  transform: translateX(-100%);
+  position: fixed;
+  transform: translateX(100%);
 }

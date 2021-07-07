@@ -11,9 +11,7 @@ function Nav() {
 
   return (
     <div className={styles.wrapper}>
-      <div>
-        <Icon onClick={() => changeMenuState(true)} icon={MENU_ICON} />
-      </div>
+      <Icon onClick={() => changeMenuState(true)} icon={MENU_ICON} />
     </div>
   );
 }

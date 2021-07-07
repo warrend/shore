@@ -15,13 +15,14 @@ import {
   RESET_URL,
   SLIDER_MESSAGE_ALL_COMPLETE,
 } from "./constants";
-import ResetScreen from "./screens/ResetScreen";
 import styles from "./App.module.scss";
 
 const Main = lazy(() => import("./screens/Main"));
 const Welcome = lazy(() => import("./screens/Welcome"));
 const LessonScreen = lazy(() => import("./screens/LessonScreen"));
-const Nav = lazy(() => import("./components/Nav"));
+const NotFound = lazy(() => import("./screens/NotFound"));
+const ResetScreen = lazy(() => import("./screens/ResetScreen"));
+// const Nav = lazy(() => import("./components/Nav"));
 const Menu = lazy(() => import("./components/Menu"));
 const Slider = lazy(() => import("./components/Slider"));
 
@@ -61,7 +62,6 @@ function App() {
     <>
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
-          <Nav />
           <div className={styles.wrapper}>
             <Switch>
               <Route exact path="/">
@@ -71,18 +71,15 @@ function App() {
                   <Redirect to={LESSONS_URL} />
                 )}
               </Route>
-              <Route exact path={LESSONS_URL}>
-                <Main />
-              </Route>
-              <Route exact path={RESET_URL}>
-                <ResetScreen />
-              </Route>
-              <Route exact path={`${LESSONS_URL}/:id`}>
-                <LessonScreen />
-              </Route>
-              <Route>
-                <div>404</div>
-              </Route>
+              <Route exact path={LESSONS_URL} component={Main} />
+              <Route exact path={RESET_URL} component={ResetScreen} />
+              <Route
+                exact
+                path={`${LESSONS_URL}/:id`}
+                component={LessonScreen}
+              />
+
+              <Route component={NotFound} />
             </Switch>
             <Slider>
               <div>{SLIDER_MESSAGE_ALL_COMPLETE}</div>

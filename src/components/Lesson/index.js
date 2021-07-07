@@ -8,7 +8,11 @@ import {
   NEXT_BUTTON,
   FINISH_LESSON_BUTTON,
   UNFINISH_LESSON_BUTTON,
+  ARROW_LEFT,
 } from "../../constants";
+import Button from "../../components/interactions/Button";
+import Icon from "../../components/Icon";
+import styles from "./Lesson.module.scss";
 
 function Lesson({ id, markdown, checkNextLesson }) {
   const history = useHistory();
@@ -29,7 +33,9 @@ function Lesson({ id, markdown, checkNextLesson }) {
 
   return (
     <div>
-      <button onClick={handleGoBack}>{BACK_BUTTON}</button>
+      <div className={styles.nav}>
+        <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
+      </div>
       <button onClick={checkNextLesson}>{NEXT_BUTTON}</button>
       <button
         onClick={
