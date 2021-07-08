@@ -16,7 +16,7 @@ const AppContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [sliderState, setSliderState] = useState(null);
   const [menuState, setMenuState] = useState(false);
-  const [nextUp, setNextUp] = useState(undefined);
+  const [nextUp, setNextUp] = useState(0);
 
   const checkIfCompleted = (lesson) => {
     const user = services.getUser();
@@ -131,7 +131,7 @@ const AppContextProvider = ({ children }) => {
       const sorted = res.finished.sort((a, b) => parseInt(a) - parseInt(b));
       const lastFinished = sorted[sorted.length - 1];
 
-      setNextUp(lastFinished);
+      setNextUp(lastFinished || 0);
     },
   };
 

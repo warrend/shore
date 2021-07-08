@@ -6,6 +6,7 @@ import styles from "./NextCard.module.scss";
 import Icon from "../Icon";
 
 function NextCard({ lesson }) {
+  console.log("lesson", lesson);
   const { title, id } = lesson;
   const history = useHistory();
 

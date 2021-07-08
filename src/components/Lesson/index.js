@@ -24,7 +24,7 @@ function Lesson({ id, markdown, checkNextLesson }) {
 
   const handleFinishLesson = () => {
     context.services.updateFinishedLessons(id);
-    checkNextLesson();
+    // checkNextLesson();
   };
 
   const handleRemoveFinishedLesson = () => {
@@ -36,19 +36,25 @@ function Lesson({ id, markdown, checkNextLesson }) {
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
-      <button onClick={checkNextLesson}>{NEXT_BUTTON}</button>
-      <button
-        onClick={
-          context.selectors.currentLesson.isCompleted
-            ? handleRemoveFinishedLesson
-            : handleFinishLesson
-        }
-      >
-        {context.selectors.currentLesson.isCompleted
-          ? UNFINISH_LESSON_BUTTON
-          : FINISH_LESSON_BUTTON}
-      </button>
-      <ReactMarkdown children={markdown} />
+      <div className={styles.content}>
+        <ReactMarkdown children={markdown} />
+      </div>
+
+      <div className={styles.buttons}>
+        <Button
+          onClick={
+            context.selectors.currentLesson.isCompleted
+              ? handleRemoveFinishedLesson
+              : handleFinishLesson
+          }
+          name={
+            context.selectors.currentLesson.isCompleted
+              ? UNFINISH_LESSON_BUTTON
+              : FINISH_LESSON_BUTTON
+          }
+        />
+        <Button onClick={checkNextLesson} name={NEXT_BUTTON} secondary />
+      </div>
     </div>
   );
 }

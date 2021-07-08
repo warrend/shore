@@ -1,8 +1,17 @@
 .wrapper {
 }
 
+.content {
+  margin: var(--large) 0;
+}
+
 .nav {
   display: flex;
   justify-content: flex-start;
   margin-bottom: var(--normal);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
 }

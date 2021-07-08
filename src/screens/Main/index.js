@@ -13,22 +13,23 @@ function Main() {
   const { selectors, services } = useApp();
 
   useEffect(() => {
-    if (!localStorage.getItem(TOKEN)) {
-      return history.push("/");
-    }
+    const getItems = async () => {
+      if (!localStorage.getItem(TOKEN)) {
+        return history.push("/");
+      }
 
-    if (!localStorage.getItem(LESSONS)) {
-      return services.setLessons();
-    }
+      if (!localStorage.getItem(LESSONS)) {
+        return services.setLessons();
+      }
 
-    services.getLessons();
-    services.getFurthestLesson();
+      await services.getLessons();
+      await services.getFurthestLesson();
+    };
+
+    getItems();
   }, []);
 
   const renderNextLesson = () => {
-    if (!selectors.nextUp) {
-      return null;
-    }
     if (selectors.nextUp >= selectors.lessons.length) {
       return (
         <div className={styles.section}>
@@ -38,14 +39,16 @@ function Main() {
       );
     }
 
-    return (
-      <div className={styles.section}>
-        <h2>Next up</h2>
-        <div>
-          <NextCard lesson={selectors.lessons[selectors.nextUp]} />
+    if (selectors.lessons.length) {
+      return (
+        <div className={styles.section}>
+          <h2>Next up</h2>
+          <div>
+            <NextCard lesson={selectors.lessons[selectors.nextUp || 0]} />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   };
 
   return (

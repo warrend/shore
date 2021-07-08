@@ -22,6 +22,7 @@ export const lessons = [
 ];
 
 export const user = {
+  track: "",
   finished: [],
   isNewUser: true,
 };
