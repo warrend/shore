@@ -1,22 +1,22 @@
 export const lessons = [
   {
     id: 1,
-    title: "Lesson One",
+    title: "The Idea",
     path: "1.md",
   },
   {
     id: 2,
-    title: "Lesson Two",
+    title: "How to Write",
     path: "2.md",
   },
   {
     id: 3,
-    title: "Lesson Three",
+    title: "The First Ten Pages",
     path: "3.md",
   },
   {
     id: 4,
-    title: "Lesson Four",
+    title: "The First Act",
     path: "4.md",
   },
 ];

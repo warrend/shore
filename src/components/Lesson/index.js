@@ -24,7 +24,7 @@ function Lesson({ id, markdown, checkNextLesson }) {
 
   const handleFinishLesson = () => {
     context.services.updateFinishedLessons(id);
-    // checkNextLesson();
+    checkNextLesson();
   };
 
   const handleRemoveFinishedLesson = () => {
