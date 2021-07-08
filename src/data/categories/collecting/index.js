@@ -1,24 +1,24 @@
-const lessons = {
+export const lessons = {
   category: "Idea Collecting",
   lessons: [
     {
       id: 1,
-      title: "The Idea",
+      title: "What is Collecting",
       path: "1.md",
     },
     {
       id: 2,
-      title: "How to Write",
+      title: "Start Collecting",
       path: "2.md",
     },
     {
       id: 3,
-      title: "The First Ten Pages",
+      title: "Exercises",
       path: "3.md",
     },
     {
       id: 4,
-      title: "The First Act",
+      title: "Start",
       path: "4.md",
     },
   ],
