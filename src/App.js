@@ -81,9 +81,6 @@ function App() {
 
               <Route component={NotFound} />
             </Switch>
-            <Slider>
-              <div>{SLIDER_MESSAGE_ALL_COMPLETE}</div>
-            </Slider>
             <Menu />
           </div>
         </Suspense>

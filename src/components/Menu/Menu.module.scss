@@ -3,15 +3,28 @@
   top: 0;
   right: 0;
   width: 90%;
-  background: #ededed;
+  background: var(--primary);
   overflow: hidden;
   height: 100%;
   transform: translateX(0%);
   transition: transform 175ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
-  border: 1px solid #ccc;
   border-left: none;
   padding: var(--normal);
   z-index: 9999;
+  padding: var(--medium);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.item {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: var(--small);
+  cursor: pointer;
 }
 
 .closed {

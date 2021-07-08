@@ -24,7 +24,8 @@ function LessonScreen() {
     const allLessons = lessons;
 
     if (nextLesson > allLessons.length) {
-      return changeSliderState(true);
+      changeSliderState(true);
+      return history.push(LESSONS_URL);
     }
 
     history.push(`${LESSONS_URL}/${nextLesson}`);
