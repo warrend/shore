@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useApp } from "../contexts/app";
 
-function useMarkdown(id) {
+function useMarkdown(slug, lessonId) {
   const [lesson, setLesson] = useState("");
-  const { selectors } = useApp();
+  const { selectors, services } = useApp();
 
   useEffect(() => {
     const getLesson = async () => {
-      const path = selectors.lessons.find((item) => `${item.id}` === id);
+      await services.getTrackBySlug(slug);
+      const path = selectors.lessons.find((item) => `${item.id}` === lessonId);
       if (!path) {
         return;
       }
-      const file = await import(`../data/${path.path}`);
+      const file = await import(`../data/tracks/${slug}/${path.path}`);
       const res = await fetch(file.default);
       const markdownFile = await res.text();
       setLesson(markdownFile);
     };
 
     getLesson();
-  }, [id]);
+  }, []);
 
   return lesson;
 }

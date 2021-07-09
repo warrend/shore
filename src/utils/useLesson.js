@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useApp } from "../contexts/app";
 
-function useLesson(id) {
+function useLesson(slug, lessonId) {
   const [lesson, setLesson] = useState("");
-  const { services } = useApp();
+  const { selectors, services } = useApp();
 
   useEffect(() => {
     const getLesson = async () => {
-      const lesson = await services.getLesson(id);
+      await services.getTrackBySlug(slug);
+      const lesson = selectors.lessons.find((item) => {
+        console.log("item", lessonId);
+        return item.id === lessonId;
+      });
       setLesson(lesson);
     };
 
     getLesson();
-  }, [id]);
+  }, [lessonId]);
 
   return lesson;
 }

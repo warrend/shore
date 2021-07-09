@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useApp } from "../../contexts/app";
 import useLesson from "../../utils/useLesson";
-import { LESSONS_URL } from "../../constants";
+import { LESSONS_URL, TRACKS_URL } from "../../constants";
 import styles from "./Lesson.module.scss";
 import Lesson from "../../components/Lesson";
 import useMarkdown from "utils/useMarkdown";
@@ -10,25 +10,32 @@ import NoLesson from "../../components/NoLesson";
 
 function LessonScreen() {
   const {
-    selectors: { currentLesson, lessons },
-    services: { changeSliderState },
+    selectors: { currentLesson, lessons, markdown },
+    services: { changeSliderState, getMarkdown, getTrackBySlug },
   } = useApp();
 
-  const { id } = useParams();
-  useLesson(id);
+  const { slug, lessonId } = useParams();
+  useEffect(() => {
+    const pageInit = async () => {
+      await getTrackBySlug(slug);
+      await getMarkdown(slug, lessonId);
+    };
+
+    pageInit();
+  }, [lessonId, slug]);
+
   const history = useHistory();
-  const markdown = useMarkdown(id);
-  const nextLesson = parseInt(id) + 1;
+  const nextLesson = parseInt(lessonId) + 1;
 
   const checkNextLesson = () => {
     const allLessons = lessons;
 
     if (nextLesson > allLessons.length) {
       changeSliderState(true);
-      return history.push(LESSONS_URL);
+      return history.push(TRACKS_URL);
     }
 
-    history.push(`${LESSONS_URL}/${nextLesson}`);
+    history.push(`${TRACKS_URL}/${slug}${LESSONS_URL}/${nextLesson}`);
   };
 
   return (
@@ -36,7 +43,11 @@ function LessonScreen() {
       {!currentLesson ? (
         <NoLesson />
       ) : (
-        <Lesson id={id} markdown={markdown} checkNextLesson={checkNextLesson} />
+        <Lesson
+          id={lessonId}
+          markdown={markdown}
+          checkNextLesson={checkNextLesson}
+        />
       )}
     </div>
   );

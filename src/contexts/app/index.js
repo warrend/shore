@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, LESSONS, TOKEN, TOKEN_VALUE } from "../../constants";
-import { lessons as lessonData, user as userData } from "../../data";
+import { USER, LESSONS, TOKEN, TOKEN_VALUE, TRACKS } from "../../constants";
+import { user as userData } from "../../data";
 
 export const AppContext = createContext();
 
@@ -11,12 +11,14 @@ export function useApp() {
 
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({ isNewUser: null });
+  const [tracks, setTracks] = useState([]);
+  const [track, setTrack] = useState(undefined);
   const [lessons, setLessons] = useState([]);
   const [currentLesson, setCurrentLesson] = useState({ isComplete: null });
-  const [token, setToken] = useState("");
   const [sliderState, setSliderState] = useState(null);
   const [menuState, setMenuState] = useState(false);
   const [nextUp, setNextUp] = useState(0);
+  const [markdown, setMarkdown] = useState("");
 
   const checkIfCompleted = (lesson) => {
     const user = services.getUser();
@@ -37,6 +39,34 @@ const AppContextProvider = ({ children }) => {
       setLessons(updatedLessons);
       return updatedLessons;
     },
+    getTracks: async () => {
+      const res = await import("../../data/tracks/index.js");
+
+      setTracks(res.default);
+      return res.default;
+    },
+    getTrackBySlug: async (slug) => {
+      const res = await import(`../../data/tracks/${slug}`);
+      setTrack(res.default);
+      setLessons(res.default.lessons);
+
+      return res.default;
+    },
+    getMarkdown: async (slug, lessonId) => {
+      const track = await services.getTrackBySlug(slug);
+      console.log("s", track);
+      const path = track.lessons.find((item) => `${item.id}` === lessonId);
+      if (!path) {
+        return;
+      }
+      const file = await import(`../../data/tracks/${slug}/${path.path}`);
+      const res = await fetch(file.default);
+      const markdownFile = await res.text();
+
+      setMarkdown(markdownFile);
+
+      return markdownFile;
+    },
     getUser: () => {
       const res = localServices.getData(USER);
 
@@ -48,10 +78,10 @@ const AppContextProvider = ({ children }) => {
 
       return res;
     },
-    setLessons: () => {
-      localServices.setData(LESSONS, lessonData);
+    setLessons: (slug) => {
+      localServices.setData(LESSONS, tracks[slug]);
 
-      setLessons(lessonData);
+      setLessons([]);
     },
     setUser: () => {
       localServices.setData(USER, userData);
@@ -93,7 +123,6 @@ const AppContextProvider = ({ children }) => {
       services.setUser();
       services.setLessons();
       services.setData(TOKEN, TOKEN_VALUE);
-      setToken(true);
     },
     getLesson: (id) => {
       const lessons = services.getLessons();
@@ -138,11 +167,13 @@ const AppContextProvider = ({ children }) => {
   const selectors = {
     user,
     lessons,
-    token,
     currentLesson,
     sliderState,
     menuState,
     nextUp,
+    tracks,
+    track,
+    markdown,
   };
 
   const context = {

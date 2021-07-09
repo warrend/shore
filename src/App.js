@@ -6,25 +6,18 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useApp } from "./contexts/app";
-import { user, lessons } from "./data";
-import {
-  USER,
-  LESSONS,
-  TOKEN,
-  LESSONS_URL,
-  RESET_URL,
-  SLIDER_MESSAGE_ALL_COMPLETE,
-} from "./constants";
+import { user } from "./data";
+import { USER, TOKEN, LESSONS_URL, RESET_URL, TRACKS_URL } from "./constants";
 import styles from "./App.module.scss";
 
 const Main = lazy(() => import("./screens/Main"));
 const Welcome = lazy(() => import("./screens/Welcome"));
 const LessonScreen = lazy(() => import("./screens/LessonScreen"));
+const TrackScreen = lazy(() => import("./screens/TrackScreen"));
 const NotFound = lazy(() => import("./screens/NotFound"));
 const ResetScreen = lazy(() => import("./screens/ResetScreen"));
-// const Nav = lazy(() => import("./components/Nav"));
 const Menu = lazy(() => import("./components/Menu"));
-const Slider = lazy(() => import("./components/Slider"));
+const Tracks = lazy(() => import("./screens/Tracks"));
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -36,7 +29,7 @@ function App() {
       if (!localStorage.getItem(TOKEN)) {
         try {
           await services.setData(USER, user);
-          await services.setData(LESSONS, lessons);
+          await services.getTracks();
         } catch (error) {
           console.error(error);
         }
@@ -47,7 +40,7 @@ function App() {
       }
 
       await services.getUser();
-      return await services.getLessons();
+      return await services.getTracks();
     };
 
     appInit();
@@ -68,16 +61,22 @@ function App() {
                 {!localStorage.getItem(TOKEN) ? (
                   <Welcome />
                 ) : (
-                  <Redirect to={LESSONS_URL} />
+                  <Redirect to={TRACKS_URL} />
                 )}
               </Route>
-              <Route exact path={LESSONS_URL} component={Main} />
-              <Route exact path={RESET_URL} component={ResetScreen} />
+              <Route exact path={TRACKS_URL} component={Tracks} />
+
               <Route
                 exact
-                path={`${LESSONS_URL}/:id`}
+                path={`${TRACKS_URL}/:slug`}
+                component={TrackScreen}
+              />
+              <Route
+                path={`${TRACKS_URL}/:slug?/(lessons)?/:lessonId`}
                 component={LessonScreen}
               />
+              <Route exact path={LESSONS_URL} component={Main} />
+              <Route exact path={RESET_URL} component={ResetScreen} />
 
               <Route component={NotFound} />
             </Switch>
