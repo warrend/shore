@@ -1,2 +1,8 @@
 .wrapper {
 }
+
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: var(--normal);
+}

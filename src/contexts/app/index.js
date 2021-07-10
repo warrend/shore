@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, LESSONS, TOKEN, TOKEN_VALUE, TRACKS } from "../../constants";
+import { USER, TOKEN, TOKEN_VALUE } from "../../constants";
 import { user as userData } from "../../data";
 
 export const AppContext = createContext();
@@ -11,62 +11,37 @@ export function useApp() {
 
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({ isNewUser: null });
-  const [tracks, setTracks] = useState([]);
-  const [track, setTrack] = useState(undefined);
-  const [lessons, setLessons] = useState([]);
-  const [currentLesson, setCurrentLesson] = useState({ isComplete: null });
   const [sliderState, setSliderState] = useState(null);
   const [menuState, setMenuState] = useState(false);
-  const [nextUp, setNextUp] = useState(0);
   const [markdown, setMarkdown] = useState("");
 
-  const checkIfCompleted = (lesson) => {
-    const user = services.getUser();
-    const computedValues = { isCompleted: false };
+  // const checkIfCompleted = (lesson) => {
+  //   const user = services.getUser();
+  //   const computedValues = { isCompleted: false };
 
-    if (user.finished.includes(`${lesson.id}`)) {
-      computedValues.isCompleted = true;
-    }
+  //   if (user.finished.includes(`${lesson.id}`)) {
+  //     computedValues.isCompleted = true;
+  //   }
 
-    return { ...lesson, ...computedValues };
-  };
+  //   return { ...lesson, ...computedValues };
+  // };
 
   const services = {
-    getLessons: () => {
-      const res = localServices.getData(LESSONS) || [];
-      const updatedLessons = res.map((item) => checkIfCompleted(item));
+    // getMarkdown: async (slug, lessonId) => {
+    //   const path = track.lessons.lessons.find(
+    //     (item) => `${item.id}` === lessonId
+    //   );
+    //   if (!path) {
+    //     return;
+    //   }
+    //   const file = await import(`../../data/tracks/${slug}/${path.path}`);
+    //   const res = await fetch(file.default);
+    //   const markdownFile = await res.text();
 
-      setLessons(updatedLessons);
-      return updatedLessons;
-    },
-    getTracks: async () => {
-      const res = await import("../../data/tracks/index.js");
+    //   setMarkdown(markdownFile);
 
-      setTracks(res.default);
-      return res.default;
-    },
-    getTrackBySlug: async (slug) => {
-      const res = await import(`../../data/tracks/${slug}`);
-      setTrack(res.default);
-      setLessons(res.default.lessons);
-
-      return res.default;
-    },
-    getMarkdown: async (slug, lessonId) => {
-      const track = await services.getTrackBySlug(slug);
-      console.log("s", track);
-      const path = track.lessons.find((item) => `${item.id}` === lessonId);
-      if (!path) {
-        return;
-      }
-      const file = await import(`../../data/tracks/${slug}/${path.path}`);
-      const res = await fetch(file.default);
-      const markdownFile = await res.text();
-
-      setMarkdown(markdownFile);
-
-      return markdownFile;
-    },
+    //   return markdownFile;
+    // },
     getUser: () => {
       const res = localServices.getData(USER);
 
@@ -77,11 +52,6 @@ const AppContextProvider = ({ children }) => {
       const res = localServices.getData(key);
 
       return res;
-    },
-    setLessons: (slug) => {
-      localServices.setData(LESSONS, tracks[slug]);
-
-      setLessons([]);
     },
     setUser: () => {
       localServices.setData(USER, userData);
@@ -124,13 +94,6 @@ const AppContextProvider = ({ children }) => {
       services.setLessons();
       services.setData(TOKEN, TOKEN_VALUE);
     },
-    getLesson: (id) => {
-      const lessons = services.getLessons();
-      const lesson = lessons.find((item) => `${item.id}` === id);
-
-      setCurrentLesson(lesson);
-      return lesson;
-    },
     updatePageScroll: (state) => {
       if (state) {
         document.body.style.overflow = "hidden";
@@ -154,25 +117,12 @@ const AppContextProvider = ({ children }) => {
         console.error(error);
       }
     },
-    getFurthestLesson: () => {
-      const res = services.getUser();
-
-      const sorted = res.finished.sort((a, b) => parseInt(a) - parseInt(b));
-      const lastFinished = sorted[sorted.length - 1];
-
-      setNextUp(lastFinished || 0);
-    },
   };
 
   const selectors = {
     user,
-    lessons,
-    currentLesson,
     sliderState,
     menuState,
-    nextUp,
-    tracks,
-    track,
     markdown,
   };
 

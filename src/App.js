@@ -10,7 +10,7 @@ import { user } from "./data";
 import { USER, TOKEN, LESSONS_URL, RESET_URL, TRACKS_URL } from "./constants";
 import styles from "./App.module.scss";
 
-const Main = lazy(() => import("./screens/Main"));
+const LessonsScreen = lazy(() => import("./screens/LessonsScreen"));
 const Welcome = lazy(() => import("./screens/Welcome"));
 const LessonScreen = lazy(() => import("./screens/LessonScreen"));
 const TrackScreen = lazy(() => import("./screens/TrackScreen"));
@@ -29,7 +29,6 @@ function App() {
       if (!localStorage.getItem(TOKEN)) {
         try {
           await services.setData(USER, user);
-          await services.getTracks();
         } catch (error) {
           console.error(error);
         }
@@ -39,12 +38,19 @@ function App() {
         services.setUser();
       }
 
-      await services.getUser();
-      return await services.getTracks();
+      try {
+        await services.getUser();
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     appInit();
     setLoading(false);
+
+    return () => {
+      console.log("useEffect cleanup");
+    };
   }, []);
 
   if (loading) {
@@ -75,7 +81,7 @@ function App() {
                 path={`${TRACKS_URL}/:slug?/(lessons)?/:lessonId`}
                 component={LessonScreen}
               />
-              <Route exact path={LESSONS_URL} component={Main} />
+              {/* <Route exact path={LESSONS_URL} component={LessonsScreen} /> */}
               <Route exact path={RESET_URL} component={ResetScreen} />
 
               <Route component={NotFound} />
