@@ -14,7 +14,17 @@ function TrackScreen() {
   const history = useHistory();
   const { slug } = useParams();
   const [selectedTrack, setSelectedTrack] = useState(undefined);
-  // const { selectors, services } = useApp();
+  const { selectors, services } = useApp();
+
+  const checkIfCompleted = (lesson, finished) => {
+    const computedValues = { isCompleted: false };
+
+    if (finished.includes(`${lesson.id}`)) {
+      computedValues.isCompleted = true;
+    }
+
+    return { ...lesson, ...computedValues };
+  };
 
   useEffect(() => {
     if (!localStorage.getItem(TOKEN)) {
@@ -22,7 +32,15 @@ function TrackScreen() {
     }
 
     const trackFromSlug = tracks.find((item) => item.path === slug);
-    setSelectedTrack(trackFromSlug);
+    const finished = services.getFinished(trackFromSlug.id);
+    const updatedLessons = trackFromSlug.lessons.lessons.map((item) =>
+      checkIfCompleted(item, finished)
+    );
+
+    setSelectedTrack({
+      ...trackFromSlug,
+      lessons: { ...trackFromSlug.lessons, lessons: updatedLessons },
+    });
   }, []);
 
   // const renderNextLesson = () => {

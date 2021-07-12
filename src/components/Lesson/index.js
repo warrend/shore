@@ -14,7 +14,7 @@ import Button from "../../components/interactions/Button";
 import Icon from "../../components/Icon";
 import styles from "./Lesson.module.scss";
 
-function Lesson({ id, markdown, checkNextLesson, lesson }) {
+function Lesson({ trackId, id, markdown, checkNextLesson, lesson }) {
   const history = useHistory();
   const context = useApp();
   const { slug } = useParams();
@@ -24,7 +24,7 @@ function Lesson({ id, markdown, checkNextLesson, lesson }) {
   };
 
   const handleFinishLesson = () => {
-    context.services.updateFinishedLessons(id);
+    context.services.updateFinishedLessons(id, trackId);
     // checkNextLesson();
   };
 
@@ -42,18 +42,18 @@ function Lesson({ id, markdown, checkNextLesson, lesson }) {
       </div>
 
       <div className={styles.buttons}>
-        {/* <Button
+        <Button
           onClick={
-            context.selectors.currentLesson.isCompleted
+            lesson && lesson.isCompleted
               ? handleRemoveFinishedLesson
               : handleFinishLesson
           }
           name={
-            context.selectors.currentLesson.isCompleted
+            lesson && lesson.isCompleted
               ? UNFINISH_LESSON_BUTTON
               : FINISH_LESSON_BUTTON
           }
-        /> */}
+        />
         <Button onClick={checkNextLesson} name={NEXT_BUTTON} secondary />
       </div>
     </div>

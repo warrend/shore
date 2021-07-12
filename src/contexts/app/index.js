@@ -12,41 +12,25 @@ export function useApp() {
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({ isNewUser: null });
   const [sliderState, setSliderState] = useState(null);
+  const [finished, setFinished] = useState([]);
   const [menuState, setMenuState] = useState(false);
   const [markdown, setMarkdown] = useState("");
 
-  // const checkIfCompleted = (lesson) => {
-  //   const user = services.getUser();
-  //   const computedValues = { isCompleted: false };
-
-  //   if (user.finished.includes(`${lesson.id}`)) {
-  //     computedValues.isCompleted = true;
-  //   }
-
-  //   return { ...lesson, ...computedValues };
-  // };
-
   const services = {
-    // getMarkdown: async (slug, lessonId) => {
-    //   const path = track.lessons.lessons.find(
-    //     (item) => `${item.id}` === lessonId
-    //   );
-    //   if (!path) {
-    //     return;
-    //   }
-    //   const file = await import(`../../data/tracks/${slug}/${path.path}`);
-    //   const res = await fetch(file.default);
-    //   const markdownFile = await res.text();
-
-    //   setMarkdown(markdownFile);
-
-    //   return markdownFile;
-    // },
     getUser: () => {
       const res = localServices.getData(USER);
 
       setUser(res);
       return res;
+    },
+    getFinished: (trackId) => {
+      const res = localServices.getData(USER);
+
+      console.log("in", res.finished, trackId);
+      const finished = res.finished[trackId];
+
+      setFinished(finished);
+      return finished;
     },
     getData: (key) => {
       const res = localServices.getData(key);
@@ -61,10 +45,10 @@ const AppContextProvider = ({ children }) => {
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
-    updateFinishedLessons: async (lessonId) => {
-      const user = await services.getUser();
+    updateFinishedLessons: async (lessonId, trackId) => {
+      const finished = await services.getFinished(trackId);
 
-      if (user.finished.includes(lessonId)) {
+      if (finished.includes(lessonId)) {
         return;
       }
       user.finished.push(lessonId);
@@ -91,7 +75,6 @@ const AppContextProvider = ({ children }) => {
     },
     registerUser: () => {
       services.setUser();
-      services.setLessons();
       services.setData(TOKEN, TOKEN_VALUE);
     },
     updatePageScroll: (state) => {
@@ -124,6 +107,7 @@ const AppContextProvider = ({ children }) => {
     sliderState,
     menuState,
     markdown,
+    finished,
   };
 
   const context = {

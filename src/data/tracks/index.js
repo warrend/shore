@@ -3,13 +3,13 @@ import writing from "./writing";
 
 const tracks = [
   {
-    id: 1,
+    id: 0,
     title: "Collecting",
     path: "collecting",
     lessons: lessons,
   },
   {
-    id: 2,
+    id: 1,
     title: "Writing",
     path: "writing",
     lessons: writing,
