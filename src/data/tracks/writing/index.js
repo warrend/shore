@@ -1,4 +1,4 @@
-export const lessons = {
+const lessons = {
   category: "Start Writing",
   lessons: [
     {
@@ -23,3 +23,5 @@ export const lessons = {
     },
   ],
 };
+
+export default lessons;

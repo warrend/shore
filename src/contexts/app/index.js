@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, LESSONS, TOKEN, TOKEN_VALUE } from "../../constants";
-import { lessons as lessonData, user as userData } from "../../data";
+import { USER, TOKEN, TOKEN_VALUE } from "../../constants";
+import { user as userData } from "../../data";
 
 export const AppContext = createContext();
 
@@ -11,47 +11,31 @@ export function useApp() {
 
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({ isNewUser: null });
-  const [lessons, setLessons] = useState([]);
-  const [currentLesson, setCurrentLesson] = useState({ isComplete: null });
-  const [token, setToken] = useState("");
   const [sliderState, setSliderState] = useState(null);
+  const [finished, setFinished] = useState([]);
   const [menuState, setMenuState] = useState(false);
-  const [nextUp, setNextUp] = useState(0);
-
-  const checkIfCompleted = (lesson) => {
-    const user = services.getUser();
-    const computedValues = { isCompleted: false };
-
-    if (user.finished.includes(`${lesson.id}`)) {
-      computedValues.isCompleted = true;
-    }
-
-    return { ...lesson, ...computedValues };
-  };
+  const [markdown, setMarkdown] = useState("");
 
   const services = {
-    getLessons: () => {
-      const res = localServices.getData(LESSONS) || [];
-      const updatedLessons = res.map((item) => checkIfCompleted(item));
-
-      setLessons(updatedLessons);
-      return updatedLessons;
-    },
     getUser: () => {
       const res = localServices.getData(USER);
 
       setUser(res);
       return res;
     },
+    getFinished: (trackId) => {
+      const res = localServices.getData(USER);
+
+      console.log("in", res.finished, trackId);
+      const finished = res.finished[trackId];
+
+      setFinished(finished);
+      return finished;
+    },
     getData: (key) => {
       const res = localServices.getData(key);
 
       return res;
-    },
-    setLessons: () => {
-      localServices.setData(LESSONS, lessonData);
-
-      setLessons(lessonData);
     },
     setUser: () => {
       localServices.setData(USER, userData);
@@ -61,14 +45,15 @@ const AppContextProvider = ({ children }) => {
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
-    updateFinishedLessons: async (lessonId) => {
-      const user = await services.getUser();
+    updateFinishedLessons: async (lessonId, trackId) => {
+      const finished = await services.getFinished(trackId);
 
-      if (user.finished.includes(lessonId)) {
+      if (finished.includes(lessonId)) {
         return;
       }
-      user.finished.push(lessonId);
-      setUser(user);
+
+      finished[trackId].push(lessonId);
+      setFinished(finished);
       services.setData(USER, user);
       await services.getLesson(lessonId);
     },
@@ -91,16 +76,7 @@ const AppContextProvider = ({ children }) => {
     },
     registerUser: () => {
       services.setUser();
-      services.setLessons();
       services.setData(TOKEN, TOKEN_VALUE);
-      setToken(true);
-    },
-    getLesson: (id) => {
-      const lessons = services.getLessons();
-      const lesson = lessons.find((item) => `${item.id}` === id);
-
-      setCurrentLesson(lesson);
-      return lesson;
     },
     updatePageScroll: (state) => {
       if (state) {
@@ -125,24 +101,14 @@ const AppContextProvider = ({ children }) => {
         console.error(error);
       }
     },
-    getFurthestLesson: () => {
-      const res = services.getUser();
-
-      const sorted = res.finished.sort((a, b) => parseInt(a) - parseInt(b));
-      const lastFinished = sorted[sorted.length - 1];
-
-      setNextUp(lastFinished || 0);
-    },
   };
 
   const selectors = {
     user,
-    lessons,
-    token,
-    currentLesson,
     sliderState,
     menuState,
-    nextUp,
+    markdown,
+    finished,
   };
 
   const context = {

@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import { LESSONS_URL } from "../../constants";
+import { useHistory, useLocation } from "react-router-dom";
+import { LESSONS_URL, TRACKS_URL } from "../../constants";
 import styles from "./LessonCard.module.scss";
 function LessonCard({ lesson }) {
   const { title, id, isCompleted } = lesson;
   const history = useHistory();
+  const location = useLocation();
 
   const handleDetailCard = (id) => {
-    history.push(`${LESSONS_URL}/${id}`);
+    history.push(`${location.pathname}${LESSONS_URL}/${id}`);
   };
 
   return (

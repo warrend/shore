@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 import { useApp } from "contexts/app";
 import {
   LESSONS_URL,
-  BACK_BUTTON,
+  TRACKS_URL,
   NEXT_BUTTON,
   FINISH_LESSON_BUTTON,
   UNFINISH_LESSON_BUTTON,
@@ -14,16 +14,17 @@ import Button from "../../components/interactions/Button";
 import Icon from "../../components/Icon";
 import styles from "./Lesson.module.scss";
 
-function Lesson({ id, markdown, checkNextLesson }) {
+function Lesson({ trackId, id, markdown, checkNextLesson, lesson }) {
   const history = useHistory();
   const context = useApp();
+  const { slug } = useParams();
 
   const handleGoBack = () => {
-    history.push(LESSONS_URL);
+    history.push(`${TRACKS_URL}/${slug}`);
   };
 
   const handleFinishLesson = () => {
-    context.services.updateFinishedLessons(id);
+    context.services.updateFinishedLessons(id, trackId);
     // checkNextLesson();
   };
 
@@ -43,12 +44,12 @@ function Lesson({ id, markdown, checkNextLesson }) {
       <div className={styles.buttons}>
         <Button
           onClick={
-            context.selectors.currentLesson.isCompleted
+            lesson && lesson.isCompleted
               ? handleRemoveFinishedLesson
               : handleFinishLesson
           }
           name={
-            context.selectors.currentLesson.isCompleted
+            lesson && lesson.isCompleted
               ? UNFINISH_LESSON_BUTTON
               : FINISH_LESSON_BUTTON
           }

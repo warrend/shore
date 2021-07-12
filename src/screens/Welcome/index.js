@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useHistory } from "react-router-dom";
-import { WELCOME_COPY, LESSONS_URL } from "../../constants";
+import { WELCOME_COPY, LESSONS_URL, TRACKS_URL } from "../../constants";
 import { useApp } from "../../contexts/app";
 import welcome1 from "../../data/welcome1.md";
 import welcome2 from "../../data/welcome2.md";
@@ -33,7 +33,7 @@ function Welcome() {
   const handleNext = () => {
     if (page === pageLength) {
       registerUser();
-      return history.push(LESSONS_URL);
+      return history.push(TRACKS_URL);
     }
 
     setPage(page + 1);
