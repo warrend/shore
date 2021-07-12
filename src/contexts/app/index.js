@@ -51,8 +51,9 @@ const AppContextProvider = ({ children }) => {
       if (finished.includes(lessonId)) {
         return;
       }
-      user.finished.push(lessonId);
-      setUser(user);
+
+      finished[trackId].push(lessonId);
+      setFinished(finished);
       services.setData(USER, user);
       await services.getLesson(lessonId);
     },
