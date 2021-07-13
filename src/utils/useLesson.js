@@ -9,7 +9,6 @@ function useLesson(slug, lessonId) {
     const getLesson = async () => {
       await services.getTrackBySlug(slug);
       const lesson = selectors.lessons.find((item) => {
-        console.log("item", lessonId);
         return item.id === lessonId;
       });
       setLesson(lesson);

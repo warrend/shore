@@ -1,6 +1,6 @@
 import React from "react";
 import cn from "classnames";
-import { useApp } from "contexts/app";
+import { useApp } from "../../contexts/app";
 import styles from "./Slider.module.scss";
 
 function Slider({ children }) {

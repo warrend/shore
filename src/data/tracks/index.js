@@ -1,7 +1,7 @@
 import lessons from "./collecting";
 import writing from "./writing";
 
-const tracks = [
+const tracksData = [
   {
     id: 0,
     title: "Collecting",
@@ -16,4 +16,4 @@ const tracks = [
   },
 ];
 
-export default tracks;
+export default tracksData;

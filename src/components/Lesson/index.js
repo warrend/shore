@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { useHistory, useParams } from "react-router";
-import { useApp } from "contexts/app";
+import { useApp } from "../../contexts/app";
 import {
   LESSONS_URL,
   TRACKS_URL,
@@ -14,23 +14,32 @@ import Button from "../../components/interactions/Button";
 import Icon from "../../components/Icon";
 import styles from "./Lesson.module.scss";
 
-function Lesson({ trackId, id, markdown, checkNextLesson, lesson }) {
+function Lesson({
+  trackId,
+  id,
+  markdown,
+  checkNextLesson,
+  lesson,
+  handleGoBack,
+  handleFinishLesson,
+  handleRemoveFinishedLesson,
+}) {
   const history = useHistory();
   const context = useApp();
   const { slug } = useParams();
 
-  const handleGoBack = () => {
-    history.push(`${TRACKS_URL}/${slug}`);
-  };
+  // const handleGoBack = () => {
+  //   history.push(`${TRACKS_URL}/${slug}`);
+  // };
 
-  const handleFinishLesson = () => {
-    context.services.updateFinishedLessons(id, trackId);
-    // checkNextLesson();
-  };
+  // const handleFinishLesson = () => {
+  //   context.services.updateFinishedLessons(id, trackId);
+  //   // checkNextLesson();
+  // };
 
-  const handleRemoveFinishedLesson = () => {
-    context.services.removeFinishedLesson(id);
-  };
+  // const handleRemoveFinishedLesson = () => {
+  //   context.services.removeFinishedLesson(id);
+  // };
 
   return (
     <div>

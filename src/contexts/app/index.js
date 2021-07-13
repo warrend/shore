@@ -1,7 +1,8 @@
 import React, { createContext, useState, useContext } from "react";
 import localServices from "../../services/localServices";
-import { USER, TOKEN, TOKEN_VALUE } from "../../constants";
-import { user as userData } from "../../data";
+import { FINISHED, TOKEN, TOKEN_VALUE } from "../../constants";
+import finishedData from "../../data";
+import tracksData from "../../data/tracks";
 
 export const AppContext = createContext();
 
@@ -10,72 +11,120 @@ export function useApp() {
 }
 
 const AppContextProvider = ({ children }) => {
-  const [user, setUser] = useState({ isNewUser: null });
   const [sliderState, setSliderState] = useState(null);
-  const [finished, setFinished] = useState([]);
+  const [tracks, setTracks] = useState([]);
+  const [finished, setFinished] = useState(undefined);
   const [menuState, setMenuState] = useState(false);
   const [markdown, setMarkdown] = useState("");
+  const [lesson, setLesson] = useState(undefined);
+
+  const checkIfCompleted = (lesson, trackId) => {
+    const computedValues = { isCompleted: false };
+
+    if (
+      selectors.finished &&
+      selectors.finished[trackId].includes(`${lesson.id}`)
+    ) {
+      computedValues.isCompleted = true;
+    }
+
+    return { ...lesson, ...computedValues };
+  };
 
   const services = {
-    getUser: () => {
-      const res = localServices.getData(USER);
+    startApp: async () => {
+      const token = localStorage.token;
+      if (!token) {
+        try {
+          services.setData(FINISHED, finishedData);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          await services.getFinished();
+          const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
+            const updatedLessons = curr.lessons.map((lesson) =>
+              checkIfCompleted(lesson, curr.id)
+            );
+            acc.push({
+              ...curr,
+              lessons: updatedLessons,
+            });
 
-      setUser(res);
-      return res;
+            return acc;
+          }, []);
+          setTracks(tracksWithFinishedData);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
-    getFinished: (trackId) => {
-      const res = localServices.getData(USER);
+    getLesson: (slug, lessonId) => {
+      const track =
+        selectors.tracks && selectors.tracks.find((t) => t.path === slug);
+      const trackLesson =
+        track.lessons && track.lessons.find((l) => `${l.id}` === lessonId);
 
-      console.log("in", res.finished, trackId);
-      const finished = res.finished[trackId];
+      // set MD
 
-      setFinished(finished);
-      return finished;
+      setLesson(trackLesson);
+    },
+    // addFinishedToLesson: async (lessons) => {
+    //   const finishedObj = await services.getData(FINISHED);
+
+    //   return lessons.map((lesson) =>
+    //     checkIfCompleted(lesson, finishedObj[trackId])
+    //   );
+    // },
+    getFinished: async () => {
+      try {
+        const res = await localServices.getData(FINISHED);
+
+        setFinished(res);
+        return finished;
+      } catch (error) {
+        console.error(error);
+      }
     },
     getData: (key) => {
       const res = localServices.getData(key);
 
       return res;
     },
-    setUser: () => {
-      localServices.setData(USER, userData);
-
-      setUser(userData);
-    },
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
-    updateFinishedLessons: async (lessonId, trackId) => {
-      const finished = await services.getFinished(trackId);
+    // updateFinishedLessons: async (lessonId, trackId) => {
+    //   const finished = await services.getFinished(trackId);
 
-      if (finished.includes(lessonId)) {
-        return;
-      }
+    //   if (finished.includes(lessonId)) {
+    //     return;
+    //   }
 
-      finished[trackId].push(lessonId);
-      setFinished(finished);
-      services.setData(USER, user);
-      await services.getLesson(lessonId);
-    },
-    removeFinishedLesson: async (lessonId) => {
-      const user = await services.getUser();
+    //   finished[trackId].push(lessonId);
+    //   setFinished(finished);
+    //   services.setData(FINISHED, user);
+    //   await services.getLesson(lessonId);
+    // },
+    // removeFinishedLesson: async (lessonId) => {
+    //   const user = await services.getUser();
 
-      if (!user.finished.includes(lessonId)) {
-        return;
-      }
+    //   if (!user.finished.includes(lessonId)) {
+    //     return;
+    //   }
 
-      const updatedFinished = user.finished.filter(
-        (id) => `${id}` !== lessonId
-      );
+    //   const updatedFinished = user.finished.filter(
+    //     (id) => `${id}` !== lessonId
+    //   );
 
-      const updatedLesson = { ...user, finished: updatedFinished };
+    //   const updatedLesson = { ...user, finished: updatedFinished };
 
-      setUser(updatedLesson);
-      services.setData(USER, updatedLesson);
-      services.getLesson(lessonId);
-    },
+    //   setUser(updatedLesson);
+    //   services.setData(USER, updatedLesson);
+    //   services.getLesson(lessonId);
+    // },
     registerUser: () => {
-      services.setUser();
       services.setData(TOKEN, TOKEN_VALUE);
     },
     updatePageScroll: (state) => {
@@ -104,11 +153,12 @@ const AppContextProvider = ({ children }) => {
   };
 
   const selectors = {
-    user,
     sliderState,
     menuState,
     markdown,
     finished,
+    tracks,
+    lesson,
   };
 
   const context = {

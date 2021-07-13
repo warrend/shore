@@ -7,74 +7,81 @@ import Lesson from "../../components/Lesson";
 import tracks from "../../data/tracks";
 
 function LessonScreen() {
-  const [lesson, setLesson] = useState(undefined);
-  const [trackId, setTrackId] = useState("");
-  const [currentTrack, setCurrentTrack] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const [markdown, setMarkdown] = useState("");
   const history = useHistory();
-  const { services } = useApp();
   const { slug, lessonId } = useParams();
 
   const nextLesson = parseInt(lessonId) + 1;
 
   const {
-    services: { changeSliderState },
+    services: { changeSliderState, getLesson },
+    selectors,
   } = useApp();
 
-  const checkIfCompleted = async (lesson, finished, slugId) => {
-    const computedValues = { isCompleted: false };
-
-    if (finished.includes(`${lesson.id}`)) {
-      computedValues.isCompleted = true;
-    }
-
-    return { ...lesson, ...computedValues };
-  };
-
   useEffect(() => {
-    const getLesson = async () => {
-      const track = tracks.find((item) => item.path === slug);
-      setTrackId(track.id);
-      const finished = await services.getFinished(track.id);
-      setCurrentTrack(track);
-      const trackLesson = track.lessons.lessons.find(
-        (item) => `${item.id}` === lessonId
-      );
-
-      const updatedTrackLesson = checkIfCompleted(
-        trackLesson,
-        finished,
-        track.slugId
-      );
-
-      if (!trackLesson) {
-        return history.push(`${TRACKS_URL}/${slug}`);
-      }
-
-      const file = await import(
-        `../../data/tracks/${slug}/${trackLesson.path}`
-      );
-      const res = await fetch(file.default);
-      const markdownFile = await res.text();
-
-      setMarkdown(markdownFile);
-      setLesson(updatedTrackLesson);
-    };
-
-    getLesson();
+    getLesson(slug, lessonId);
     setLoading(false);
-  }, [lessonId, slug]);
+  }, []);
+
+  console.log("lesson...", selectors.lesson);
+
+  // useEffect(() => {
+  //   const getLesson = async () => {
+  //     const track = tracks.find((item) => item.path === slug);
+  //     setTrackId(track.id);
+  //     const finished = await services.getFinished(track.id);
+  //     setCurrentTrack(track);
+  //     const trackLesson = track.lessons.lessons.find(
+  //       (item) => `${item.id}` === lessonId
+  //     );
+
+  //     const updatedTrackLesson = checkIfCompleted(
+  //       trackLesson,
+  //       finished,
+  //       track.slugId
+  //     );
+
+  //     if (!trackLesson) {
+  //       return history.push(`${TRACKS_URL}/${slug}`);
+  //     }
+
+  //     const file = await import(
+  //       `../../data/tracks/${slug}/${trackLesson.path}`
+  //     );
+  //     const res = await fetch(file.default);
+  //     const markdownFile = await res.text();
+
+  //     setMarkdown(markdownFile);
+  //     setLesson(updatedTrackLesson);
+  //   };
+
+  //   getLesson();
+  //   setLoading(false);
+  // }, [lessonId, slug]);
 
   const checkNextLesson = () => {
-    const allLessons = currentTrack.lessons.lessons;
+    // const allLessons = currentTrack.lessons.lessons;
 
-    if (nextLesson > allLessons.length) {
-      changeSliderState(true);
-      return history.push(TRACKS_URL);
-    }
+    // if (nextLesson > allLessons.length) {
+    //   changeSliderState(true);
+    //   return history.push(TRACKS_URL);
+    // }
 
     history.push(`${TRACKS_URL}/${slug}${LESSONS_URL}/${nextLesson}`);
+  };
+
+  const handleGoBack = () => {
+    history.push(`${TRACKS_URL}/${slug}`);
+  };
+
+  const handleFinishLesson = () => {
+    // context.services.updateFinishedLessons(id, trackId);
+    // checkNextLesson();
+  };
+
+  const handleRemoveFinishedLesson = () => {
+    // context.services.removeFinishedLesson(id);
   };
 
   if (loading) {
@@ -84,8 +91,10 @@ function LessonScreen() {
   return (
     <div className={styles.wrapper}>
       <Lesson
-        trackId={trackId}
-        lesson={lesson}
+        handleFinishLesson={handleFinishLesson}
+        handleGoBack={handleGoBack}
+        handleRemoveFinishedLesson={handleRemoveFinishedLesson}
+        lesson={selectors.lesson}
         id={lessonId}
         markdown={markdown}
         checkNextLesson={checkNextLesson}

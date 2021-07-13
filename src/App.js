@@ -10,7 +10,6 @@ import { user } from "./data";
 import { USER, TOKEN, LESSONS_URL, RESET_URL, TRACKS_URL } from "./constants";
 import styles from "./App.module.scss";
 
-const LessonsScreen = lazy(() => import("./screens/LessonsScreen"));
 const Welcome = lazy(() => import("./screens/Welcome"));
 const LessonScreen = lazy(() => import("./screens/LessonScreen"));
 const TrackScreen = lazy(() => import("./screens/TrackScreen"));
@@ -21,32 +20,38 @@ const Tracks = lazy(() => import("./screens/Tracks"));
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const { services } = useApp();
+  const { services, selectors } = useApp();
 
   useEffect(() => {
     const appInit = async () => {
       setLoading(true);
-      if (!localStorage.getItem(TOKEN)) {
-        try {
-          await services.setData(USER, user);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-
-      if (!localStorage.getItem(USER)) {
-        services.setUser();
-      }
-
       try {
-        await services.getUser();
+        await services.startApp();
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
       }
+      // if (!localStorage.getItem(TOKEN)) {
+      //   try {
+      //     await services.setData(USER, user);
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // }
+
+      // if (!localStorage.getItem(USER)) {
+      //   services.setUser();
+      // }
+
+      // try {
+      //   await services.getUser();
+      // } catch (error) {
+      //   console.error(error);
+      // }
     };
 
     appInit();
-    setLoading(false);
 
     return () => {
       console.log("useEffect cleanup");
