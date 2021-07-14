@@ -2,8 +2,6 @@ import React from 'react';
 import cn from 'classnames';
 import styles from './Button.module.scss';
 
-const { button, alternate } = styles;
-
 type Props = {
   name: string;
   onClick: () => void;
@@ -12,8 +10,8 @@ type Props = {
 
 function Button({ name, onClick, secondary }: Props) {
   const btnClass = cn({
-    [button]: true,
-    [alternate]: secondary,
+    [styles.button]: true,
+    [styles.alternate]: secondary,
   });
 
   return (

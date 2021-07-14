@@ -1,8 +1,9 @@
-import React, { createContext, useState, useContext } from "react";
-import localServices from "../../services/localServices";
-import { FINISHED, TOKEN, TOKEN_VALUE } from "../../constants";
-import finishedData from "../../data";
-import tracksData from "../../data/tracks";
+import React, { createContext, useState, useContext } from 'react';
+import localServices from '../../services/localServices';
+import { FINISHED, TOKEN, TOKEN_VALUE, TOKEN_INACTIVE } from '../../constants';
+import finishedData from '../../data';
+import tracksData from '../../data/tracks';
+import { setTokenSourceMapRange } from 'typescript';
 
 export const AppContext = createContext();
 
@@ -15,8 +16,21 @@ const AppContextProvider = ({ children }) => {
   const [tracks, setTracks] = useState([]);
   const [finished, setFinished] = useState(undefined);
   const [menuState, setMenuState] = useState(false);
-  const [markdown, setMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState('');
   const [lesson, setLesson] = useState(undefined);
+  const [showWelcome, setShowWelcome] = useState(undefined);
+  const [trackLessonsLength, setTrackLessonsLength] = useState(undefined);
+
+  const selectors = {
+    sliderState,
+    menuState,
+    markdown,
+    finished,
+    tracks,
+    lesson,
+    trackLessonsLength,
+    showWelcome,
+  };
 
   const checkIfCompleted = (lesson, trackId) => {
     const computedValues = { isCompleted: false };
@@ -33,15 +47,19 @@ const AppContextProvider = ({ children }) => {
 
   const services = {
     startApp: async () => {
-      const token = localStorage.token;
-      if (!token) {
+      const tokenCheck = localServices.getData(TOKEN);
+
+      if (!tokenCheck || tokenCheck === TOKEN_INACTIVE) {
         try {
           services.setData(FINISHED, finishedData);
+          services.setData(TOKEN, TOKEN_INACTIVE);
+          setShowWelcome(true);
         } catch (error) {
           console.log(error);
         }
       } else {
         try {
+          setShowWelcome(false);
           await services.getFinished();
           const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
             const updatedLessons = curr.lessons.map((lesson) =>
@@ -60,23 +78,24 @@ const AppContextProvider = ({ children }) => {
         }
       }
     },
-    getLesson: (slug, lessonId) => {
+    getLesson: async (slug, lessonId) => {
+      // set lesson
       const track =
         selectors.tracks && selectors.tracks.find((t) => t.path === slug);
+      setTrackLessonsLength(track.lessons.length);
       const trackLesson =
         track.lessons && track.lessons.find((l) => `${l.id}` === lessonId);
 
-      // set MD
+      // set markdown file
+      const file = await import(
+        `../../data/tracks/${slug}/${trackLesson.path}`
+      );
+      const res = await fetch(file.default);
+      const markdownFile = await res.text();
 
-      setLesson(trackLesson);
+      setMarkdown(markdownFile);
+      setLesson(checkIfCompleted(trackLesson, track.id));
     },
-    // addFinishedToLesson: async (lessons) => {
-    //   const finishedObj = await services.getData(FINISHED);
-
-    //   return lessons.map((lesson) =>
-    //     checkIfCompleted(lesson, finishedObj[trackId])
-    //   );
-    // },
     getFinished: async () => {
       try {
         const res = await localServices.getData(FINISHED);
@@ -95,43 +114,47 @@ const AppContextProvider = ({ children }) => {
     setData: (key, data) => {
       return localServices.setData(key, data);
     },
-    // updateFinishedLessons: async (lessonId, trackId) => {
-    //   const finished = await services.getFinished(trackId);
+    finishLesson: async (slug, lessonId) => {
+      const finished = await services.getFinished();
+      const finishedTrack = selectors.tracks.find(
+        (track) => track.path === slug
+      );
+      if (finishedTrack.lessons.includes(lessonId)) {
+        return;
+      }
 
-    //   if (finished.includes(lessonId)) {
-    //     return;
-    //   }
+      finished[finishedTrack.id].push(lessonId);
+      setFinished(finished);
+      services.setData(FINISHED, finished);
+      await services.getLesson(slug, lessonId);
+    },
+    removeFinishedLesson: async (slug, lessonId) => {
+      let finishedList = await services.getFinished();
+      const finishedTrack = selectors.tracks.find(
+        (track) => track.path === slug
+      );
+      if (!selectors.finished[finishedTrack.id].includes(`${lessonId}`)) {
+        return;
+      }
 
-    //   finished[trackId].push(lessonId);
-    //   setFinished(finished);
-    //   services.setData(FINISHED, user);
-    //   await services.getLesson(lessonId);
-    // },
-    // removeFinishedLesson: async (lessonId) => {
-    //   const user = await services.getUser();
+      const filteredFinished = selectors.finished[finishedTrack.id].filter(
+        (lesson) => lesson !== lessonId
+      );
 
-    //   if (!user.finished.includes(lessonId)) {
-    //     return;
-    //   }
+      finishedList[finishedTrack.id] = filteredFinished;
 
-    //   const updatedFinished = user.finished.filter(
-    //     (id) => `${id}` !== lessonId
-    //   );
-
-    //   const updatedLesson = { ...user, finished: updatedFinished };
-
-    //   setUser(updatedLesson);
-    //   services.setData(USER, updatedLesson);
-    //   services.getLesson(lessonId);
-    // },
+      setFinished(finishedList);
+      services.setData(FINISHED, finishedList);
+      await services.getLesson(slug, lessonId);
+    },
     registerUser: () => {
       services.setData(TOKEN, TOKEN_VALUE);
     },
     updatePageScroll: (state) => {
       if (state) {
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.overflow = "unset";
+        document.body.style.overflow = 'unset';
       }
     },
     changeSliderState: (state) => {
@@ -142,23 +165,14 @@ const AppContextProvider = ({ children }) => {
       setMenuState(state);
       services.updatePageScroll(state);
     },
-    resetData: () => {
+    resetData: async () => {
       try {
-        localStorage.removeItem(TOKEN);
-        services.setUser();
+        services.setData(TOKEN, TOKEN_INACTIVE);
+        setShowWelcome(true);
       } catch (error) {
         console.error(error);
       }
     },
-  };
-
-  const selectors = {
-    sliderState,
-    menuState,
-    markdown,
-    finished,
-    tracks,
-    lesson,
   };
 
   const context = {

@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { useHistory } from "react-router-dom";
-import { WELCOME_COPY, LESSONS_URL, TRACKS_URL } from "../../constants";
-import { useApp } from "../../contexts/app";
-import welcome1 from "../../data/welcome1.md";
-import welcome2 from "../../data/welcome2.md";
-import welcome3 from "../../data/welcome3.md";
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { useHistory } from 'react-router-dom';
+import {
+  WELCOME_COPY,
+  LESSONS_URL,
+  TRACKS_URL,
+  ROOT_URL,
+} from '../../constants';
+import { useApp } from '../../contexts/app';
+import welcome1 from '../../data/welcome1.md';
+import welcome2 from '../../data/welcome2.md';
+import welcome3 from '../../data/welcome3.md';
 
 function Welcome() {
   const pages = [welcome1, welcome2, welcome3];
@@ -13,11 +18,11 @@ function Welcome() {
   const pageLength = pages.length;
 
   const [page, setPage] = useState(1);
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   const history = useHistory();
   const {
-    services: { registerUser },
+    services: { registerUser, startApp },
   } = useApp();
 
   useEffect(() => {
@@ -33,7 +38,8 @@ function Welcome() {
   const handleNext = () => {
     if (page === pageLength) {
       registerUser();
-      return history.push(TRACKS_URL);
+      startApp();
+      return history.push(ROOT_URL);
     }
 
     setPage(page + 1);
@@ -52,7 +58,7 @@ function Welcome() {
       {page !== 1 && <button onClick={goBack}>Back</button>}
       <ReactMarkdown children={text} />
       <button onClick={handleNext}>
-        {page === pageLength ? "Start" : "Next"}
+        {page === pageLength ? 'Start' : 'Next'}
       </button>
     </div>
   );

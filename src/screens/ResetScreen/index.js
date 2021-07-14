@@ -1,13 +1,16 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { useApp } from "../../contexts/app";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useApp } from '../../contexts/app';
 import {
   RESET_MESSAGE,
   GO_BACK_BUTTON,
   RESET_DATA_BUTTON,
   LESSONS_URL,
   ROOT_URL,
-} from "../../constants";
+  TOKEN,
+  TOKEN_INACTIVE,
+} from '../../constants';
+import localServices from '../../services/localServices';
 
 function ResetScreen() {
   const history = useHistory();
