@@ -69,35 +69,25 @@ const AppContextProvider = ({ children }: ContextProps) => {
       const tokenCheck = localServices.getData(TOKEN);
 
       if (!tokenCheck || tokenCheck === TOKEN_INACTIVE) {
-        try {
-          services.setData(FINISHED, finishedData);
-          services.setData(TOKEN, TOKEN_INACTIVE);
-          return setShowWelcome(true);
-        } catch (e) {
-          console.log(e);
-        }
+        services.setData(FINISHED, finishedData);
+        services.setData(TOKEN, TOKEN_INACTIVE);
+        setShowWelcome(true);
       } else {
-        try {
-          setShowWelcome(false);
-          await services.getFinished();
-          const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
-            const updatedLessons = curr.lessons.map((l) =>
-              checkIfCompleted(l, curr.id)
-            );
-            acc.push({
-              ...curr,
-              lessons: updatedLessons,
-            });
+        setShowWelcome(false);
+        await services.getFinished();
+        const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
+          const updatedLessons = curr.lessons.map((l) =>
+            checkIfCompleted(l, curr.id)
+          );
+          acc.push({
+            ...curr,
+            lessons: updatedLessons,
+          });
 
-            return acc;
-          }, [] as TrackData[]);
-          console.log('am i running');
-          setTracks(tracksWithFinishedData);
-        } catch (e) {
-          console.log(e);
-        }
+          return acc;
+        }, [] as TrackData[]);
+        setTracks(tracksWithFinishedData);
       }
-      return 'fart';
     },
     getLesson: async (slug: string, lessonId: string) => {
       // set lesson
@@ -192,8 +182,6 @@ const AppContextProvider = ({ children }: ContextProps) => {
     services,
     selectors,
   };
-
-  console.log('selectors', selectors);
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };
