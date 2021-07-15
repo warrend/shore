@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useHistory } from 'react-router-dom';
-import {
-  WELCOME_COPY,
-  LESSONS_URL,
-  TRACKS_URL,
-  ROOT_URL,
-} from '../../constants';
+import Button from '../../components/interactions/Button';
+import { ROOT_URL } from '../../constants';
 import { useApp } from '../../contexts/app';
 import welcome1 from '../../data/welcome1.md';
 import welcome2 from '../../data/welcome2.md';
@@ -43,6 +39,8 @@ function Welcome() {
     }
 
     setPage(page + 1);
+
+    return () => {};
   };
 
   const goBack = () => {
@@ -55,11 +53,18 @@ function Welcome() {
 
   return (
     <div>
-      {page !== 1 && <button onClick={goBack}>Back</button>}
-      <ReactMarkdown children={text} />
-      <button onClick={handleNext}>
-        {page === pageLength ? 'Start' : 'Next'}
-      </button>
+      {page !== 1 && (
+        <button type="button" onClick={goBack}>
+          Back
+        </button>
+      )}
+      {/* <ReactMarkdown children={text} /> */}
+      <ReactMarkdown>{text}</ReactMarkdown>
+      <Button
+        secondary
+        onClick={handleNext}
+        name={page === pageLength ? 'Start' : 'Next'}
+      />
     </div>
   );
 }

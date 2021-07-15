@@ -1,11 +1,11 @@
-import React from "react";
-import cn from "classnames";
-import { useHistory } from "react-router-dom";
-import { useApp } from "../../contexts/app";
-import Icon from "../Icon";
-import { CLOSE_ICON } from "../../constants";
-import styles from "./Menu.module.scss";
-import { options } from "./options";
+import React from 'react';
+import cn from 'classnames';
+import { useHistory } from 'react-router-dom';
+import { useApp } from '../../contexts/app';
+import Icon from '../Icon';
+import { CLOSE_ICON } from '../../constants';
+import styles from './Menu.module.scss';
+import { options } from './options';
 
 function Menu() {
   const history = useHistory();
@@ -19,7 +19,7 @@ function Menu() {
     [styles.closed]: !menuState,
   });
 
-  const handleMenuClick = (path) => {
+  const handleMenuClick = (path: string) => {
     history.push(path);
     changeMenuState(false);
   };
@@ -29,7 +29,14 @@ function Menu() {
       <Icon icon={CLOSE_ICON} onClick={() => changeMenuState(false)} />
       <div className={styles.list}>
         {options.map(({ text, path }) => (
-          <p className={styles.item} onClick={() => handleMenuClick(path)}>
+          <p
+            className={styles.item}
+            onClick={() => {
+              handleMenuClick(path);
+            }}
+            role="presentation"
+            onKeyPress={() => handleMenuClick(path)}
+          >
             {text}
           </p>
         ))}

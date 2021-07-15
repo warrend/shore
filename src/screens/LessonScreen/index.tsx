@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useApp } from '../../contexts/app';
-import { LESSONS_URL, TRACKS_URL } from '../../constants';
+import {
+  GO_BACK_BUTTON,
+  LESSONS_URL,
+  TRACKS_URL,
+  LAST_LESSON_MESSAGE,
+} from '../../constants';
 import styles from './Lesson.module.scss';
 import Lesson from '../../components/Lesson';
-import tracks from '../../data/tracks';
+import Button from '../../components/interactions/Button';
+import { Params } from '../../sharedTypes';
+import Slider from '../../components/Slider';
 
 function LessonScreen() {
-  const [loading, setLoading] = useState(true);
-  const [markdown, setMarkdown] = useState('');
+  const [loading, setLoading] = useState<boolean>(true);
   const history = useHistory();
-  const { slug, lessonId } = useParams();
+  const { slug, lessonId } = useParams<Params>();
 
-  const nextLesson = parseInt(lessonId) + 1;
+  const nextLesson = parseInt(lessonId!, 10) + 1;
 
   const {
     services: {
@@ -42,6 +48,7 @@ function LessonScreen() {
 
   const handleGoBack = () => {
     history.push(`${TRACKS_URL}/${slug}`);
+    changeSliderState(false);
   };
 
   const handleFinishLesson = () => {
@@ -61,13 +68,17 @@ function LessonScreen() {
           handleGoBack={handleGoBack}
           handleRemoveFinishedLesson={handleRemoveFinishedLesson}
           lesson={selectors.lesson}
-          id={lessonId}
-          markdown={markdown}
           checkNextLesson={checkNextLesson}
         />
       ) : (
         <div>Loading...</div>
       )}
+      <Slider>
+        <div>
+          <div>{LAST_LESSON_MESSAGE}</div>
+          <Button name={GO_BACK_BUTTON} onClick={handleGoBack} />
+        </div>
+      </Slider>
     </div>
   );
 }

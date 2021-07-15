@@ -6,18 +6,8 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { useApp } from './contexts/app';
-import { user } from './data';
-import {
-  USER,
-  TOKEN,
-  LESSONS_URL,
-  RESET_URL,
-  TRACKS_URL,
-  TOKEN_INACTIVE,
-  ROOT_URL,
-} from './constants';
+import { RESET_URL, TRACKS_URL, ROOT_URL } from './constants';
 import styles from './App.module.scss';
-import localServices from './services/localServices';
 
 const Welcome = lazy(() => import('./screens/Welcome'));
 const LessonScreen = lazy(() => import('./screens/LessonScreen'));
@@ -28,7 +18,7 @@ const Menu = lazy(() => import('./components/Menu'));
 const Tracks = lazy(() => import('./screens/Tracks'));
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     services,
     selectors: { showWelcome },
@@ -41,7 +31,6 @@ function App() {
         await services.startApp();
         setLoading(false);
       } catch (error) {
-        console.error(error);
         setLoading(false);
       }
     };
@@ -50,7 +39,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    <div>Loading...</div>;
   }
 
   return (
@@ -86,9 +75,7 @@ function App() {
                 path={`${TRACKS_URL}/:slug?/(lessons)?/:lessonId`}
                 component={LessonScreen}
               />
-              {/* <Route exact path={LESSONS_URL} component={LessonsScreen} /> */}
               <Route exact path={RESET_URL} component={ResetScreen} />
-
               <Route component={NotFound} />
             </Switch>
             <Menu />

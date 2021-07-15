@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { useApp } from "../../contexts/app";
-import LessonCard from "../../components/LessonCard";
-import { ARROW_LEFT, TOKEN, TRACKS_URL } from "../../constants";
-import Nav from "../../components/Nav";
-import Slider from "../../components/Slider";
-import styles from "./TrackScreen.module.scss";
-import NextCard from "../../components/NextCard";
-import tracks from "../../data/tracks";
-import Icon from "../../components/Icon";
+import React, { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { useApp } from '../../contexts/app';
+import LessonCard from '../../components/LessonCard';
+import { ARROW_LEFT, TOKEN, TRACKS_URL } from '../../constants';
+import Slider from '../../components/Slider';
+import styles from './TrackScreen.module.scss';
+// import NextCard from '../../components/NextCard';
+// import tracks from '../../data/tracks';
+import Icon from '../../components/Icon';
+import { LessonData, Params, TrackData } from '../../sharedTypes';
 
 function TrackScreen() {
   const history = useHistory();
-  const { slug } = useParams();
-  const [selectedTrack, setSelectedTrack] = useState(undefined);
-  const { selectors, services } = useApp();
+  const { slug } = useParams<Params>();
+  // const [selectedTrack, setSelectedTrack] = useState(undefined);
+  const { selectors } = useApp();
 
-  const track = selectors.tracks.find((track) => track.path === slug);
+  const track =
+    selectors.tracks &&
+    selectors.tracks.find((t: TrackData) => t.path === slug);
 
   useEffect(() => {
     if (!localStorage.getItem(TOKEN)) {
-      return history.push("/");
+      return history.push('/');
     }
+
+    return () => {};
   }, []);
 
   // const renderNextLesson = () => {
@@ -61,8 +65,8 @@ function TrackScreen() {
       <div>
         {/* {renderNextLesson()} */}
         <h2>Lessons</h2>
-        {track.lessons &&
-          track.lessons.map((item) => <LessonCard lesson={item} />)}
+        {track &&
+          track.lessons.map((item: LessonData) => <LessonCard lesson={item} />)}
       </div>
       <Slider>
         <div>Slider</div>

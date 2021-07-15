@@ -1,20 +1,10 @@
-export const localServices = {
+export default {
   getData: (item) => {
-    try {
-      const res = localStorage.getItem(item);
-      return JSON.parse(res);
-    } catch (error) {
-      console.error(error);
-    }
+    const res = localStorage.getItem(item);
+    return JSON.parse(res);
   },
   setData: (name, data) => {
     const dataString = JSON.stringify(data);
-    try {
-      return localStorage.setItem(name, dataString);
-    } catch (error) {
-      console.error(error);
-    }
+    return localStorage.setItem(name, dataString);
   },
 };
-
-export default localServices;

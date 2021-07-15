@@ -7,10 +7,8 @@ import {
   RESET_DATA_BUTTON,
   LESSONS_URL,
   ROOT_URL,
-  TOKEN,
-  TOKEN_INACTIVE,
 } from '../../constants';
-import localServices from '../../services/localServices';
+import Button from '../../components/interactions/Button';
 
 function ResetScreen() {
   const history = useHistory();
@@ -25,11 +23,9 @@ function ResetScreen() {
 
   return (
     <div>
-      <button onClick={() => history.push(LESSONS_URL)}>
-        {GO_BACK_BUTTON}
-      </button>
+      <Button onClick={() => history.push(LESSONS_URL)} name={GO_BACK_BUTTON} />
       {RESET_MESSAGE}
-      <button onClick={handleReset}>{RESET_DATA_BUTTON}</button>
+      <Button onClick={handleReset} name={RESET_DATA_BUTTON} />
     </div>
   );
 }

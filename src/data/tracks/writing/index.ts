@@ -1,12 +1,14 @@
-const lessons = [
+import { LessonData } from '../../../sharedTypes';
+
+const lessons: LessonData[] = [
   {
     id: 1,
-    title: 'What is Collecting',
+    title: 'What is Writing',
     path: '1.md',
   },
   {
     id: 2,
-    title: 'Start Collecting',
+    title: 'Start Writing',
     path: '2.md',
   },
   {
@@ -16,7 +18,7 @@ const lessons = [
   },
   {
     id: 4,
-    title: 'Start',
+    title: 'Something else',
     path: '4.md',
   },
 ];

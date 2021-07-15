@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useHistory, useParams } from 'react-router';
 import { useApp } from '../../contexts/app';
 import {
   NEXT_BUTTON,
@@ -8,9 +7,18 @@ import {
   UNFINISH_LESSON_BUTTON,
   ARROW_LEFT,
 } from '../../constants';
-import Button from '../../components/interactions/Button';
-import Icon from '../../components/Icon';
+import Button from '../interactions/Button';
+import Icon from '../Icon';
 import styles from './Lesson.module.scss';
+import { LessonData } from '../../sharedTypes';
+
+type Props = {
+  checkNextLesson: () => void;
+  lesson: LessonData;
+  handleGoBack: () => void;
+  handleFinishLesson: () => void;
+  handleRemoveFinishedLesson: () => void;
+};
 
 function Lesson({
   checkNextLesson,
@@ -18,7 +26,7 @@ function Lesson({
   handleGoBack,
   handleFinishLesson,
   handleRemoveFinishedLesson,
-}) {
+}: Props) {
   const { selectors } = useApp();
 
   return (
@@ -27,7 +35,7 @@ function Lesson({
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
       <div className={styles.content}>
-        <ReactMarkdown children={selectors.markdown} />
+        <ReactMarkdown>{selectors.markdown}</ReactMarkdown>
       </div>
 
       <div className={styles.buttons}>

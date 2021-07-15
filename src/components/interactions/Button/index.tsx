@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 type Props = {
   name: string;
   onClick: () => void;
-  secondary: boolean;
+  secondary?: boolean;
 };
 
 function Button({ name, onClick, secondary }: Props) {
