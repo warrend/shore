@@ -183,6 +183,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
     },
     resetData: async () => {
       services.setData(TOKEN, TOKEN_INACTIVE);
+      services.setData(FINISHED, finishedData);
       setShowWelcome(true);
     },
   };
