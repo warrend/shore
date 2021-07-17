@@ -48,23 +48,17 @@ const AppContextProvider = ({ children }: ContextProps) => {
     showWelcome,
   };
 
-  const checkIfCompleted = (
-    lessonData: LessonData,
-    trackId: string | number
-  ) => {
-    const computedValues = { isCompleted: false };
-
-    if (
-      selectors.finished &&
-      selectors.finished[trackId].includes(`${lessonData.id}`)
-    ) {
-      computedValues.isCompleted = true;
-    }
-
-    return { ...lessonData, ...computedValues };
-  };
-
   const services = {
+    checkIfCompleted: (lessonData: LessonData, trackId: string | number) => {
+      const computedValues = { isCompleted: false };
+      const finishedObj = services.getFinished();
+
+      if (finishedObj && finishedObj[trackId].includes(`${lessonData.id}`)) {
+        computedValues.isCompleted = true;
+      }
+
+      return { ...lessonData, ...computedValues };
+    },
     startApp: async () => {
       const tokenCheck = localServices.getData(TOKEN);
 
@@ -73,21 +67,29 @@ const AppContextProvider = ({ children }: ContextProps) => {
         services.setData(TOKEN, TOKEN_INACTIVE);
         setShowWelcome(true);
       } else {
-        setShowWelcome(false);
-        await services.getFinished();
-        const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
-          const updatedLessons = curr.lessons.map((l) =>
-            checkIfCompleted(l, curr.id)
-          );
-          acc.push({
-            ...curr,
-            lessons: updatedLessons,
-          });
-
-          return acc;
-        }, [] as TrackData[]);
-        setTracks(tracksWithFinishedData);
+        try {
+          services.getTracks();
+          setShowWelcome(false);
+        } catch (e) {
+          console.log(e);
+        }
       }
+    },
+    getTracks: async () => {
+      await services.getFinished();
+      const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
+        const updatedLessons = curr.lessons.map((l) =>
+          services.checkIfCompleted(l, curr.id)
+        );
+        acc.push({
+          ...curr,
+          // @ts-ignore
+          lessons: updatedLessons,
+        });
+
+        return acc;
+      }, [] as TrackData[]);
+      setTracks(tracksWithFinishedData);
     },
     getLesson: async (slug: string, lessonId: string) => {
       // set lesson
@@ -105,13 +107,13 @@ const AppContextProvider = ({ children }: ContextProps) => {
       const markdownFile = await res.text();
 
       setMarkdown(markdownFile);
-      setLesson(checkIfCompleted(trackLesson!, `${track?.id}`));
+      setLesson(services.checkIfCompleted(trackLesson!, `${track?.id}`));
     },
-    getFinished: async () => {
-      const res = await localServices.getData(FINISHED);
+    getFinished: () => {
+      const res = localServices.getData(FINISHED);
 
       setFinished(res);
-      return finished;
+      return res;
     },
     getData: (key: string) => {
       const res = localServices.getData(key);
@@ -132,6 +134,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
       finishedObj[`${finishedTrack?.id}`].push(lessonId);
       setFinished(finished);
       services.setData(FINISHED, finishedObj);
+      await services.getTracks();
       await services.getLesson(slug, lessonId);
     },
     removeFinishedLesson: async (slug: string, lessonId: string) => {
@@ -151,6 +154,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
 
       setFinished(finishedList);
       services.setData(FINISHED, finishedList);
+      await services.getTracks();
       await services.getLesson(slug, lessonId);
     },
     registerUser: () => {

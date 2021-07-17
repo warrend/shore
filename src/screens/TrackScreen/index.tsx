@@ -62,11 +62,15 @@ function TrackScreen() {
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
-      <div>
+      <div className={styles.content}>
         {/* {renderNextLesson()} */}
-        <h2>Lessons</h2>
-        {track &&
-          track.lessons.map((item: LessonData) => <LessonCard lesson={item} />)}
+        <div>
+          <h2>Lessons</h2>
+          {track &&
+            track.lessons.map((item: LessonData) => (
+              <LessonCard lesson={item} />
+            ))}
+        </div>
       </div>
       <Slider>
         <div>Slider</div>

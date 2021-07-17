@@ -25,6 +25,7 @@ function App() {
   } = useApp();
 
   useEffect(() => {
+    console.log('startApp');
     const appInit = async () => {
       setLoading(true);
       try {

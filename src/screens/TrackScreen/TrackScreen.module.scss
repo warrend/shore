@@ -1,6 +1,11 @@
 .wrapper {
 }
 
+.content {
+  margin: 0 auto;
+  max-width: 75ch;
+}
+
 .nav {
   display: flex;
   justify-content: flex-start;

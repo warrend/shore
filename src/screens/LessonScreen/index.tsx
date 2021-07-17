@@ -22,6 +22,7 @@ function LessonScreen() {
 
   const {
     services: {
+      getTracks,
       changeSliderState,
       getLesson,
       finishLesson,
@@ -29,6 +30,10 @@ function LessonScreen() {
     },
     selectors,
   } = useApp();
+
+  useEffect(() => {
+    getTracks();
+  }, []);
 
   useEffect(() => {
     getLesson(slug, lessonId);
@@ -61,25 +66,27 @@ function LessonScreen() {
   };
 
   return (
-    <div className={styles.wrapper}>
-      {!loading ? (
-        <Lesson
-          handleFinishLesson={handleFinishLesson}
-          handleGoBack={handleGoBack}
-          handleRemoveFinishedLesson={handleRemoveFinishedLesson}
-          lesson={selectors.lesson}
-          checkNextLesson={checkNextLesson}
-        />
-      ) : (
-        <div>Loading...</div>
-      )}
+    <>
+      <div className={styles.wrapper}>
+        {!loading ? (
+          <Lesson
+            handleFinishLesson={handleFinishLesson}
+            handleGoBack={handleGoBack}
+            handleRemoveFinishedLesson={handleRemoveFinishedLesson}
+            lesson={selectors.lesson}
+            checkNextLesson={checkNextLesson}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
+      </div>
       <Slider>
         <div>
           <div>{LAST_LESSON_MESSAGE}</div>
           <Button name={GO_BACK_BUTTON} onClick={handleGoBack} />
         </div>
       </Slider>
-    </div>
+    </>
   );
 }
 

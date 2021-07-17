@@ -2,7 +2,9 @@
 }
 
 .content {
-  margin: var(--large) 0;
+  margin: var(--large) auto;
+  max-width: 35em;
+  max-width: 65ch;
 }
 
 .nav {

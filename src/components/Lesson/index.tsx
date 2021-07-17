@@ -36,22 +36,22 @@ function Lesson({
       </div>
       <div className={styles.content}>
         <ReactMarkdown>{selectors.markdown}</ReactMarkdown>
-      </div>
 
-      <div className={styles.buttons}>
-        <Button
-          onClick={
-            lesson && lesson.isCompleted
-              ? handleRemoveFinishedLesson
-              : handleFinishLesson
-          }
-          name={
-            lesson && lesson.isCompleted
-              ? UNFINISH_LESSON_BUTTON
-              : FINISH_LESSON_BUTTON
-          }
-        />
-        <Button onClick={checkNextLesson} name={NEXT_BUTTON} secondary />
+        <div className={styles.buttons}>
+          <Button
+            onClick={
+              lesson && lesson.isCompleted
+                ? handleRemoveFinishedLesson
+                : handleFinishLesson
+            }
+            name={
+              lesson && lesson.isCompleted
+                ? UNFINISH_LESSON_BUTTON
+                : FINISH_LESSON_BUTTON
+            }
+          />
+          <Button onClick={checkNextLesson} name={NEXT_BUTTON} secondary />
+        </div>
       </div>
     </div>
   );

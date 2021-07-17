@@ -2,14 +2,13 @@
   background: var(--primary);
   border: none;
   color: var(--button-color);
-  height: 38px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
+  border-radius: var(--tiny);
   font-size: var(--button-font-size);
   font-weight: 500;
-  padding: 0 var(--normal);
+  padding: 8px 10px;
 
   &:active {
     background: var(--button-active);
