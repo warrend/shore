@@ -1,32 +1,36 @@
-@import url("https://rsms.me/inter/inter.css");
-@import "./theme/app.scss";
+@import url('https://rsms.me/inter/inter.css');
+@import './theme/app.scss';
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 @supports (font-variation-settings: normal) {
   html {
-    font-family: "Inter var", sans-serif;
+    font-family: 'Inter var', sans-serif;
   }
 }
 
 body {
   margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--font-size);
   background: var(--background);
+
+  @media screen and (min-width: 600px) {
+    font-size: var(--font-normal);
+  }
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
   white-space: pre-wrap !important;
 }

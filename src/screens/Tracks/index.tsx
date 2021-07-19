@@ -18,11 +18,13 @@ function Tracks() {
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       <Nav />
-      <div>
+      <div className={styles.wrapper}>
         <h2>Tracks</h2>
-        {tracks && tracks.map((item) => <TrackCard track={item} />)}
+        <div className={styles.content}>
+          {tracks && tracks.map((item) => <TrackCard track={item} />)}
+        </div>
       </div>
     </div>
   );

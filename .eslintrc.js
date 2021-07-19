@@ -38,5 +38,6 @@ module.exports = {
     'object-curly-newline': 0,
     'function-paren-newline': 0,
     'comma-dangle': 0,
+    'react/jsx-one-expression-per-line': 'off',
   },
 };

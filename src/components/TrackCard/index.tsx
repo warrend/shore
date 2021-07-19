@@ -2,13 +2,14 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { TRACKS_URL } from '../../constants';
 import { TrackData } from '../../sharedTypes';
+import styles from './TrackCard.module.scss';
 
 type TrackCardProps = {
   track: TrackData;
 };
 
 function TrackCard({ track }: TrackCardProps) {
-  const { title, id, path } = track;
+  const { title, path, lessons } = track;
   const history = useHistory();
 
   const handleDetailCard = (lessonId: string | number) => {
@@ -17,15 +18,14 @@ function TrackCard({ track }: TrackCardProps) {
 
   return (
     <div
+      className={styles.wrapper}
       onClick={() => handleDetailCard(path)}
       onKeyPress={() => handleDetailCard(path)}
       tabIndex={0}
       role="button"
     >
-      <div>
-        <span>{id}</span>
-        {title}
-      </div>
+      <p>{title}</p>
+      <p>{lessons.length} Lessons</p>
     </div>
   );
 }

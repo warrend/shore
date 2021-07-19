@@ -1,5 +1,6 @@
 import lessons from './collecting';
 import writing from './writing';
+import revising from './revising';
 import { TrackData } from '../../sharedTypes';
 
 const tracksData: TrackData[] = [
@@ -14,6 +15,12 @@ const tracksData: TrackData[] = [
     title: 'Writing',
     path: 'writing',
     lessons: writing,
+  },
+  {
+    id: 2,
+    title: 'Revising',
+    path: 'revising',
+    lessons: revising,
   },
 ];
 
