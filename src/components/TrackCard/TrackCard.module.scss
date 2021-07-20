@@ -1,6 +1,26 @@
 .wrapper {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-gap: var(--normal);
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: flex-end;
   background: var(--track-card-background);
   border-radius: var(--small);
-  padding: var(--normal);
-  height: 125px;
+  padding: var(--medium);
+  // height: 145px;
+  box-shadow: var(--shadow100);
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: var(--tiny);
+  color: var(--primary600);
+  font-weight: 600;
+}
+
+.lessons {
+  margin: 0;
+  color: var(--grey400);
+  font-size: var(--font-tiny);
 }

@@ -22,7 +22,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: var(--font-size);
-  background: var(--background);
+  background: var(--app-background);
 
   @media screen and (min-width: 600px) {
     font-size: var(--font-normal);
@@ -33,4 +33,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
   white-space: pre-wrap !important;
+}
+
+h2 {
+  font-size: var(--font-medium);
+  color: var(--grey600);
+  margin-bottom: 1.5rem;
 }

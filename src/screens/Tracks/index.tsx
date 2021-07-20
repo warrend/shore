@@ -5,6 +5,7 @@ import Nav from '../../components/Nav';
 import styles from './Tracks.module.scss';
 import TrackCard from '../../components/TrackCard';
 import tracks from '../../data/tracks';
+import Menu from '../../components/Menu';
 
 function Tracks() {
   const history = useHistory();
@@ -26,6 +27,7 @@ function Tracks() {
           {tracks && tracks.map((item) => <TrackCard track={item} />)}
         </div>
       </div>
+      <Menu />
     </div>
   );
 }

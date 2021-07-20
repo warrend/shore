@@ -27,7 +27,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
   const [sliderState, setSliderState] = useState<boolean | null>(null);
   const [tracks, setTracks] = useState<TrackData[] | undefined>(undefined);
   const [finished, setFinished] = useState<Finished>(finishedData);
-  const [menuState, setMenuState] = useState(false);
+  const [menuState, setMenuState] = useState<boolean>(false);
   const [markdown, setMarkdown] = useState('');
   const [lesson, setLesson] = useState<LessonData | undefined>(undefined);
   const [showWelcome, setShowWelcome] = useState<boolean | undefined>(

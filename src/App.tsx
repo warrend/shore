@@ -14,7 +14,6 @@ const LessonScreen = lazy(() => import('./screens/LessonScreen'));
 const TrackScreen = lazy(() => import('./screens/TrackScreen'));
 const NotFound = lazy(() => import('./screens/NotFound'));
 const ResetScreen = lazy(() => import('./screens/ResetScreen'));
-const Menu = lazy(() => import('./components/Menu'));
 const Tracks = lazy(() => import('./screens/Tracks'));
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
   } = useApp();
 
   useEffect(() => {
-    console.log('startApp');
     const appInit = async () => {
       setLoading(true);
       try {
@@ -79,7 +77,6 @@ function App() {
               <Route exact path={RESET_URL} component={ResetScreen} />
               <Route component={NotFound} />
             </Switch>
-            <Menu />
           </div>
         </Suspense>
       </Router>

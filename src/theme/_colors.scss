@@ -1,17 +1,12 @@
 :root {
-  --primary: hsl(215, 82%, 55%);
-  --highlight: hsl(215, 82%, 96%);
-  --background: hsl(231, 64%, 98%);
+  --app-background: hsla(212, 20%, 98%);
   --button-color: #fff;
-  --button-active: #4185bd;
-  --button-hover: #1171c0;
-  --button-visited: #4185bd;
   --lesson-card-background: #fff;
   --track-card-background: #fff;
   --icon-color: hsl(213, 42%, 5%);
 
-  --grey100: hsl(208, 21%, 93%);
-  --grey200: hsl(210, 18%, 85%);
+  --grey100: hsl(208, 21%, 97%);
+  --grey200: hsl(210, 18%, 94%);
   --grey300: hsl(208, 16%, 76%);
   --grey400: hsl(208, 16%, 67%);
   --grey500: hsl(208, 15%, 60%);
@@ -20,33 +15,43 @@
   --grey800: hsl(209, 15%, 34%);
   --grey900: hsl(209, 15%, 28%);
 
-  --primary100: hsl(200, 70%, 93%);
-  --primary200: hsl(212, 60%, 82%);
+  --primary100: hsl(200, 70%, 95%);
+  --primary200: hsl(212, 60%, 86%);
   --primary300: hsl(212, 50%, 72%);
   --primary400: hsl(212, 50%, 61%);
   --primary500: hsl(212, 50%, 50%);
   --primary600: hsl(212, 50%, 42%);
   --primary700: hsl(215, 50%, 34%);
   --primary800: hsl(210, 50%, 21%);
-  --primary900: hsl(212, 50%, 18%);
+  --primary900: hsl(212, 50%, 15%);
 
-  --accent100: hsl(180, 70%, 93%);
-  --accent200: hsl(180, 60%, 82%);
-  --accent300: hsl(180, 50%, 72%);
-  --accent400: hsl(180, 50%, 61%);
-  --accent500: hsl(180, 50%, 50%);
-  --accent600: hsl(180, 50%, 42%);
-  --accent700: hsl(180, 50%, 34%);
-  --accent800: hsl(180, 50%, 21%);
-  --accent900: hsl(180, 50%, 18%);
+  --accent100: hsl(185, 70%, 90%);
+  --accent200: hsl(185, 60%, 82%);
+  --accent300: hsl(185, 50%, 72%);
+  --accent400: hsl(185, 50%, 61%);
+  --accent500: hsl(185, 50%, 50%);
+  --accent600: hsl(185, 50%, 42%);
+  --accent700: hsl(185, 50%, 34%);
+  --accent800: hsl(185, 50%, 21%);
+  --accent900: hsl(185, 50%, 14%);
 
-  --red100: hsl(0, 70%, 95%);
-  --red200: hsl(0, 70%, 82%);
-  --red300: hsl(0, 60%, 72%);
-  --red400: hsl(0, 60%, 61%);
-  --red500: hsl(0, 60%, 50%);
-  --red600: hsl(0, 60%, 42%);
-  --red700: hsl(0, 60%, 34%);
-  --red800: hsl(0, 60%, 21%);
-  --red900: hsl(0, 60%, 18%);
+  --error100: hsl(0, 70%, 95%);
+  --error200: hsl(0, 70%, 82%);
+  --error300: hsl(0, 60%, 72%);
+  --error400: hsl(0, 60%, 61%);
+  --error500: hsl(0, 60%, 50%);
+  --error600: hsl(0, 60%, 42%);
+  --error700: hsl(0, 60%, 34%);
+  --error800: hsl(0, 60%, 21%);
+  --error900: hsl(0, 60%, 14%);
+
+  --success100: hsl(120, 70%, 93%);
+  --success200: hsl(120, 70%, 82%);
+  --success300: hsl(120, 70%, 72%);
+  --success400: hsl(120, 70%, 61%);
+  --success500: hsl(120, 70%, 50%);
+  --success600: hsl(120, 70%, 42%);
+  --success700: hsl(120, 70%, 34%);
+  --success800: hsl(120, 70%, 21%);
+  --success900: hsl(120, 70%, 12%);
 }

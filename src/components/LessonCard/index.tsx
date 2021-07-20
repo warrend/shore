@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { LESSONS_URL } from '../../constants';
 import styles from './LessonCard.module.scss';
 import { LessonData } from '../../sharedTypes';
+import Complete from '../Complete';
 
 type LessonCardProps = {
   lesson: LessonData;
@@ -27,11 +28,11 @@ function LessonCard({ lesson }: LessonCardProps) {
       role="button"
       tabIndex={0}
     >
-      <div>
-        <span className={styles.number}>{id}</span>
+      <div className={styles.header}>
+        <div className={styles.number}>{id}</div>
         {title}
       </div>
-      <div className={styles.complete}>{isCompleted && 'complete'}</div>
+      {isCompleted && <Complete />}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useApp } from '../../contexts/app';
 import LessonCard from '../../components/LessonCard';
-import { ARROW_LEFT, TOKEN, TRACKS_URL } from '../../constants';
+import { ARROW_LEFT, TOKEN, TRACKS_URL, LESSONS_COPY } from '../../constants';
 import Slider from '../../components/Slider';
 import styles from './TrackScreen.module.scss';
 // import NextCard from '../../components/NextCard';
@@ -58,14 +58,17 @@ function TrackScreen() {
 
   return (
     <div className={styles.wrapper}>
-      {/* <Nav /> */}
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
       <div className={styles.content}>
         {/* {renderNextLesson()} */}
         <div>
-          <h2>Lessons</h2>
+          <div className={styles.header}>
+            <h2>
+              {track.title} {LESSONS_COPY}
+            </h2>
+          </div>
           {track &&
             track.lessons.map((item: LessonData) => (
               <LessonCard lesson={item} />

@@ -7,13 +7,30 @@ type Props = {
   onClick?: () => void;
   icon: string;
   background?: boolean;
+  readonly?: boolean;
+  backgroundColor?: string;
+  randomize?: boolean;
 };
 
-function Icon({ onClick, icon, background }: Props) {
+function Icon({
+  onClick,
+  icon,
+  background,
+  readonly,
+  backgroundColor,
+  randomize,
+}: Props) {
   const iconClass = cn({
     [styles.wrapper]: true,
     [styles.background]: background,
+    [styles.readonly]: readonly,
   });
+
+  const randomColor = () => {
+    const hue = Math.floor(Math.random() * 361);
+
+    return `hsl(${hue}, 50%, 95%)`;
+  };
 
   return (
     <div
@@ -22,6 +39,7 @@ function Icon({ onClick, icon, background }: Props) {
       role="button"
       tabIndex={0}
       onKeyPress={onClick}
+      style={{ background: randomize ? randomColor() : backgroundColor }}
     >
       <img src={iconMap[icon]} alt="icon" className={styles.custom} />
     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { TRACKS_URL } from '../../constants';
 import { TrackData } from '../../sharedTypes';
+import Icon from '../Icon';
 import styles from './TrackCard.module.scss';
 
 type TrackCardProps = {
@@ -24,8 +25,13 @@ function TrackCard({ track }: TrackCardProps) {
       tabIndex={0}
       role="button"
     >
-      <p>{title}</p>
-      <p>{lessons.length} Lessons</p>
+      <div>
+        <Icon icon={track.path} readonly background />
+      </div>
+      <div>
+        <p className={styles.title}>{title}</p>
+        <p className={styles.lessons}>{lessons.length} Lessons</p>
+      </div>
     </div>
   );
 }
