@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useApp } from '../../contexts/app';
 import {
   NEXT_BUTTON,
   FINISH_LESSON_BUTTON,
@@ -18,24 +17,24 @@ type Props = {
   handleGoBack: () => void;
   handleFinishLesson: () => void;
   handleRemoveFinishedLesson: () => void;
+  markdown: string;
 };
 
 function Lesson({
   checkNextLesson,
   lesson,
+  markdown,
   handleGoBack,
   handleFinishLesson,
   handleRemoveFinishedLesson,
 }: Props) {
-  const { selectors } = useApp();
-
   return (
     <div>
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
       <div className={styles.content}>
-        <ReactMarkdown>{selectors.markdown}</ReactMarkdown>
+        <ReactMarkdown>{markdown}</ReactMarkdown>
 
         <div className={styles.buttons}>
           <Button

@@ -30,9 +30,6 @@ const AppContextProvider = ({ children }: ContextProps) => {
   const [menuState, setMenuState] = useState<boolean>(false);
   const [markdown, setMarkdown] = useState('');
   const [lesson, setLesson] = useState<LessonData | undefined>(undefined);
-  const [showWelcome, setShowWelcome] = useState<boolean | undefined>(
-    undefined
-  );
   const [trackLessonsLength, setTrackLessonsLength] = useState<
     number | undefined
   >(undefined);
@@ -45,7 +42,6 @@ const AppContextProvider = ({ children }: ContextProps) => {
     tracks,
     lesson,
     trackLessonsLength,
-    showWelcome,
   };
 
   const services = {
@@ -65,11 +61,9 @@ const AppContextProvider = ({ children }: ContextProps) => {
       if (!tokenCheck || tokenCheck === TOKEN_INACTIVE) {
         services.setData(FINISHED, finishedData);
         services.setData(TOKEN, TOKEN_INACTIVE);
-        setShowWelcome(true);
       } else {
         try {
-          services.getTracks();
-          setShowWelcome(false);
+          await services.getTracks();
         } catch (e) {
           console.log(e);
         }
@@ -78,8 +72,8 @@ const AppContextProvider = ({ children }: ContextProps) => {
     getTracks: async () => {
       await services.getFinished();
       const tracksWithFinishedData = tracksData.reduce((acc, curr) => {
-        const updatedLessons = curr.lessons.map((l) =>
-          services.checkIfCompleted(l, curr.id)
+        const updatedLessons = curr?.lessons?.map((l) =>
+          services.checkIfCompleted(l, curr.id!)
         );
         acc.push({
           ...curr,
@@ -95,7 +89,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
       // set lesson
       const track =
         selectors.tracks && selectors.tracks.find((t) => t.path === slug);
-      setTrackLessonsLength(track?.lessons.length);
+      setTrackLessonsLength(track?.lessons?.length);
       const trackLesson =
         track?.lessons && track.lessons.find((l) => `${l.id}` === lessonId);
 
@@ -178,7 +172,6 @@ const AppContextProvider = ({ children }: ContextProps) => {
     resetData: async () => {
       services.setData(TOKEN, TOKEN_INACTIVE);
       services.setData(FINISHED, finishedData);
-      setShowWelcome(true);
     },
   };
 

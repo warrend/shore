@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { useApp } from './contexts/app';
-import { RESET_URL, TRACKS_URL, ROOT_URL } from './constants';
+import { RESET_URL, TRACKS_URL } from './constants';
 import styles from './App.module.scss';
 
 const Welcome = lazy(() => import('./screens/Welcome'));
@@ -18,10 +18,7 @@ const Tracks = lazy(() => import('./screens/Tracks'));
 
 function App() {
   const [loading, setLoading] = useState<boolean>(false);
-  const {
-    services,
-    selectors: { showWelcome },
-  } = useApp();
+  const { services } = useApp();
 
   useEffect(() => {
     const appInit = async () => {
@@ -41,6 +38,8 @@ function App() {
     <div>Loading...</div>;
   }
 
+  const token = JSON.parse(localStorage.getItem('token') || '');
+
   return (
     <>
       <Router>
@@ -48,20 +47,20 @@ function App() {
           <div className={styles.wrapper}>
             <Switch>
               <Route exact path="/">
-                {showWelcome && showWelcome ? (
-                  <Redirect to="/welcome" />
-                ) : (
+                {token === 'app-token' ? (
                   <Redirect to={TRACKS_URL} />
+                ) : (
+                  <Redirect to="/welcome" />
                 )}
               </Route>
               <Route exact path="/welcome">
                 <Welcome />
               </Route>
               <Route exact path={TRACKS_URL}>
-                {showWelcome && showWelcome ? (
-                  <Redirect to={ROOT_URL} />
-                ) : (
+                {token === 'app-token' ? (
                   <Tracks />
+                ) : (
+                  <Redirect to="/welcome" />
                 )}
               </Route>
 

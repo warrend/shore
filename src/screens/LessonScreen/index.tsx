@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useApp } from '../../contexts/app';
 import {
   GO_BACK_BUTTON,
   LESSONS_URL,
@@ -10,34 +9,36 @@ import {
 import styles from './Lesson.module.scss';
 import Lesson from '../../components/Lesson';
 import Button from '../../components/interactions/Button';
-import { Params } from '../../sharedTypes';
+import { LessonData, Params } from '../../sharedTypes';
 import Slider from '../../components/Slider';
+import localServices from '../../services/localServices';
+import { useApp } from '../../contexts/app';
 
 function LessonScreen() {
+  const [lesson, setLesson] = useState<LessonData>();
+  const [markdown, setMarkdown] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const {
+    services: { changeSliderState, finishLesson, removeFinishedLesson },
+    selectors,
+  } = useApp();
   const history = useHistory();
   const { slug, lessonId } = useParams<Params>();
 
   const nextLesson = parseInt(lessonId!, 10) + 1;
 
-  const {
-    services: {
-      getTracks,
-      changeSliderState,
-      getLesson,
-      finishLesson,
-      removeFinishedLesson,
-    },
-    selectors,
-  } = useApp();
-
   useEffect(() => {
-    getTracks();
-  }, []);
+    const getData = async () => {
+      if (slug && lessonId) {
+        const res = await localServices.getLesson(slug, lessonId);
 
-  useEffect(() => {
-    getLesson(slug, lessonId);
-    setLoading(false);
+        setLesson(res.lesson);
+        setMarkdown(res.markdown);
+        setLoading(false);
+      }
+    };
+
+    getData();
   }, [lessonId]);
 
   const checkNextLesson = () => {
@@ -73,7 +74,8 @@ function LessonScreen() {
             handleFinishLesson={handleFinishLesson}
             handleGoBack={handleGoBack}
             handleRemoveFinishedLesson={handleRemoveFinishedLesson}
-            lesson={selectors.lesson}
+            lesson={lesson!}
+            markdown={markdown!}
             checkNextLesson={checkNextLesson}
           />
         ) : (

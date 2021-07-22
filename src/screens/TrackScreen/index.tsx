@@ -1,28 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useApp } from '../../contexts/app';
+// import { useApp } from '../../contexts/app';
 import LessonCard from '../../components/LessonCard';
-import { ARROW_LEFT, TOKEN, TRACKS_URL, LESSONS_COPY } from '../../constants';
+import { ARROW_LEFT, TRACKS_URL, LESSONS_COPY } from '../../constants';
 import Slider from '../../components/Slider';
 import styles from './TrackScreen.module.scss';
 // import NextCard from '../../components/NextCard';
 // import tracks from '../../data/tracks';
 import Icon from '../../components/Icon';
 import { LessonData, Params, TrackData } from '../../sharedTypes';
+import localServices from '../../services/localServices';
 
 function TrackScreen() {
+  const [track, setTrack] = useState<TrackData>();
   const history = useHistory();
-  const { slug } = useParams<Params>();
+  const { slug } = useParams<Params>() || '';
   // const [selectedTrack, setSelectedTrack] = useState(undefined);
-  const { selectors } = useApp();
+  // const { selectors } = useApp();
 
-  const track =
-    selectors.tracks &&
-    selectors.tracks.find((t: TrackData) => t.path === slug);
+  // const track =
+  //   selectors.tracks &&
+  //   selectors.tracks.find((t: TrackData) => t.path === slug);
 
   useEffect(() => {
-    if (!localStorage.getItem(TOKEN)) {
-      return history.push('/');
+    if (slug) {
+      const res = localServices.getTrack(slug);
+      setTrack(res);
     }
 
     return () => {};
@@ -66,11 +69,11 @@ function TrackScreen() {
         <div>
           <div className={styles.header}>
             <h2>
-              {track.title} {LESSONS_COPY}
+              {track?.title} {LESSONS_COPY}
             </h2>
           </div>
           {track &&
-            track.lessons.map((item: LessonData) => (
+            track?.lessons?.map((item: LessonData) => (
               <LessonCard lesson={item} />
             ))}
         </div>

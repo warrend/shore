@@ -5,7 +5,7 @@ export type Finished = {
 };
 
 const finishedData = tracks.reduce<Finished>((acc, curr) => {
-  acc[curr.id] = [];
+  acc[curr.id!] = [];
   return acc;
 }, {});
 

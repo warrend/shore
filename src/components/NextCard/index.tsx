@@ -10,7 +10,7 @@ type NextCardProps = {
 };
 
 function NextCard({ lesson }: NextCardProps) {
-  const { title, id } = lesson;
+  const { title, id } = lesson!;
   const history = useHistory();
 
   const handleDetailCard = (lessonId: string | number) => {
@@ -20,8 +20,8 @@ function NextCard({ lesson }: NextCardProps) {
   return (
     <div
       className={styles.wrapper}
-      onClick={() => handleDetailCard(id)}
-      onKeyPress={() => handleDetailCard(id)}
+      onClick={() => handleDetailCard(id!)}
+      onKeyPress={() => handleDetailCard(id!)}
       role="button"
       tabIndex={0}
     >

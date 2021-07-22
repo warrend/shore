@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { TOKEN } from '../../constants';
+import React, { useEffect, useState } from 'react';
+// import { useHistory } from 'react-router-dom';
+// import { TOKEN } from '../../constants';
 import Nav from '../../components/Nav';
 import styles from './Tracks.module.scss';
 import TrackCard from '../../components/TrackCard';
-import tracks from '../../data/tracks';
 import Menu from '../../components/Menu';
+// import { useApp } from '../../contexts/app';
+import { TrackData } from '../../sharedTypes';
+import localServices from '../../services/localServices';
 
 function Tracks() {
-  const history = useHistory();
+  const [tracks, setTracks] = useState<TrackData[]>([]);
 
   useEffect(() => {
-    if (!localStorage.getItem(TOKEN)) {
-      return history.push('/');
-    }
+    const res = localServices.getTracks();
+    setTracks(res);
 
     return () => {};
   }, []);
@@ -24,7 +25,8 @@ function Tracks() {
       <div className={styles.wrapper}>
         <h2>Tracks</h2>
         <div className={styles.content}>
-          {tracks && tracks.map((item) => <TrackCard track={item} />)}
+          {tracks &&
+            tracks.map((item: TrackData) => <TrackCard track={item} />)}
         </div>
       </div>
       <Menu />

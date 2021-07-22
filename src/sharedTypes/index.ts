@@ -1,16 +1,16 @@
 export type LessonData = {
-  id: number;
+  id?: number;
   isCompleted?: boolean;
-  title: string;
-  path: string;
+  title?: string;
+  path?: string;
 };
 
 export type TrackData = {
-  [key: string]: any;
-  id: number | string;
-  title: string;
-  path: string;
-  lessons: LessonData[];
+  // [key: string]: any;
+  id?: number | string;
+  title?: string;
+  path?: string;
+  lessons?: LessonData[];
 };
 
 export type Params = {

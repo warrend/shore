@@ -23,8 +23,8 @@ function LessonCard({ lesson }: LessonCardProps) {
   return (
     <div
       className={styles.wrapper}
-      onClick={() => handleDetailCard(id)}
-      onKeyPress={() => handleDetailCard(id)}
+      onClick={() => handleDetailCard(id!)}
+      onKeyPress={() => handleDetailCard(id!)}
       role="button"
       tabIndex={0}
     >
