@@ -6,7 +6,7 @@ export type LessonData = {
 };
 
 export type TrackData = {
-  // [key: string]: any;
+  [key: string]: any;
   id?: number | string;
   title?: string;
   path?: string;
@@ -17,3 +17,8 @@ export type Params = {
   slug?: string;
   lessonId?: string;
 };
+
+export type TLesson = {
+  lesson?: LessonData;
+  markdown?: string;
+} | null;

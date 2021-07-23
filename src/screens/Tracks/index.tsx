@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
-// import { TOKEN } from '../../constants';
 import Nav from '../../components/Nav';
 import styles from './Tracks.module.scss';
 import TrackCard from '../../components/TrackCard';
 import Menu from '../../components/Menu';
-// import { useApp } from '../../contexts/app';
 import { TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
+import { TRACKS_HEADER_COPY } from '../../constants';
 
 function Tracks() {
   const [tracks, setTracks] = useState<TrackData[]>([]);
@@ -23,7 +21,7 @@ function Tracks() {
     <div>
       <Nav />
       <div className={styles.wrapper}>
-        <h2>Tracks</h2>
+        <h2>{TRACKS_HEADER_COPY}</h2>
         <div className={styles.content}>
           {tracks &&
             tracks.map((item: TrackData) => <TrackCard track={item} />)}

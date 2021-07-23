@@ -72,6 +72,34 @@ const localServices = {
 
     return { ...lessonData, ...computedValues };
   },
+  finishLesson: (slug: string, lessonId: string) => {
+    const finishedObj = localServices.getData(FINISHED);
+    const finishedTrack = tracksData?.find((track) => track.path === slug);
+    if (finishedObj[`${finishedTrack?.id}`].includes(lessonId)) {
+      return null;
+    }
+
+    finishedObj[`${finishedTrack?.id}`].push(lessonId);
+    localServices.setData(FINISHED, finishedObj);
+    return localServices.getLesson(slug, lessonId);
+  },
+  removeFinishedLesson: (slug: string, lessonId: string) => {
+    const finishedList = localServices.getData(FINISHED);
+    const finishedTrack = tracksData?.find((track) => track.path === slug);
+    if (!finishedList[`${finishedTrack?.id}`].includes(`${lessonId}`)) {
+      return null;
+    }
+
+    const filteredFinished = finishedList[`${finishedTrack?.id}`].filter(
+      (l: string) => l !== lessonId
+    );
+
+    finishedList[`${finishedTrack?.id}`] = filteredFinished;
+
+    localServices.setData(FINISHED, finishedList);
+
+    return localServices.getLesson(slug, lessonId);
+  },
 };
 
 export default localServices;

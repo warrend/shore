@@ -9,7 +9,7 @@ import {
 import styles from './Lesson.module.scss';
 import Lesson from '../../components/Lesson';
 import Button from '../../components/interactions/Button';
-import { LessonData, Params } from '../../sharedTypes';
+import { LessonData, Params, TLesson } from '../../sharedTypes';
 import Slider from '../../components/Slider';
 import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
@@ -19,7 +19,7 @@ function LessonScreen() {
   const [markdown, setMarkdown] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const {
-    services: { changeSliderState, finishLesson, removeFinishedLesson },
+    services: { changeSliderState },
     selectors,
   } = useApp();
   const history = useHistory();
@@ -57,13 +57,18 @@ function LessonScreen() {
     changeSliderState(false);
   };
 
-  const handleFinishLesson = () => {
-    finishLesson(slug, lessonId);
-    // checkNextLesson();
+  const handleFinishLesson = async () => {
+    const res: TLesson = await localServices.finishLesson(slug!, lessonId!);
+    setLesson(res?.lesson);
   };
 
-  const handleRemoveFinishedLesson = () => {
-    removeFinishedLesson(slug, lessonId);
+  const handleRemoveFinishedLesson = async () => {
+    const res: TLesson = await localServices.removeFinishedLesson(
+      slug!,
+      lessonId!
+    );
+
+    setLesson(res?.lesson);
   };
 
   return (
