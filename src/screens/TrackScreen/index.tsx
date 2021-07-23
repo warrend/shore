@@ -23,11 +23,16 @@ function TrackScreen() {
   //   selectors.tracks.find((t: TrackData) => t.path === slug);
 
   useEffect(() => {
-    if (slug) {
-      const res = localServices.getTrack(slug);
-      setTrack(res);
-    }
+    const getData = async () => {
+      if (slug) {
+        const res = localServices.getTrack(slug);
+        const test = await localServices.getNextLesson(slug);
+        console.log('test', test);
+        setTrack(res);
+      }
+    };
 
+    getData();
     return () => {};
   }, []);
 

@@ -1,4 +1,4 @@
-import { FINISHED } from '../../constants';
+import { FINISHED, FIRST_LESSON_ID } from '../../constants';
 import { LessonData, TrackData } from '../../sharedTypes';
 // import finishedData, { Finished } from '../../data';
 import tracksData from '../../data/tracks';
@@ -99,6 +99,31 @@ const localServices = {
     localServices.setData(FINISHED, finishedList);
 
     return localServices.getLesson(slug, lessonId);
+  },
+  getNextLesson: (slug: string) => {
+    const finishedList = localServices.getData(FINISHED);
+    const currentTrack = tracksData?.find((track) => track.path === slug);
+    const finishedLessons = finishedList[currentTrack?.id!];
+
+    // if no completed lessons
+    if (!finishedLessons.length) {
+      // return the first lesson
+      return localServices.getLesson(slug, FIRST_LESSON_ID);
+    }
+
+    // get the last finished lesson
+    const lastFinishedLesson = finishedLessons.reduce(
+      (acc: number, curr: number) => (acc > curr ? acc : curr)
+    );
+
+    // if the last lesson is already done, return null
+    if (lastFinishedLesson === currentTrack?.lessons?.length.toString()) {
+      return null;
+    }
+
+    const nextLesson = parseInt(lastFinishedLesson, 10) + 1;
+    // else return the next lesson
+    return localServices.getLesson(slug, `${nextLesson}`);
   },
 };
 
