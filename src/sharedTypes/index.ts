@@ -3,6 +3,7 @@ export type LessonData = {
   isCompleted?: boolean;
   title?: string;
   path?: string;
+  readTime?: string;
 };
 
 export type TrackData = {

@@ -1,4 +1,9 @@
-import { FINISHED, FIRST_LESSON_ID } from '../../constants';
+import {
+  FINISHED,
+  FIRST_LESSON_ID,
+  AVE_READING_SPEED,
+  READ_TIME_COPY,
+} from '../../constants';
 import { LessonData, TrackData } from '../../sharedTypes';
 // import finishedData, { Finished } from '../../data';
 import tracksData from '../../data/tracks';
@@ -49,10 +54,20 @@ const localServices = {
     // get markdown file
     const markdownFile = await localServices.getMarkdown(slug, trackLesson!);
 
+    const strippedMd = localServices.getLessonReadTime(markdownFile);
+    const minsRead = Math.ceil(
+      strippedMd.split(' ').length / AVE_READING_SPEED
+    );
+
     return {
       markdown: markdownFile,
       lesson: trackLesson,
+      readTime: `${minsRead} ${READ_TIME_COPY}`,
     };
+  },
+  getLessonReadTime: (md: string) => {
+    const strippedMd = md.replace(/[^\w\s]/g, '');
+    return strippedMd;
   },
   getTrack: (slug: string) => {
     const track = tracksData.find((t: TrackData) => t.path === slug);

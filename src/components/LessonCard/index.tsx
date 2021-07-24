@@ -13,6 +13,7 @@ type LessonId = string | number;
 
 function LessonCard({ lesson }: LessonCardProps) {
   const { title, id, isCompleted } = lesson;
+
   const history = useHistory();
   const location = useLocation();
 

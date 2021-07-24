@@ -18,6 +18,7 @@ type Props = {
   handleFinishLesson: () => void;
   handleRemoveFinishedLesson: () => void;
   markdown: string;
+  readTime: string;
 };
 
 function Lesson({
@@ -27,12 +28,14 @@ function Lesson({
   handleGoBack,
   handleFinishLesson,
   handleRemoveFinishedLesson,
+  readTime,
 }: Props) {
   return (
     <div>
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
+      {readTime}
       <div className={styles.content}>
         <ReactMarkdown>{markdown}</ReactMarkdown>
 

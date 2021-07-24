@@ -17,6 +17,7 @@ import { useApp } from '../../contexts/app';
 function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
   const [markdown, setMarkdown] = useState<string>('');
+  const [readTime, setReadTime] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const {
     services: { changeSliderState },
@@ -34,6 +35,7 @@ function LessonScreen() {
 
         setLesson(res.lesson);
         setMarkdown(res.markdown);
+        setReadTime(res.readTime);
         setLoading(false);
       }
     };
@@ -81,6 +83,7 @@ function LessonScreen() {
             handleRemoveFinishedLesson={handleRemoveFinishedLesson}
             lesson={lesson!}
             markdown={markdown!}
+            readTime={readTime}
             checkNextLesson={checkNextLesson}
           />
         ) : (

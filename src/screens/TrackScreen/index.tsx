@@ -1,67 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // import { useApp } from '../../contexts/app';
 import LessonCard from '../../components/LessonCard';
-import { ARROW_LEFT, TRACKS_URL, LESSONS_COPY } from '../../constants';
+import { ARROW_LEFT, LESSONS_COPY } from '../../constants';
 import Slider from '../../components/Slider';
 import styles from './TrackScreen.module.scss';
-// import NextCard from '../../components/NextCard';
+import NextCard from '../../components/NextCard';
 // import tracks from '../../data/tracks';
 import Icon from '../../components/Icon';
-import { LessonData, Params, TrackData } from '../../sharedTypes';
+import { LessonData, Params, TLesson, TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
 
 function TrackScreen() {
   const [track, setTrack] = useState<TrackData>();
-  const history = useHistory();
+  const [next, setNext] = useState<TLesson>();
+  // const history = useHistory();
   const { slug } = useParams<Params>() || '';
-  // const [selectedTrack, setSelectedTrack] = useState(undefined);
-  // const { selectors } = useApp();
-
-  // const track =
-  //   selectors.tracks &&
-  //   selectors.tracks.find((t: TrackData) => t.path === slug);
 
   useEffect(() => {
     const getData = async () => {
       if (slug) {
         const res = localServices.getTrack(slug);
-        const test = await localServices.getNextLesson(slug);
-        console.log('test', test);
+        const nextLesson: TLesson = await localServices.getNextLesson(slug);
+        setNext(nextLesson);
         setTrack(res);
       }
     };
 
     getData();
+
     return () => {};
   }, []);
 
-  // const renderNextLesson = () => {
-  //   if (selectors.nextUp >= selectors.lessons.length) {
-  //     return (
-  //       <div className={styles.section}>
-  //         <h2>Next up</h2>
-  //         <div>You have finished the last lesson.</div>
-  //       </div>
-  //     );
-  //   }
-
-  //   if (selectors.lessons.length) {
-  //     return (
-  //       <div className={styles.section}>
-  //         <h2>Next up</h2>
-  //         <div>
-  //           <NextCard lesson={selectors.lessons[selectors.nextUp || 0]} />
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  // };
-
-  // TODO - add protection for unhappy path
+  // eslint-disable-next-line no-confusing-arrow
+  const renderNextLesson = () =>
+    next ? (
+      <div className={styles.section}>
+        <h2>Next up</h2>
+        <div>
+          <NextCard lesson={next.lesson!} />
+        </div>
+      </div>
+    ) : null;
 
   const handleGoBack = () => {
-    history.push(TRACKS_URL);
+    // history.push(TRACKS_URL);
   };
 
   return (
@@ -70,7 +53,7 @@ function TrackScreen() {
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
       <div className={styles.content}>
-        {/* {renderNextLesson()} */}
+        {renderNextLesson()}
         <div>
           <div className={styles.header}>
             <h2>
