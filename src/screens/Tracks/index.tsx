@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Nav from '../../components/Nav';
 import styles from './Tracks.module.scss';
 import TrackCard from '../../components/TrackCard';
@@ -6,11 +7,20 @@ import Menu from '../../components/Menu';
 import { TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
 import { TRACKS_HEADER_COPY } from '../../constants';
+import { useApp } from '../../contexts/app';
 
 function Tracks() {
   const [tracks, setTracks] = useState<TrackData[]>([]);
+  const history = useHistory();
+  const {
+    selectors: { token },
+  } = useApp();
 
   useEffect(() => {
+    if (token === 'show-welcome' || token === null) {
+      return history.push('/welcome');
+    }
+
     const res = localServices.getTracks();
     setTracks(res);
 

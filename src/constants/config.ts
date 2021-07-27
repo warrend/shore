@@ -7,3 +7,4 @@ export const TRACKS: string = 'tracks';
 export const FIRST_LESSON_ID: string = '1';
 export const AVE_READING_SPEED: number = 250;
 export const READ_TIME_COPY: string = 'min read';
+export const LAST_FINISHED: string = 'lastFinished';

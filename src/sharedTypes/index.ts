@@ -22,4 +22,5 @@ export type Params = {
 export type TLesson = {
   lesson?: LessonData;
   markdown?: string;
+  readTime?: string;
 } | null;

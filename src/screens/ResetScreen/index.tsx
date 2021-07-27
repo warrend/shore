@@ -16,8 +16,8 @@ function ResetScreen() {
     services: { resetData },
   } = useApp();
 
-  const handleReset = async () => {
-    await resetData();
+  const handleReset = () => {
+    resetData();
     history.push(ROOT_URL);
   };
 

@@ -3,9 +3,9 @@ import {
   FIRST_LESSON_ID,
   AVE_READING_SPEED,
   READ_TIME_COPY,
+  LAST_FINISHED,
 } from '../../constants';
 import { LessonData, TrackData } from '../../sharedTypes';
-// import finishedData, { Finished } from '../../data';
 import tracksData from '../../data/tracks';
 
 const localServices = {
@@ -41,7 +41,6 @@ const localServices = {
     const markdownFile = await res.text();
     return markdownFile;
   },
-
   getLesson: async (slug: string, lessonId: string) => {
     // get lesson
     const tracks = localServices.getTracks();
@@ -96,6 +95,10 @@ const localServices = {
 
     finishedObj[`${finishedTrack?.id}`].push(lessonId);
     localServices.setData(FINISHED, finishedObj);
+    localServices.setData(LAST_FINISHED, {
+      track: finishedTrack?.id,
+      lesson: lessonId,
+    });
     return localServices.getLesson(slug, lessonId);
   },
   removeFinishedLesson: (slug: string, lessonId: string) => {
@@ -115,7 +118,7 @@ const localServices = {
 
     return localServices.getLesson(slug, lessonId);
   },
-  getNextLesson: (slug: string) => {
+  getNextLesson: async (slug: string) => {
     const finishedList = localServices.getData(FINISHED);
     const currentTrack = tracksData?.find((track) => track.path === slug);
     const finishedLessons = finishedList[currentTrack?.id!];
@@ -138,7 +141,8 @@ const localServices = {
 
     const nextLesson = parseInt(lastFinishedLesson, 10) + 1;
     // else return the next lesson
-    return localServices.getLesson(slug, `${nextLesson}`);
+    const next = await localServices.getLesson(slug, `${nextLesson}`);
+    return next;
   },
 };
 

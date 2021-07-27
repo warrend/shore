@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-// import { useApp } from '../../contexts/app';
+import { useParams, useHistory } from 'react-router-dom';
 import LessonCard from '../../components/LessonCard';
-import { ARROW_LEFT, LESSONS_COPY } from '../../constants';
+import { ARROW_LEFT, LESSONS_COPY, TRACKS_URL } from '../../constants';
 import Slider from '../../components/Slider';
 import styles from './TrackScreen.module.scss';
 import NextCard from '../../components/NextCard';
@@ -14,7 +13,7 @@ import localServices from '../../services/localServices';
 function TrackScreen() {
   const [track, setTrack] = useState<TrackData>();
   const [next, setNext] = useState<TLesson>();
-  // const history = useHistory();
+  const history = useHistory();
   const { slug } = useParams<Params>() || '';
 
   useEffect(() => {
@@ -38,13 +37,13 @@ function TrackScreen() {
       <div className={styles.section}>
         <h2>Next up</h2>
         <div>
-          <NextCard lesson={next.lesson!} />
+          <NextCard lesson={next.lesson!} readTime={next?.readTime!} />
         </div>
       </div>
     ) : null;
 
   const handleGoBack = () => {
-    // history.push(TRACKS_URL);
+    history.push(TRACKS_URL);
   };
 
   return (

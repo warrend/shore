@@ -1,9 +1,10 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
+import cn from 'classnames';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
 import { useApp } from './contexts/app';
 import { RESET_URL, TRACKS_URL } from './constants';
@@ -18,7 +19,10 @@ const Tracks = lazy(() => import('./screens/Tracks'));
 
 function App() {
   const [loading, setLoading] = useState<boolean>(false);
-  const { services } = useApp();
+  const {
+    services,
+    selectors: { token, menuState },
+  } = useApp();
 
   useEffect(() => {
     const appInit = async () => {
@@ -38,8 +42,11 @@ function App() {
     <div>Loading...</div>;
   }
 
-  const token = JSON.parse(localStorage.getItem('token') || '');
+  const overlayClass = cn({
+    [styles.overlay]: menuState,
+  });
 
+  console.log('TOKEN', token);
   return (
     <>
       <Router>
@@ -47,21 +54,28 @@ function App() {
           <div className={styles.wrapper}>
             <Switch>
               <Route exact path="/">
-                {token === 'app-token' ? (
+                {/* {token === 'app-token' ? (
                   <Redirect to={TRACKS_URL} />
                 ) : (
                   <Redirect to="/welcome" />
-                )}
+                )} */}
+                <Tracks />
               </Route>
               <Route exact path="/welcome">
                 <Welcome />
+                {/* {token === 'show-welcome' ? (
+                  <Welcome />
+                ) : (
+                  <Redirect to="/tracks" />
+                )} */}
               </Route>
               <Route exact path={TRACKS_URL}>
-                {token === 'app-token' ? (
+                <Tracks />
+                {/* {token === 'app-token' ? (
                   <Tracks />
                 ) : (
                   <Redirect to="/welcome" />
-                )}
+                )} */}
               </Route>
 
               <Route
@@ -78,6 +92,7 @@ function App() {
             </Switch>
           </div>
         </Suspense>
+        <div className={overlayClass} />
       </Router>
     </>
   );
