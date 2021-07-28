@@ -33,10 +33,12 @@ function LessonScreen() {
       if (slug && lessonId) {
         const res = await localServices.getLesson(slug, lessonId);
 
-        setLesson(res.lesson);
-        setMarkdown(res.markdown);
-        setReadTime(res.readTime);
-        setLoading(false);
+        if (res !== undefined) {
+          setLesson(res.lesson);
+          setMarkdown(res.markdown);
+          setReadTime(res.readTime);
+          setLoading(false);
+        }
       }
     };
 
@@ -72,6 +74,10 @@ function LessonScreen() {
 
     setLesson(res?.lesson);
   };
+
+  if (!lesson) {
+    return <div>Sorry, this is not a lesson.</div>;
+  }
 
   return (
     <>

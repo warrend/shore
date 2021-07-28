@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { LESSONS_URL } from '../../constants';
+// import { LESSONS_URL } from '../../constants';
 import styles from './LessonCard.module.scss';
 import { LessonData } from '../../sharedTypes';
 import Complete from '../Complete';
@@ -18,7 +18,7 @@ function LessonCard({ lesson }: LessonCardProps) {
   const location = useLocation();
 
   const handleDetailCard = (lessonId: LessonId) => {
-    history.push(`${location.pathname}${LESSONS_URL}/${lessonId}`);
+    history.push(`${location.pathname}/lessons/${lessonId}`);
   };
 
   return (

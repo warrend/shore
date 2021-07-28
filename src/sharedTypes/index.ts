@@ -19,8 +19,11 @@ export type Params = {
   lessonId?: string;
 };
 
-export type TLesson = {
-  lesson?: LessonData;
-  markdown?: string;
-  readTime?: string;
-} | null;
+export type TLesson =
+  | {
+      lesson?: LessonData;
+      markdown?: string;
+      readTime?: string;
+    }
+  | null
+  | undefined;

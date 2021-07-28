@@ -20,9 +20,11 @@ function TrackScreen() {
     const getData = async () => {
       if (slug) {
         const res = localServices.getTrack(slug);
-        const nextLesson: TLesson = await localServices.getNextLesson(slug);
-        setNext(nextLesson);
-        setTrack(res);
+        if (res.lessons !== undefined) {
+          const nextLesson: TLesson = await localServices.getNextLesson(slug);
+          setNext(nextLesson);
+          setTrack(res);
+        }
       }
     };
 
@@ -45,6 +47,10 @@ function TrackScreen() {
   const handleGoBack = () => {
     history.push(TRACKS_URL);
   };
+
+  if (!track) {
+    return <div>Sorry, not a track.</div>;
+  }
 
   return (
     <div className={styles.wrapper}>

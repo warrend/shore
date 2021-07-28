@@ -6,7 +6,7 @@ import {
   GO_BACK_BUTTON,
   RESET_DATA_BUTTON,
   LESSONS_URL,
-  ROOT_URL,
+  WELCOME_URL,
 } from '../../constants';
 import Button from '../../components/interactions/Button';
 
@@ -18,7 +18,7 @@ function ResetScreen() {
 
   const handleReset = () => {
     resetData();
-    history.push(ROOT_URL);
+    history.push(WELCOME_URL);
   };
 
   return (
