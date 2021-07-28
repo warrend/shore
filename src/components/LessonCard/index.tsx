@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { LESSONS_URL } from '../../constants';
 import styles from './LessonCard.module.scss';
 import { LessonData } from '../../sharedTypes';
+import Complete from '../Complete';
 
 type LessonCardProps = {
   lesson: LessonData;
@@ -12,6 +13,7 @@ type LessonId = string | number;
 
 function LessonCard({ lesson }: LessonCardProps) {
   const { title, id, isCompleted } = lesson;
+
   const history = useHistory();
   const location = useLocation();
 
@@ -22,16 +24,16 @@ function LessonCard({ lesson }: LessonCardProps) {
   return (
     <div
       className={styles.wrapper}
-      onClick={() => handleDetailCard(id)}
-      onKeyPress={() => handleDetailCard(id)}
+      onClick={() => handleDetailCard(id!)}
+      onKeyPress={() => handleDetailCard(id!)}
       role="button"
       tabIndex={0}
     >
-      <div>
-        <span className={styles.number}>{id}</span>
+      <div className={styles.header}>
+        <div className={styles.number}>{id}</div>
         {title}
       </div>
-      <div className={styles.complete}>{isCompleted && 'complete'}</div>
+      {isCompleted && <Complete />}
     </div>
   );
 }

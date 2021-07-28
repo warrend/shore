@@ -1,29 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TOKEN } from '../../constants';
 import Nav from '../../components/Nav';
 import styles from './Tracks.module.scss';
 import TrackCard from '../../components/TrackCard';
-import tracks from '../../data/tracks';
+import Menu from '../../components/Menu';
+import { TrackData } from '../../sharedTypes';
+import localServices from '../../services/localServices';
+import { TRACKS_HEADER_COPY } from '../../constants';
+import { useApp } from '../../contexts/app';
 
 function Tracks() {
+  const [tracks, setTracks] = useState<TrackData[]>([]);
   const history = useHistory();
+  const {
+    selectors: { token },
+  } = useApp();
 
   useEffect(() => {
-    if (!localStorage.getItem(TOKEN)) {
-      return history.push('/');
+    if (token === 'show-welcome' || token === null) {
+      return history.push('/welcome');
     }
+
+    const res = localServices.getTracks();
+    setTracks(res);
 
     return () => {};
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       <Nav />
-      <div>
-        <h2>Tracks</h2>
-        {tracks && tracks.map((item) => <TrackCard track={item} />)}
+      <div className={styles.wrapper}>
+        <h2>{TRACKS_HEADER_COPY}</h2>
+        <div className={styles.content}>
+          {tracks &&
+            tracks.map((item: TrackData) => <TrackCard track={item} />)}
+        </div>
       </div>
+      <Menu />
     </div>
   );
 }

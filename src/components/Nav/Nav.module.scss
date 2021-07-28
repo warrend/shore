@@ -1,5 +1,12 @@
 .wrapper {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: var(--normal);
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--large);
+}
+
+.logo {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.1em;
 }

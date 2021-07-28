@@ -1,13 +1,17 @@
 .wrapper {
-  padding: 5px;
+  cursor: pointer;
+}
+
+.background {
+  background: var(--primary100);
+  padding: 8px;
   width: 32px;
   height: 32px;
   border-radius: 8px;
   display: grid;
   place-content: center;
-  cursor: pointer;
 }
 
-.background {
-  background: var(--highlight);
+.readonly {
+  cursor: auto;
 }

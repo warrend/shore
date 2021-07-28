@@ -9,3 +9,5 @@ export const RESET_MESSAGE: string =
 export const RESET_DATA_BUTTON: string = 'Reset my data';
 export const LESSON: string = 'Lesson';
 export const LAST_LESSON_MESSAGE: string = 'You have reached the last lesson.';
+export const LESSONS_COPY = 'Lessons';
+export const TRACKS_HEADER_COPY = 'Tracks';

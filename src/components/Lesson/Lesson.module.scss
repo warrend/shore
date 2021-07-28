@@ -2,13 +2,24 @@
 }
 
 .content {
-  margin: var(--large) 0;
+  margin: var(--large) auto;
+  max-width: 35em;
+  max-width: 65ch;
+
+  p {
+    line-height: 1.75;
+    margin-bottom: var(--medium);
+
+    @media screen and (min-width: 600px) {
+      line-height: 2;
+    }
+  }
 }
 
 .nav {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: var(--normal);
+  margin-bottom: var(--large);
 }
 
 .buttons {
