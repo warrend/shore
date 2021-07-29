@@ -9,6 +9,7 @@ import {
 import { useApp } from './contexts/app';
 import styles from './App.module.scss';
 import TokenRoutes from './TokenRoutes';
+import Loader from './components/Loader';
 
 const Welcome = lazy(() => import('./screens/Welcome'));
 // const NotFound = lazy(() => import('./screens/NotFound'));
@@ -48,9 +49,6 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <div className={styles.wrapper}>
             <Switch>
-              {/* <Route exact path="/welcome">
-                <Welcome />
-              </Route> */}
               <Route exact path="/">
                 <Redirect to="/app" />
               </Route>
@@ -58,12 +56,11 @@ function App() {
                 <TokenRoutes />
               </Route>
               <Route path="/welcome" component={Welcome} exact />
-
-              {/* <Route component={NotFound} /> */}
             </Switch>
           </div>
         </Suspense>
         <div className={overlayClass} />
+        <Loader />
       </Router>
     </>
   );
