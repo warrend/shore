@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import styles from './Icon.module.scss';
 import { iconMap } from '../icons';
+import { DEFAULT_ICON } from '../../constants';
 
 type Props = {
   onClick?: () => void;
@@ -32,6 +33,8 @@ function Icon({
     return `hsl(${hue}, 50%, 95%)`;
   };
 
+  console.log(iconMap[icon], 'icon');
+
   return (
     <div
       className={iconClass}
@@ -41,7 +44,11 @@ function Icon({
       onKeyPress={onClick}
       style={{ background: randomize ? randomColor() : backgroundColor }}
     >
-      <img src={iconMap[icon]} alt="icon" className={styles.custom} />
+      <img
+        src={iconMap[icon] ? iconMap[icon] : iconMap[DEFAULT_ICON]}
+        alt="icon"
+        className={styles.custom}
+      />
     </div>
   );
 }

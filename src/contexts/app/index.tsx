@@ -43,11 +43,46 @@ const AppContextProvider = ({ children }: ContextProps) => {
 
   const services = {
     startApp: () => {
+      if (localStorage.getItem(FINISHED)) {
+        const appFinished = localServices.getData(FINISHED);
+        const newFinished: any = {};
+
+        // If a track is removed from the app, remove it from localStorage
+        // and preserve users lesson data.
+        if (
+          Object.keys(appFinished).length > Object.keys(finishedData).length
+        ) {
+          const paredDownObj: any = {};
+          // eslint-disable-next-line array-callback-return
+          Object.keys(appFinished).map((key: string) => {
+            if (finishedData[key]) {
+              paredDownObj[key] = appFinished[key];
+            }
+          });
+
+          return localServices.setData(FINISHED, paredDownObj);
+        }
+
+        // If new tracks have been added, add them to
+        // localStorage while preserving users lesson data.
+
+        // eslint-disable-next-line array-callback-return
+        Object.keys(finishedData).map((key: string) => {
+          if (!appFinished[key]) {
+            newFinished[key] = [];
+          }
+        });
+
+        if (Object.keys(newFinished).length) {
+          localServices.setData(FINISHED, { ...appFinished, ...newFinished });
+        }
+      }
       if (token === null || token === TOKEN_INACTIVE) {
         localServices.setData(FINISHED, finishedData);
         localServices.setData(LAST_FINISHED, lastFinished);
       }
-      setToken(TOKEN_VALUE);
+
+      return setToken(TOKEN_VALUE);
     },
     registerUser: () => {
       localServices.setData('token', 'app-token');
