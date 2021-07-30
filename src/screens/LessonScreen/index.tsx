@@ -18,11 +18,12 @@ function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
   const [markdown, setMarkdown] = useState<string>('');
   const [readTime, setReadTime] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+
   const {
-    services: { changeSliderState },
-    selectors,
+    services: { changeSliderState, changeLoadingState },
   } = useApp();
+
   const history = useHistory();
   const { slug, lessonId } = useParams<Params>();
 
@@ -30,6 +31,8 @@ function LessonScreen() {
 
   useEffect(() => {
     const getData = async () => {
+      changeLoadingState(true);
+
       if (slug && lessonId) {
         const res = await localServices.getLesson(slug, lessonId);
 
@@ -37,21 +40,18 @@ function LessonScreen() {
           setLesson(res.lesson);
           setMarkdown(res.markdown);
           setReadTime(res.readTime);
-          setLoading(false);
+        } else {
+          setError(true);
         }
       }
+      changeLoadingState(false);
     };
 
     getData();
   }, [lessonId]);
 
   const checkNextLesson = () => {
-    if (nextLesson > selectors.trackLessonsLength) {
-      // history.push(TRACKS_URL);
-      // TODO decide where the slider shows when last lesson done
-      changeSliderState(true);
-      return;
-    }
+    // @TODO fix this
 
     history.push(`${TRACKS_URL}/${slug}${LESSONS_URL}/${nextLesson}`);
   };
@@ -75,14 +75,10 @@ function LessonScreen() {
     setLesson(res?.lesson);
   };
 
-  if (!lesson) {
-    return <div>Sorry, this is not a lesson.</div>;
-  }
-
   return (
     <>
       <div className={styles.wrapper}>
-        {!loading ? (
+        {!error ? (
           <Lesson
             handleFinishLesson={handleFinishLesson}
             handleGoBack={handleGoBack}
@@ -93,7 +89,13 @@ function LessonScreen() {
             checkNextLesson={checkNextLesson}
           />
         ) : (
-          <div>Loading...</div>
+          <div>
+            Sorry, this lesson does not exist. Lorem, ipsum dolor sit amet
+            consectetur adipisicing elit. Doloribus eligendi commodi numquam eum
+            voluptates at voluptatum enim, dolor nulla dolores dolorum nisi.
+            Repudiandae velit, voluptates laudantium impedit numquam cupiditate
+            perferendis.
+          </div>
         )}
       </div>
       <Slider>
