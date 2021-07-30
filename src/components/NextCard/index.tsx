@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { LESSONS_URL, COFFEE_ICON, LESSON } from '../../constants';
+import { COFFEE_ICON, LESSON } from '../../constants';
 import styles from './NextCard.module.scss';
 import Icon from '../Icon';
 import { LessonData } from '../../sharedTypes';
@@ -16,7 +16,7 @@ function NextCard({ lesson, readTime }: NextCardProps) {
   const location = useLocation();
 
   const handleDetailCard = (lessonId: string | number) => {
-    history.push(`${location.pathname}${LESSONS_URL}/${lessonId}`);
+    history.push(`${location.pathname}/lessons/${lessonId}`);
   };
 
   return (

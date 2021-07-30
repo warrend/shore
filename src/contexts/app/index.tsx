@@ -30,6 +30,7 @@ export function useApp() {
 
 const AppContextProvider = ({ children }: ContextProps) => {
   const [sliderState, setSliderState] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [token, setToken] = useState<string>('');
   const [menuState, setMenuState] = useState<boolean>(false);
 
@@ -37,6 +38,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
     sliderState,
     menuState,
     token,
+    loading,
   };
 
   const services = {
@@ -71,6 +73,7 @@ const AppContextProvider = ({ children }: ContextProps) => {
       localServices.setData(FINISHED, finishedData);
       setToken(TOKEN_INACTIVE);
     },
+    changeLoadingState: (state: boolean) => setLoading(state),
   };
 
   useEffect(() => {

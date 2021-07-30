@@ -4,24 +4,21 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  // Redirect,
+  Redirect,
 } from 'react-router-dom';
 import { useApp } from './contexts/app';
-import { RESET_URL, TRACKS_URL } from './constants';
 import styles from './App.module.scss';
+import TokenRoutes from './TokenRoutes';
+import Loader from './components/Loader';
 
 const Welcome = lazy(() => import('./screens/Welcome'));
-const LessonScreen = lazy(() => import('./screens/LessonScreen'));
-const TrackScreen = lazy(() => import('./screens/TrackScreen'));
-const NotFound = lazy(() => import('./screens/NotFound'));
-const ResetScreen = lazy(() => import('./screens/ResetScreen'));
-const Tracks = lazy(() => import('./screens/Tracks'));
+// const NotFound = lazy(() => import('./screens/NotFound'));
 
 function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const {
     services,
-    selectors: { token, menuState },
+    selectors: { menuState },
   } = useApp();
 
   useEffect(() => {
@@ -46,7 +43,6 @@ function App() {
     [styles.overlay]: menuState,
   });
 
-  console.log('TOKEN', token);
   return (
     <>
       <Router>
@@ -54,45 +50,17 @@ function App() {
           <div className={styles.wrapper}>
             <Switch>
               <Route exact path="/">
-                {/* {token === 'app-token' ? (
-                  <Redirect to={TRACKS_URL} />
-                ) : (
-                  <Redirect to="/welcome" />
-                )} */}
-                <Tracks />
+                <Redirect to="/app" />
               </Route>
-              <Route exact path="/welcome">
-                <Welcome />
-                {/* {token === 'show-welcome' ? (
-                  <Welcome />
-                ) : (
-                  <Redirect to="/tracks" />
-                )} */}
+              <Route path="/app">
+                <TokenRoutes />
               </Route>
-              <Route exact path={TRACKS_URL}>
-                <Tracks />
-                {/* {token === 'app-token' ? (
-                  <Tracks />
-                ) : (
-                  <Redirect to="/welcome" />
-                )} */}
-              </Route>
-
-              <Route
-                exact
-                path={`${TRACKS_URL}/:slug`}
-                component={TrackScreen}
-              />
-              <Route
-                path={`${TRACKS_URL}/:slug?/(lessons)?/:lessonId`}
-                component={LessonScreen}
-              />
-              <Route exact path={RESET_URL} component={ResetScreen} />
-              <Route component={NotFound} />
+              <Route path="/welcome" component={Welcome} exact />
             </Switch>
           </div>
         </Suspense>
         <div className={overlayClass} />
+        <Loader />
       </Router>
     </>
   );

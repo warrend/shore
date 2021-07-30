@@ -46,9 +46,17 @@ const localServices = {
     const tracks = localServices.getTracks();
     const track = tracks && tracks.find((t: TrackData) => t.path === slug);
 
+    if (!track) {
+      return undefined;
+    }
+
     const trackLesson =
       track?.lessons &&
       track.lessons.find((l: LessonData) => `${l.id}` === lessonId);
+
+    if (!trackLesson) {
+      return undefined;
+    }
 
     // get markdown file
     const markdownFile = await localServices.getMarkdown(slug, trackLesson!);
