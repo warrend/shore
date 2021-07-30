@@ -6,6 +6,7 @@ import check from './check.svg';
 import writing from './writing.svg';
 import revising from './revising.svg';
 import collecting from './collecting.svg';
+import defaultIcon from './default-icon.svg';
 
 type IconMap = {
   [key: string]: string;
@@ -21,4 +22,5 @@ export const iconMap: IconMap = {
   writing,
   revising,
   collecting,
+  defaultIcon,
 };

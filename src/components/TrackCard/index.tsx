@@ -46,7 +46,6 @@ function TrackCard({ track }: TrackCardProps) {
         <p className={styles.title}>{title}</p>
         <p className={styles.lessons}>{lessons?.length} lessons</p>
         <p className={styles.highlight}>{completedPercentage()} percent read</p>
-        {/* <Progress percentage={completedPercentage()} /> */}
       </div>
     </div>
   );
