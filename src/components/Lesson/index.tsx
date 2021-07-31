@@ -5,11 +5,14 @@ import {
   FINISH_LESSON_BUTTON,
   UNFINISH_LESSON_BUTTON,
   ARROW_LEFT,
+  LAST_LESSON_MESSAGE,
+  GO_BACK_BUTTON,
 } from '../../constants';
 import Button from '../interactions/Button';
 import Icon from '../Icon';
 import styles from './Lesson.module.scss';
 import { LessonData } from '../../sharedTypes';
+import Slider from '../Slider';
 
 type Props = {
   checkNextLesson: () => void;
@@ -55,6 +58,12 @@ function Lesson({
           <Button onClick={checkNextLesson} name={NEXT_BUTTON} secondary />
         </div>
       </div>
+      <Slider>
+        <div>
+          <div>{LAST_LESSON_MESSAGE}</div>
+          <Button name={GO_BACK_BUTTON} onClick={handleGoBack} />
+        </div>
+      </Slider>
     </div>
   );
 }
