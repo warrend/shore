@@ -1,5 +1,5 @@
 {
-  "homepage": "https://warrend.github.io/shore",
+  "homepage": "https://warrend.github.io/",
   "name": "raft",
   "version": "0.1.0",
   "private": true,
@@ -12,7 +12,6 @@
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "classnames": "^2.3.1",
-    "gh-pages": "^3.2.3",
     "glob": "^7.1.7",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",
@@ -37,6 +36,8 @@
     "workbox-streams": "^5.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
