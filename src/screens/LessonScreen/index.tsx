@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-  GO_BACK_BUTTON,
-  TRACKS_URL,
-  LAST_LESSON_MESSAGE,
-} from '../../constants';
+import { TRACKS_URL } from '../../constants';
 import styles from './Lesson.module.scss';
 import Lesson from '../../components/Lesson';
-import Button from '../../components/interactions/Button';
 import { LessonData, Params, TLesson } from '../../sharedTypes';
-import Slider from '../../components/Slider';
 import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
 
@@ -102,12 +96,6 @@ function LessonScreen() {
           </div>
         )}
       </div>
-      <Slider>
-        <div>
-          <div>{LAST_LESSON_MESSAGE}</div>
-          <Button name={GO_BACK_BUTTON} onClick={handleGoBack} />
-        </div>
-      </Slider>
     </>
   );
 }
