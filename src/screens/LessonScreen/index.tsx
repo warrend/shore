@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import {
   GO_BACK_BUTTON,
-  LESSONS_URL,
   TRACKS_URL,
   LAST_LESSON_MESSAGE,
 } from '../../constants';
@@ -18,6 +17,7 @@ function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
   const [markdown, setMarkdown] = useState<string>('');
   const [readTime, setReadTime] = useState<string>('');
+  const [lessonCount, setLessonCount] = useState<number | null>();
   const [error, setError] = useState<boolean>(false);
 
   const {
@@ -35,11 +35,13 @@ function LessonScreen() {
 
       if (slug && lessonId) {
         const res = await localServices.getLesson(slug, lessonId);
+        const count = localServices.getLessonCount(slug);
 
         if (res !== undefined) {
           setLesson(res.lesson);
           setMarkdown(res.markdown);
           setReadTime(res.readTime);
+          setLessonCount(count);
         } else {
           setError(true);
         }
@@ -51,9 +53,11 @@ function LessonScreen() {
   }, [lessonId]);
 
   const checkNextLesson = () => {
-    // @TODO fix this
+    if (parseInt(lessonId!, 10) + 1 <= lessonCount!) {
+      return history.push(`${TRACKS_URL}/${slug}/lessons/${nextLesson}`);
+    }
 
-    history.push(`${TRACKS_URL}/${slug}${LESSONS_URL}/${nextLesson}`);
+    return changeSliderState(true);
   };
 
   const handleGoBack = () => {

@@ -35,6 +35,13 @@ const localServices = {
 
     return tracksWithFinishedData;
   },
+  getLessonCount: (slug: string) => {
+    const track = localServices.getTrack(slug);
+
+    if (!track) return null;
+
+    return track.lessons?.length;
+  },
   getMarkdown: async (slug: string, trackLesson: LessonData) => {
     const file = await import(`../../data/tracks/${slug}/${trackLesson?.path}`);
     const res = await fetch(file.default);
