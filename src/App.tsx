@@ -18,7 +18,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false);
   const {
     services,
-    selectors: { menuState },
+    selectors: { menuState, sliderState },
   } = useApp();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function App() {
   }
 
   const overlayClass = cn({
-    [styles.overlay]: menuState,
+    [styles.overlay]: menuState || sliderState,
   });
 
   return (
