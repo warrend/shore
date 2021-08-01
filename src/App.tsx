@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
   Redirect,
+  HashRouter,
 } from 'react-router-dom';
 import { useApp } from './contexts/app';
 import styles from './App.module.scss';
@@ -45,7 +46,7 @@ function App() {
 
   return (
     <>
-      <Router>
+      <HashRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <div className={styles.wrapper}>
             <Switch>
@@ -61,7 +62,7 @@ function App() {
         </Suspense>
         <div className={overlayClass} />
         <Loader />
-      </Router>
+      </HashRouter>
     </>
   );
 }
