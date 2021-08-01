@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import cn from 'classnames';
 import {
-  BrowserRouter as Router,
+  // BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
