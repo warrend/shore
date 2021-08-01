@@ -5,8 +5,8 @@ import {
   RESET_MESSAGE,
   GO_BACK_BUTTON,
   RESET_DATA_BUTTON,
-  LESSONS_URL,
   WELCOME_URL,
+  TRACKS_URL,
 } from '../../constants';
 import Button from '../../components/interactions/Button';
 
@@ -23,7 +23,7 @@ function ResetScreen() {
 
   return (
     <div>
-      <Button onClick={() => history.push(LESSONS_URL)} name={GO_BACK_BUTTON} />
+      <Button onClick={() => history.push(TRACKS_URL)} name={GO_BACK_BUTTON} />
       {RESET_MESSAGE}
       <Button onClick={handleReset} name={RESET_DATA_BUTTON} />
     </div>
