@@ -17,10 +17,23 @@
 }
 
 .lesson {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   font-size: 12px;
   margin: 0;
   color: var(--grey400);
   margin-bottom: var(--small);
+}
+
+.track {
+  // padding: 3px 5px;
+  // border-radius: var(--small);
+  // border: 1.5px solid var(--accent600);
+  // background: var(--accent100);
+  margin-right: var(--tiny);
+  color: var(--accent600);
+  font-weight: 600;
 }
 
 .read {

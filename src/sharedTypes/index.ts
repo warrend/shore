@@ -19,6 +19,11 @@ export type Params = {
   lessonId?: string;
 };
 
+export type TLastLesson = {
+  track?: string;
+  lesson?: TLesson | string;
+};
+
 export type TLesson =
   | {
       lesson?: LessonData;

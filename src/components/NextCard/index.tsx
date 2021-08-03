@@ -1,22 +1,22 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { COFFEE_ICON, LESSON } from '../../constants';
+import { useHistory } from 'react-router-dom';
+import { LESSON, TRACKS_URL } from '../../constants';
 import styles from './NextCard.module.scss';
 import Icon from '../Icon';
-import { LessonData } from '../../sharedTypes';
+import { LessonData, TrackData } from '../../sharedTypes';
 
 type NextCardProps = {
   lesson: LessonData;
   readTime: string;
+  track?: TrackData;
 };
 
-function NextCard({ lesson, readTime }: NextCardProps) {
+function NextCard({ lesson, readTime, track }: NextCardProps) {
   const { title, id } = lesson!;
   const history = useHistory();
-  const location = useLocation();
 
   const handleDetailCard = (lessonId: string | number) => {
-    history.push(`${location.pathname}/lessons/${lessonId}`);
+    history.push(`${TRACKS_URL}/${track?.path}/lessons/${lessonId}`);
   };
 
   return (
@@ -27,10 +27,13 @@ function NextCard({ lesson, readTime }: NextCardProps) {
       role="button"
       tabIndex={0}
     >
-      <Icon icon={COFFEE_ICON} background />
+      <Icon icon={track?.path!} background />
       <div>
         <div className={styles.lesson}>
-          {LESSON} {id}
+          <div className={styles.track}>{track?.title}</div>
+          <div className={styles.lesson_info}>
+            {LESSON} {id}
+          </div>
         </div>
         <div className={styles.title}>{title}</div>
         <div className={styles.read}>{readTime}</div>

@@ -42,6 +42,31 @@ const localServices = {
 
     return track.lessons?.length;
   },
+  getContinueTrack: async () => {
+    const lastFinished = localServices.getData(LAST_FINISHED);
+
+    if (lastFinished.track !== '') {
+      const track = tracksData[lastFinished.track];
+
+      const nextLessonId = parseInt(lastFinished.lesson, 10) + 1;
+
+      if (nextLessonId >= track?.lessons?.length!) {
+        return { track: '' };
+      }
+
+      const lesson = await localServices.getLesson(
+        tracksData[lastFinished?.track].path!,
+        nextLessonId.toString()
+      );
+
+      return {
+        track,
+        lesson,
+      };
+    }
+
+    return { track: '' };
+  },
   getMarkdown: async (slug: string, trackLesson: LessonData) => {
     const file = await import(`../../data/tracks/${slug}/${trackLesson?.path}`);
     const res = await fetch(file.default);

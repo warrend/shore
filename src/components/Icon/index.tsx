@@ -33,8 +33,6 @@ function Icon({
     return `hsl(${hue}, 50%, 95%)`;
   };
 
-  console.log(iconMap[icon], 'icon');
-
   return (
     <div
       className={iconClass}

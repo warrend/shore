@@ -8,8 +8,6 @@ function Loader() {
     selectors: { loading },
   } = useApp();
 
-  console.log('loading', loading);
-
   const loaderClass = cn({
     [styles.loader]: true,
     [styles.on]: loading,

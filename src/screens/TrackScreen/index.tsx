@@ -48,7 +48,11 @@ function TrackScreen() {
       <div className={styles.section}>
         <h2>Next up</h2>
         <div>
-          <NextCard lesson={next.lesson!} readTime={next?.readTime!} />
+          <NextCard
+            lesson={next.lesson!}
+            readTime={next?.readTime!}
+            track={track!}
+          />
         </div>
       </div>
     ) : null;
