@@ -34,7 +34,7 @@ function Lesson({
   readTime,
 }: Props) {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>

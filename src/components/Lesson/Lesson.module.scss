@@ -5,6 +5,7 @@
   margin: var(--large) auto;
   max-width: 35em;
   max-width: 65ch;
+  color: #222;
 
   p {
     line-height: 1.75;
@@ -30,4 +31,6 @@
 
 .read_time {
   color: var(--accent700);
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
