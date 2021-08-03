@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import cn from 'classnames';
 import { useHistory } from 'react-router-dom';
 import Button from '../../components/interactions/Button';
-import { ROOT_URL } from '../../constants';
+import { COFFEE_ICON, ROOT_URL } from '../../constants';
 import { useApp } from '../../contexts/app';
 import welcome1 from '../../data/welcome1.md';
 import welcome2 from '../../data/welcome2.md';
 import welcome3 from '../../data/welcome3.md';
+import styles from './Welcome.module.scss';
+import Icon from '../../components/Icon';
 
 function Welcome() {
   const pages = [welcome1, welcome2, welcome3];
@@ -51,20 +54,25 @@ function Welcome() {
     setPage(page - 1);
   };
 
+  const buttonBarStyles = cn({
+    [styles.button_bar]: true,
+    [styles.single]: page === 1,
+  });
+
   return (
     <div>
-      {page !== 1 && (
-        <button type="button" onClick={goBack}>
-          Back
-        </button>
-      )}
-      {/* <ReactMarkdown children={text} /> */}
-      <ReactMarkdown>{text}</ReactMarkdown>
-      <Button
-        secondary
-        onClick={handleNext}
-        name={page === pageLength ? 'Start' : 'Next'}
-      />
+      <Icon icon={COFFEE_ICON} background />
+      <div className={styles.content}>
+        <div className={buttonBarStyles}>
+          {page !== 1 && <Button secondary onClick={goBack} name="Back" />}
+          <Button
+            secondary={page !== pageLength}
+            onClick={handleNext}
+            name={page === pageLength ? 'Start' : 'Next'}
+          />
+        </div>
+        <ReactMarkdown>{text}</ReactMarkdown>
+      </div>
     </div>
   );
 }

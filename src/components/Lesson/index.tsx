@@ -38,10 +38,10 @@ function Lesson({
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
-      {readTime}
-      <div className={styles.content}>
-        <ReactMarkdown>{markdown}</ReactMarkdown>
 
+      <div className={styles.content}>
+        <div className={styles.read_time}>{readTime}</div>
+        <ReactMarkdown>{markdown}</ReactMarkdown>
         <div className={styles.buttons}>
           <Button
             onClick={
