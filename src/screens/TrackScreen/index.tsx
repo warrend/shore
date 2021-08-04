@@ -77,17 +77,12 @@ function TrackScreen() {
             </div>
             {track &&
               track?.lessons?.map((item: LessonData) => (
-                <LessonCard lesson={item} />
+                <LessonCard lesson={item} key={item.id} />
               ))}
           </div>
         </div>
       ) : (
-        <div>
-          No track. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Autem nemo fugiat porro molestias beatae quo, facilis optio vero
-          voluptate doloribus quas. Accusantium sapiente non perspiciatis quia
-          ducimus nostrum minus voluptatum.
-        </div>
+        <div>No track.</div>
       )}
       <Slider>
         <div>Slider</div>

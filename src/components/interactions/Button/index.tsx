@@ -7,17 +7,24 @@ type Props = {
   onClick: () => void;
   secondary?: boolean;
   warning?: boolean;
+  disabled?: boolean;
 };
 
-function Button({ name, onClick, secondary, warning }: Props) {
+function Button({ name, onClick, secondary, warning, disabled }: Props) {
   const btnClass = cn({
     [styles.button]: true,
     [styles.alternate]: secondary,
     [styles.warning]: warning,
+    [styles.disabled]: disabled,
   });
 
   return (
-    <button onClick={onClick} className={btnClass} type="button">
+    <button
+      onClick={onClick}
+      className={btnClass}
+      type="button"
+      disabled={disabled}
+    >
       {name}
     </button>
   );

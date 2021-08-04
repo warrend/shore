@@ -30,6 +30,7 @@ function Menu() {
       <div className={styles.list}>
         {options.map(({ text, path }) => (
           <p
+            key={text}
             className={styles.item}
             onClick={() => {
               handleMenuClick(path);

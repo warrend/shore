@@ -37,7 +37,7 @@ function App() {
   }, []);
 
   if (loading) {
-    <div>Loading...</div>;
+    return <Loader />;
   }
 
   const overlayClass = cn({
@@ -47,7 +47,7 @@ function App() {
   return (
     <>
       <HashRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader />}>
           <div className={styles.wrapper}>
             <Switch>
               <Route exact path="/">

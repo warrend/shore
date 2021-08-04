@@ -24,6 +24,11 @@
   &:visited {
     background: var(--primary500);
   }
+
+  &:disabled {
+    background: var(--grey300);
+    cursor: default;
+  }
 }
 
 .alternate {
@@ -48,4 +53,16 @@
 
 .warning {
   background: var(--error600);
+
+  &:hover {
+    background: var(--error500);
+  }
+
+  &:active {
+    background: var(--error600);
+  }
+}
+
+.disabled {
+  pointer-events: none;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useApp } from '../../contexts/app';
 import {
@@ -14,6 +14,8 @@ import Switch from '../../components/Switch';
 
 function ResetScreen() {
   const history = useHistory();
+  const [toggle, setToggle] = useState<boolean>(false);
+
   const {
     services: { resetData },
   } = useApp();
@@ -32,8 +34,13 @@ function ResetScreen() {
       />
       <div className={styles.message}>{RESET_MESSAGE}</div>
       <div className={styles.buttons}>
-        <Switch onChange={(e: any) => console.log(e.target.checked)} />
-        <Button onClick={handleReset} name={RESET_DATA_BUTTON} warning />
+        <Switch onChange={(e: any) => setToggle(e.target.checked)} />
+        <Button
+          onClick={handleReset}
+          name={RESET_DATA_BUTTON}
+          warning
+          disabled={!toggle}
+        />
       </div>
     </div>
   );

@@ -53,7 +53,9 @@ function Tracks() {
         <h2>{TRACKS_HEADER_COPY}</h2>
         <div className={styles.content}>
           {tracks &&
-            tracks.map((item: TrackData) => <TrackCard track={item} />)}
+            tracks.map((item: TrackData) => (
+              <TrackCard key={item.id} track={item} />
+            ))}
         </div>
       </div>
       <Menu />
