@@ -1,3 +1,0 @@
-# Welcome Three
-
-page three.
