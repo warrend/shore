@@ -6,12 +6,14 @@ type Props = {
   name: string;
   onClick: () => void;
   secondary?: boolean;
+  warning?: boolean;
 };
 
-function Button({ name, onClick, secondary }: Props) {
+function Button({ name, onClick, secondary, warning }: Props) {
   const btnClass = cn({
     [styles.button]: true,
     [styles.alternate]: secondary,
+    [styles.warning]: warning,
   });
 
   return (

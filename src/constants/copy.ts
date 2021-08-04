@@ -11,3 +11,4 @@ export const LESSON: string = 'lesson';
 export const LAST_LESSON_MESSAGE: string = 'You have reached the last lesson.';
 export const LESSONS_COPY = 'Lessons';
 export const TRACKS_HEADER_COPY = 'Tracks';
+export const CONTINUE_COPY = 'Continue';

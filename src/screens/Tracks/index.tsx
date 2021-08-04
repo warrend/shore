@@ -6,7 +6,7 @@ import TrackCard from '../../components/TrackCard';
 import Menu from '../../components/Menu';
 import { TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
-import { TRACKS_HEADER_COPY } from '../../constants';
+import { CONTINUE_COPY, TRACKS_HEADER_COPY } from '../../constants';
 import { useApp } from '../../contexts/app';
 import NextCard from '../../components/NextCard';
 // import { TLastFinished } from '../../data';
@@ -42,7 +42,7 @@ function Tracks() {
       <div className={styles.wrapper}>
         {next && next.track !== '' && (
           <>
-            <h2>Next Up</h2>
+            <h2>{CONTINUE_COPY}</h2>
             <NextCard
               lesson={next.lesson.lesson}
               readTime={next.lesson.readTime}
