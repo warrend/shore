@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { useApp } from './contexts/app';
 import { RESET_URL, TOKEN_INACTIVE, TRACKS_URL } from './constants';
+import Loader from './components/Loader';
 
 const LessonScreen = lazy(() => import('./screens/LessonScreen'));
 const TrackScreen = lazy(() => import('./screens/TrackScreen'));
@@ -30,7 +31,7 @@ function TokenRoutes() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Switch>
           <Route path="/app" exact>
             <Redirect to="/app/tracks" />
