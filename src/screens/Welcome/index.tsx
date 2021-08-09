@@ -10,6 +10,7 @@ import welcome2 from '../../data/welcome2.md';
 import welcome3 from '../../data/welcome3.md';
 import styles from './Welcome.module.scss';
 import Icon from '../../components/Icon';
+import useTransition from '../../utils/useTransition';
 
 function Welcome() {
   const pages = [welcome1, welcome2, welcome3];
@@ -23,6 +24,8 @@ function Welcome() {
   const {
     services: { registerUser, startApp },
   } = useApp();
+
+  useTransition();
 
   useEffect(() => {
     const getPage = async () => {

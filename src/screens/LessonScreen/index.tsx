@@ -52,7 +52,9 @@ function LessonScreen() {
 
   const checkNextLesson = () => {
     if (parseInt(lessonId!, 10) + 1 <= lessonCount!) {
-      return history.push(`${TRACKS_URL}/${slug}/lessons/${nextLesson}`);
+      return clickTransition(() =>
+        history.push(`${TRACKS_URL}/${slug}/lessons/${nextLesson}`)
+      );
     }
 
     return changeSliderState(true);

@@ -6,6 +6,7 @@ import Icon from '../Icon';
 import { CLOSE_ICON } from '../../constants';
 import styles from './Menu.module.scss';
 import { options } from './options';
+import clickTransition from '../../utils/clickTransition';
 
 function Menu() {
   const history = useHistory();
@@ -20,7 +21,7 @@ function Menu() {
   });
 
   const handleMenuClick = (path: string) => {
-    history.push(path);
+    clickTransition(() => history.push(path));
     changeMenuState(false);
   };
 
