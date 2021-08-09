@@ -9,3 +9,6 @@ export const AVE_READING_SPEED: number = 250;
 export const READ_TIME_COPY: string = 'min read';
 export const LAST_FINISHED: string = 'lastFinished';
 export const NO_LAST_LESSON: string = 'no last lesson';
+export const TRANSITION_CLASS: string = 'transition';
+export const HTML_TAG: string = 'html';
+export const TRANSITION_DURATION: number = 150;

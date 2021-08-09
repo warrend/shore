@@ -10,6 +10,8 @@ import Icon from '../../components/Icon';
 import { LessonData, Params, TLesson, TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
+import useTransition from '../../utils/useTransition';
+import clickTransition from '../../utils/clickTransition';
 
 function TrackScreen() {
   const {
@@ -20,6 +22,8 @@ function TrackScreen() {
   const [error, setError] = useState<boolean>(false);
   const history = useHistory();
   const { slug } = useParams<Params>() || '';
+
+  useTransition();
 
   useEffect(() => {
     const getData = async () => {
@@ -58,7 +62,7 @@ function TrackScreen() {
     ) : null;
 
   const handleGoBack = () => {
-    history.push(TRACKS_URL);
+    clickTransition(() => history.push(TRACKS_URL));
   };
 
   return (

@@ -9,6 +9,7 @@ import localServices from '../../services/localServices';
 import { CONTINUE_COPY, TRACKS_HEADER_COPY } from '../../constants';
 import { useApp } from '../../contexts/app';
 import NextCard from '../../components/NextCard';
+import useTransition from '../../utils/useTransition';
 // import { TLastFinished } from '../../data';
 
 function Tracks() {
@@ -18,6 +19,8 @@ function Tracks() {
   const {
     selectors: { token },
   } = useApp();
+
+  useTransition();
 
   useEffect(() => {
     const getData = async () => {

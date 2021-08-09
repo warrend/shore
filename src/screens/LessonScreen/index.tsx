@@ -6,6 +6,8 @@ import Lesson from '../../components/Lesson';
 import { LessonData, Params, TLesson } from '../../sharedTypes';
 import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
+import useTransition from '../../utils/useTransition';
+import clickTransition from '../../utils/clickTransition';
 
 function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
@@ -22,6 +24,8 @@ function LessonScreen() {
   const { slug, lessonId } = useParams<Params>();
 
   const nextLesson = parseInt(lessonId!, 10) + 1;
+
+  useTransition();
 
   useEffect(() => {
     const getData = async () => {
@@ -55,7 +59,7 @@ function LessonScreen() {
   };
 
   const handleGoBack = () => {
-    history.push(`${TRACKS_URL}/${slug}`);
+    clickTransition(() => history.push(`${TRACKS_URL}/${slug}`));
     changeSliderState(false);
   };
 

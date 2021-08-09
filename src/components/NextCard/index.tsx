@@ -4,6 +4,7 @@ import { LESSON, TRACKS_URL } from '../../constants';
 import styles from './NextCard.module.scss';
 import Icon from '../Icon';
 import { LessonData, TrackData } from '../../sharedTypes';
+import clickTransition from '../../utils/clickTransition';
 
 type NextCardProps = {
   lesson: LessonData;
@@ -16,7 +17,9 @@ function NextCard({ lesson, readTime, track }: NextCardProps) {
   const history = useHistory();
 
   const handleDetailCard = (lessonId: string | number) => {
-    history.push(`${TRACKS_URL}/${track?.path}/lessons/${lessonId}`);
+    clickTransition(() =>
+      history.push(`${TRACKS_URL}/${track?.path}/lessons/${lessonId}`)
+    );
   };
 
   return (

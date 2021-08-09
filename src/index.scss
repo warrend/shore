@@ -7,11 +7,18 @@
 
 html {
   font-family: 'Inter', sans-serif;
+  opacity: 1;
+  transition: var(--transition-duration) ease-out;
 }
+
 @supports (font-variation-settings: normal) {
   html {
     font-family: 'Inter var', sans-serif;
   }
+}
+
+.transition {
+  opacity: 0;
 }
 
 body {
