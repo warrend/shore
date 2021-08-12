@@ -23,6 +23,7 @@
 
   &:visited {
     background: var(--primary500);
+    outline: none;
   }
 
   &:disabled {
@@ -48,6 +49,7 @@
 
   &:visited {
     background: transparent;
+    outline: none;
   }
 }
 
@@ -60,6 +62,7 @@
 
   &:active {
     background: var(--error600);
+    outline: none;
   }
 }
 
