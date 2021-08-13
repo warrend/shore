@@ -47,3 +47,14 @@ h2 {
   font-size: var(--font-medium);
   margin-bottom: 1.5rem;
 }
+
+a {
+  outline: 0;
+}
+
+*:focus {
+  outline: 0;
+  outline: none;
+}
+
+// @TODO add accessibility states
