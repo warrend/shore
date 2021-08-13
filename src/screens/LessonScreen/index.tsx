@@ -6,6 +6,8 @@ import Lesson from '../../components/Lesson';
 import { LessonData, Params, TLesson } from '../../sharedTypes';
 import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
+import useTransition from '../../utils/useTransition';
+import clickTransition from '../../utils/clickTransition';
 
 function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
@@ -46,16 +48,20 @@ function LessonScreen() {
     getData();
   }, [lessonId]);
 
+  useTransition(lessonId);
+
   const checkNextLesson = () => {
     if (parseInt(lessonId!, 10) + 1 <= lessonCount!) {
-      return history.push(`${TRACKS_URL}/${slug}/lessons/${nextLesson}`);
+      return clickTransition(() =>
+        history.push(`${TRACKS_URL}/${slug}/lessons/${nextLesson}`)
+      );
     }
 
     return changeSliderState(true);
   };
 
   const handleGoBack = () => {
-    history.push(`${TRACKS_URL}/${slug}`);
+    clickTransition(() => history.push(`${TRACKS_URL}/${slug}`));
     changeSliderState(false);
   };
 

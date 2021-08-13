@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styles from './LessonCard.module.scss';
 import { LessonData } from '../../sharedTypes';
 import Complete from '../Complete';
+import clickTransition from '../../utils/clickTransition';
 
 type LessonCardProps = {
   lesson: LessonData;
@@ -18,7 +19,9 @@ function LessonCard({ lesson }: LessonCardProps) {
   const location = useLocation();
 
   const handleDetailCard = (lessonId: LessonId) => {
-    history.push(`${location.pathname}/lessons/${lessonId}`);
+    clickTransition(() =>
+      history.push(`${location.pathname}/lessons/${lessonId}`)
+    );
   };
 
   return (

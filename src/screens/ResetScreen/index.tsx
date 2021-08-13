@@ -11,6 +11,8 @@ import {
 import Button from '../../components/interactions/Button';
 import styles from './ResetScreen.module.scss';
 import Switch from '../../components/Switch';
+import clickTransition from '../../utils/clickTransition';
+import useTransition from '../../utils/useTransition';
 
 function ResetScreen() {
   const history = useHistory();
@@ -20,15 +22,17 @@ function ResetScreen() {
     services: { resetData },
   } = useApp();
 
+  useTransition();
+
   const handleReset = () => {
     resetData();
-    history.push(WELCOME_URL);
+    clickTransition(() => history.push(WELCOME_URL));
   };
 
   return (
     <div className={styles.wrapper}>
       <Button
-        onClick={() => history.push(TRACKS_URL)}
+        onClick={() => clickTransition(() => history.push(TRACKS_URL))}
         name={GO_BACK_BUTTON}
         secondary
       />

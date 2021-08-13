@@ -50,7 +50,7 @@
   width: 18px;
   left: -1px;
   bottom: 0;
-  background-color: #fff;
+  background-color: var(--error600);
   border: 1px solid var(--grey300);
   transition: 0.4s;
 }

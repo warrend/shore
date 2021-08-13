@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { TRACKS_URL } from '../../constants';
 import { TrackData } from '../../sharedTypes';
+import clickTransition from '../../utils/clickTransition';
 import Icon from '../Icon';
 import styles from './TrackCard.module.scss';
 
@@ -14,7 +15,13 @@ function TrackCard({ track }: TrackCardProps) {
   const history = useHistory();
 
   const handleDetailCard = (lessonId: string | number) => {
-    history.push(`${TRACKS_URL}/${lessonId}`);
+    clickTransition(() => history.push(`${TRACKS_URL}/${lessonId}`));
+    // const el = document.querySelector('html');
+    // el?.classList.add('transition');
+
+    // setTimeout(() => {
+    //   history.push(`${TRACKS_URL}/${lessonId}`);
+    // }, 500);
   };
 
   const completedPercentage = () => {
