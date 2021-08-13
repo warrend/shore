@@ -16,13 +16,14 @@ import clickTransition from '../../utils/clickTransition';
 function TrackScreen() {
   const {
     services: { changeLoadingState },
-    selectors: { loading },
   } = useApp();
   const [track, setTrack] = useState<TrackData>();
   const [next, setNext] = useState<TLesson>();
   const [error, setError] = useState<boolean>(false);
   const history = useHistory();
   const { slug } = useParams<Params>() || '';
+
+  useTransition();
 
   useEffect(() => {
     const getData = async () => {
@@ -44,8 +45,6 @@ function TrackScreen() {
 
     return () => {};
   }, []);
-
-  useTransition(loading);
 
   // eslint-disable-next-line no-confusing-arrow
   const renderNextLesson = () =>

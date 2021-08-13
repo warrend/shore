@@ -25,8 +25,6 @@ function LessonScreen() {
 
   const nextLesson = parseInt(lessonId!, 10) + 1;
 
-  useTransition();
-
   useEffect(() => {
     const getData = async () => {
       changeLoadingState(true);
@@ -49,6 +47,8 @@ function LessonScreen() {
 
     getData();
   }, [lessonId]);
+
+  useTransition(lessonId);
 
   const checkNextLesson = () => {
     if (parseInt(lessonId!, 10) + 1 <= lessonCount!) {
