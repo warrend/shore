@@ -73,3 +73,10 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+
+self.addEventListener('installed', (event) => {
+  if (event.isUpdate) {
+    // Show "Update App" banner
+    alert('New service worker installed...');
+  }
+});
