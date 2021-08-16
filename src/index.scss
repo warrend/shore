@@ -43,6 +43,10 @@ code {
   white-space: pre-wrap !important;
 }
 
+h1 {
+  color: var(--h1-color);
+}
+
 h2 {
   font-size: var(--font-medium);
   margin-bottom: 1.5rem;

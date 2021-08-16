@@ -10,7 +10,7 @@
   transform: translateY(0%);
   transition: transform 175ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
   border-bottom: none;
-  border-radius: 16px 16px 0 0;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
   padding: var(--normal);
   z-index: 9999;
 }
