@@ -6,3 +6,5 @@ export const UNFINISH_LESSON_BUTTON: string = 'Remove as finished';
 export const MENU_RESET: string = 'Reset';
 export const MENU_ABOUT: string = 'About';
 export const MENU_STATS: string = 'Stats';
+export const RESET_DATA_BUTTON: string = 'Reset my data';
+export const UNLOCK_BUTTON: string = 'Unlock me';

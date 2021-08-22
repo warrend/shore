@@ -8,6 +8,8 @@
   --primary-base-hue: 208;
   --accent-base-hue: 185;
   --grey-base-hue: 208;
+  --error-base-hue: 0;
+  --success-base-hue: 120;
 
   --grey100: hsl(var(--grey-base-hue), 21%, 97%);
   --grey200: hsl(var(--grey-base-hue), 18%, 94%);
@@ -39,23 +41,23 @@
   --accent800: hsl(var(--accent-base-hue), 50%, 21%);
   --accent900: hsl(var(--accent-base-hue), 50%, 14%);
 
-  --error100: hsl(0, 70%, 95%);
-  --error200: hsl(0, 70%, 82%);
-  --error300: hsl(0, 60%, 72%);
-  --error400: hsl(0, 60%, 61%);
-  --error500: hsl(0, 60%, 50%);
-  --error600: hsl(0, 60%, 42%);
-  --error700: hsl(0, 60%, 34%);
-  --error800: hsl(0, 60%, 21%);
-  --error900: hsl(0, 60%, 14%);
+  --error100: hsl(var(--error-base-hue), 70%, 95%);
+  --error200: hsl(var(--error-base-hue), 70%, 82%);
+  --error300: hsl(var(--error-base-hue), 60%, 72%);
+  --error400: hsl(var(--error-base-hue), 60%, 61%);
+  --error500: hsl(var(--error-base-hue), 60%, 50%);
+  --error600: hsl(var(--error-base-hue), 60%, 42%);
+  --error700: hsl(var(--error-base-hue), 60%, 34%);
+  --error800: hsl(var(--error-base-hue), 60%, 21%);
+  --error900: hsl(var(--error-base-hue), 60%, 14%);
 
-  --success100: hsl(120, 70%, 93%);
-  --success200: hsl(120, 70%, 82%);
-  --success300: hsl(120, 70%, 72%);
-  --success400: hsl(120, 70%, 61%);
-  --success500: hsl(120, 70%, 50%);
-  --success600: hsl(120, 70%, 42%);
-  --success700: hsl(120, 70%, 34%);
-  --success800: hsl(120, 70%, 21%);
-  --success900: hsl(120, 70%, 12%);
+  --success100: hsl(var(--success-base-hue), 70%, 93%);
+  --success200: hsl(var(--success-base-hue), 70%, 82%);
+  --success300: hsl(var(--success-base-hue), 70%, 72%);
+  --success400: hsl(var(--success-base-hue), 70%, 61%);
+  --success500: hsl(var(--success-base-hue), 70%, 50%);
+  --success600: hsl(var(--success-base-hue), 70%, 42%);
+  --success700: hsl(var(--success-base-hue), 70%, 34%);
+  --success800: hsl(var(--success-base-hue), 70%, 21%);
+  --success900: hsl(var(--success-base-hue), 70%, 12%);
 }
