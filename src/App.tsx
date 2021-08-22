@@ -45,7 +45,7 @@ function App() {
   });
 
   return (
-    <div className={styles.container}>
+    <div>
       <HashRouter>
         <Suspense fallback={<Loader />}>
           <div className={styles.wrapper}>
