@@ -8,6 +8,7 @@ import { useApp } from '../../contexts/app';
 import useTransition from '../../utils/useTransition';
 import clickTransition from '../../utils/clickTransition';
 import styles from './Lesson.module.scss';
+import Wrapper from '../../layout/Wrapper';
 
 function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
@@ -81,7 +82,7 @@ function LessonScreen() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.content}>
+      <Wrapper>
         {!error ? (
           <Lesson
             handleFinishLesson={handleFinishLesson}
@@ -101,7 +102,7 @@ function LessonScreen() {
             perferendis.
           </div>
         )}
-      </div>
+      </Wrapper>
     </div>
   );
 }
