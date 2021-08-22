@@ -43,9 +43,14 @@ code {
   white-space: pre-wrap !important;
 }
 
+h1 {
+  color: var(--h1-color);
+}
+
 h2 {
-  font-size: var(--font-medium);
+  font-size: var(--font-small);
   margin-bottom: 1.5rem;
+  color: var(--h2-color);
 }
 
 a {

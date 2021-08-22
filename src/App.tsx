@@ -45,7 +45,7 @@ function App() {
   });
 
   return (
-    <>
+    <div className={styles.container}>
       <HashRouter>
         <Suspense fallback={<Loader />}>
           <div className={styles.wrapper}>
@@ -63,7 +63,7 @@ function App() {
         <div className={overlayClass} />
         <Loader />
       </HashRouter>
-    </>
+    </div>
   );
 }
 

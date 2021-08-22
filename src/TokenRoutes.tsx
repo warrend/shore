@@ -1,11 +1,5 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import {
-  // BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-} from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import { useApp } from './contexts/app';
 import { RESET_URL, TOKEN_INACTIVE, TRACKS_URL } from './constants';
 import Loader from './components/Loader';
