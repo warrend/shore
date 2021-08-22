@@ -10,6 +10,7 @@ import { CONTINUE_COPY, TRACKS_HEADER_COPY } from '../../constants';
 import { useApp } from '../../contexts/app';
 import NextCard from '../../components/NextCard';
 import useTransition from '../../utils/useTransition';
+import Wrapper from '../../layout/Wrapper';
 // import { TLastFinished } from '../../data';
 
 function Tracks() {
@@ -42,7 +43,7 @@ function Tracks() {
   return (
     <div>
       <Nav />
-      <div className={styles.wrapper}>
+      <Wrapper>
         {next && next.track !== '' && (
           <>
             <h2>{CONTINUE_COPY}</h2>
@@ -60,7 +61,7 @@ function Tracks() {
               <TrackCard key={item.id} track={item} />
             ))}
         </div>
-      </div>
+      </Wrapper>
       <Menu />
     </div>
   );

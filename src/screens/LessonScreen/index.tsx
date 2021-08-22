@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { TRACKS_URL } from '../../constants';
-import styles from './Lesson.module.scss';
 import Lesson from '../../components/Lesson';
 import { LessonData, Params, TLesson } from '../../sharedTypes';
 import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
 import useTransition from '../../utils/useTransition';
 import clickTransition from '../../utils/clickTransition';
+import styles from './Lesson.module.scss';
 
 function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
@@ -80,8 +80,8 @@ function LessonScreen() {
   };
 
   return (
-    <>
-      <div className={styles.wrapper}>
+    <div className={styles.wrapper}>
+      <div className={styles.content}>
         {!error ? (
           <Lesson
             handleFinishLesson={handleFinishLesson}
@@ -102,7 +102,7 @@ function LessonScreen() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

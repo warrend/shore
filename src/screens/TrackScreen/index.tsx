@@ -12,6 +12,7 @@ import localServices from '../../services/localServices';
 import { useApp } from '../../contexts/app';
 import useTransition from '../../utils/useTransition';
 import clickTransition from '../../utils/clickTransition';
+import Wrapper from '../../layout/Wrapper';
 
 function TrackScreen() {
   const {
@@ -66,7 +67,7 @@ function TrackScreen() {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <Wrapper>
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
@@ -91,7 +92,7 @@ function TrackScreen() {
       <Slider>
         <div>Slider</div>
       </Slider>
-    </div>
+    </Wrapper>
   );
 }
 
