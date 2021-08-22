@@ -1,6 +1,6 @@
 :root {
   --border-radius: 7px;
-  --app-background: hsla(212, 30%, 98%);
+  --app-background: hsla(var(--primary-base-hue), 30%, 98%);
   --lesson-screen-background: white;
   --h1-color: var(--primary700);
   --h2-color: var(--primary700);
