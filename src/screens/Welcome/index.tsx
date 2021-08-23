@@ -11,6 +11,7 @@ import welcome3 from '../../data/welcome3.md';
 import styles from './Welcome.module.scss';
 import Icon from '../../components/Icon';
 import useTransition from '../../utils/useTransition';
+import Wrapper from '../../layout/Wrapper';
 
 function Welcome() {
   const pages = [welcome1, welcome2, welcome3];
@@ -64,18 +65,22 @@ function Welcome() {
 
   return (
     <div>
-      <Icon icon={COFFEE_ICON} background />
-      <div className={styles.content}>
-        <div className={buttonBarStyles}>
-          {page !== 1 && <Button secondary onClick={goBack} name="Back" />}
-          <Button
-            secondary={page !== pageLength}
-            onClick={handleNext}
-            name={page === pageLength ? 'Start' : 'Next'}
-          />
-        </div>
-        <ReactMarkdown>{text}</ReactMarkdown>
+      <div className={styles.nav}>
+        <Icon icon={COFFEE_ICON} background />
       </div>
+      <Wrapper>
+        <div className={styles.content}>
+          <div className={buttonBarStyles}>
+            {page !== 1 && <Button secondary onClick={goBack} name="Back" />}
+            <Button
+              secondary={page !== pageLength}
+              onClick={handleNext}
+              name={page === pageLength ? 'Start' : 'Next'}
+            />
+          </div>
+          <ReactMarkdown>{text}</ReactMarkdown>
+        </div>
+      </Wrapper>
     </div>
   );
 }
