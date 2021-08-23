@@ -6,3 +6,7 @@
   display: grid;
   place-content: center;
 }
+
+.disabled {
+  background: var(--grey100);
+}

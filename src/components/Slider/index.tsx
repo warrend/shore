@@ -21,8 +21,8 @@ function Slider({ children }: SliderProps) {
 
   return (
     <div className={btnClass}>
-      <Button onClick={() => changeSliderState(false)} name="close" />
-      {children}
+      <Button secondary onClick={() => changeSliderState(false)} name="Close" />
+      <div className={styles.content}>{children}</div>
     </div>
   );
 }

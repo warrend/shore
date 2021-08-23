@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import LessonCard from '../../components/LessonCard';
 import { ARROW_LEFT, LESSONS_COPY, TRACKS_URL } from '../../constants';
-import Slider from '../../components/Slider';
 import styles from './TrackScreen.module.scss';
 import NextCard from '../../components/NextCard';
-// import tracks from '../../data/tracks';
 import Icon from '../../components/Icon';
 import { LessonData, Params, TLesson, TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
@@ -67,32 +65,31 @@ function TrackScreen() {
   };
 
   return (
-    <Wrapper>
+    <div>
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
-      {!error ? (
-        <div className={styles.content}>
-          {renderNextLesson()}
-          <div>
-            <div className={styles.header}>
-              <h2>
-                {track?.title} {LESSONS_COPY}
-              </h2>
+      <Wrapper>
+        {!error ? (
+          <div className={styles.content}>
+            {renderNextLesson()}
+            <div>
+              <div className={styles.header}>
+                <h2>
+                  {track?.title} {LESSONS_COPY}
+                </h2>
+              </div>
+              {track &&
+                track?.lessons?.map((item: LessonData) => (
+                  <LessonCard lesson={item} key={item.id} />
+                ))}
             </div>
-            {track &&
-              track?.lessons?.map((item: LessonData) => (
-                <LessonCard lesson={item} key={item.id} />
-              ))}
           </div>
-        </div>
-      ) : (
-        <div>No track.</div>
-      )}
-      <Slider>
-        <div>Slider</div>
-      </Slider>
-    </Wrapper>
+        ) : (
+          <div>No track.</div>
+        )}
+      </Wrapper>
+    </div>
   );
 }
 

@@ -6,9 +6,9 @@ export const SLIDER_MESSAGE_LAST_LESSON: string =
   'This is the last lesson but you still have unfinished lessons';
 export const RESET_MESSAGE: string =
   'This will reset all data. This cannot be undone.';
-export const RESET_DATA_BUTTON: string = 'Reset my data';
 export const LESSON: string = 'lesson';
-export const LAST_LESSON_MESSAGE: string = 'You have reached the last lesson.';
+export const LAST_LESSON_MESSAGE: string =
+  'Congratulations, you have reached the last lesson. Select the go back button to continue learning or close to stay on the page.';
 export const LESSONS_COPY = 'Lessons';
 export const TRACKS_HEADER_COPY = 'Tracks';
 export const CONTINUE_COPY = 'Continue';

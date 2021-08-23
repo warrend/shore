@@ -1,12 +1,18 @@
 .wrapper {
-  width: 100%;
-  padding: 0 1rem;
+  padding: 2rem 0;
+  margin: 0.5rem;
   background: var(--lesson-screen-background);
-}
-
-.content {
+  border-radius: var(--tiny);
   margin-left: auto;
   margin-right: auto;
   width: min(35em, 100% - 2rem);
   width: min(75ch, 100% - 2rem);
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: var(--large);
+  margin-top: 1.5rem;
+  padding: 0 1rem;
 }

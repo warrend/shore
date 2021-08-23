@@ -36,7 +36,7 @@ function LessonCard({ lesson }: LessonCardProps) {
         <div className={styles.number}>{id}</div>
         {title}
       </div>
-      {isCompleted && <Complete />}
+      <Complete complete={isCompleted} />
     </div>
   );
 }

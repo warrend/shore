@@ -4,7 +4,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background: var(--primary500);
+  background: var(--slider-background);
   overflow: hidden;
   height: 66%;
   transform: translateY(0%);
@@ -18,4 +18,8 @@
 .closed {
   position: fixed;
   transform: translateY(100%);
+}
+
+.content {
+  margin-top: 1rem;
 }

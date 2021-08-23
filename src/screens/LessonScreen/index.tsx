@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { TRACKS_URL } from '../../constants';
+import { ARROW_LEFT, TRACKS_URL } from '../../constants';
 import Lesson from '../../components/Lesson';
 import { LessonData, Params, TLesson } from '../../sharedTypes';
 import localServices from '../../services/localServices';
@@ -8,6 +8,8 @@ import { useApp } from '../../contexts/app';
 import useTransition from '../../utils/useTransition';
 import clickTransition from '../../utils/clickTransition';
 import styles from './Lesson.module.scss';
+import Wrapper from '../../layout/Wrapper';
+import Icon from '../../components/Icon';
 
 function LessonScreen() {
   const [lesson, setLesson] = useState<LessonData>();
@@ -80,27 +82,32 @@ function LessonScreen() {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.content}>
-        {!error ? (
-          <Lesson
-            handleFinishLesson={handleFinishLesson}
-            handleGoBack={handleGoBack}
-            handleRemoveFinishedLesson={handleRemoveFinishedLesson}
-            lesson={lesson!}
-            markdown={markdown!}
-            readTime={readTime}
-            checkNextLesson={checkNextLesson}
-          />
-        ) : (
-          <div>
-            Sorry, this lesson does not exist. Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Doloribus eligendi commodi numquam eum
-            voluptates at voluptatum enim, dolor nulla dolores dolorum nisi.
-            Repudiandae velit, voluptates laudantium impedit numquam cupiditate
-            perferendis.
-          </div>
-        )}
+    <div>
+      <div className={styles.nav}>
+        <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
+      </div>
+      <div className={styles.wrapper}>
+        <Wrapper>
+          {!error ? (
+            <Lesson
+              handleFinishLesson={handleFinishLesson}
+              handleGoBack={handleGoBack}
+              handleRemoveFinishedLesson={handleRemoveFinishedLesson}
+              lesson={lesson!}
+              markdown={markdown!}
+              readTime={readTime}
+              checkNextLesson={checkNextLesson}
+            />
+          ) : (
+            <div>
+              Sorry, this lesson does not exist. Lorem, ipsum dolor sit amet
+              consectetur adipisicing elit. Doloribus eligendi commodi numquam
+              eum voluptates at voluptatum enim, dolor nulla dolores dolorum
+              nisi. Repudiandae velit, voluptates laudantium impedit numquam
+              cupiditate perferendis.
+            </div>
+          )}
+        </Wrapper>
       </div>
     </div>
   );
