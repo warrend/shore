@@ -4,12 +4,12 @@ import {
   NEXT_BUTTON,
   FINISH_LESSON_BUTTON,
   UNFINISH_LESSON_BUTTON,
-  ARROW_LEFT,
+  // ARROW_LEFT,
   LAST_LESSON_MESSAGE,
   GO_BACK_BUTTON,
 } from '../../constants';
 import Button from '../interactions/Button';
-import Icon from '../Icon';
+// import Icon from '../Icon';
 import styles from './Lesson.module.scss';
 import { LessonData } from '../../sharedTypes';
 import Slider from '../Slider';
@@ -35,9 +35,9 @@ function Lesson({
 }: Props) {
   return (
     <div>
-      <div className={styles.nav}>
+      {/* <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
-      </div>
+      </div> */}
 
       <div className={styles.content}>
         <div className={styles.read_time}>{readTime}</div>

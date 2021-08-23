@@ -67,32 +67,34 @@ function TrackScreen() {
   };
 
   return (
-    <Wrapper>
+    <div>
       <div className={styles.nav}>
         <Icon icon={ARROW_LEFT} onClick={handleGoBack} />
       </div>
-      {!error ? (
-        <div className={styles.content}>
-          {renderNextLesson()}
-          <div>
-            <div className={styles.header}>
-              <h2>
-                {track?.title} {LESSONS_COPY}
-              </h2>
+      <Wrapper>
+        {!error ? (
+          <div className={styles.content}>
+            {renderNextLesson()}
+            <div>
+              <div className={styles.header}>
+                <h2>
+                  {track?.title} {LESSONS_COPY}
+                </h2>
+              </div>
+              {track &&
+                track?.lessons?.map((item: LessonData) => (
+                  <LessonCard lesson={item} key={item.id} />
+                ))}
             </div>
-            {track &&
-              track?.lessons?.map((item: LessonData) => (
-                <LessonCard lesson={item} key={item.id} />
-              ))}
           </div>
-        </div>
-      ) : (
-        <div>No track.</div>
-      )}
-      <Slider>
-        <div>Slider</div>
-      </Slider>
-    </Wrapper>
+        ) : (
+          <div>No track.</div>
+        )}
+        <Slider>
+          <div>Slider</div>
+        </Slider>
+      </Wrapper>
+    </div>
   );
 }
 
