@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import LessonCard from '../../components/LessonCard';
 import { ARROW_LEFT, LESSONS_COPY, TRACKS_URL } from '../../constants';
-import Slider from '../../components/Slider';
 import styles from './TrackScreen.module.scss';
 import NextCard from '../../components/NextCard';
-// import tracks from '../../data/tracks';
 import Icon from '../../components/Icon';
 import { LessonData, Params, TLesson, TrackData } from '../../sharedTypes';
 import localServices from '../../services/localServices';
@@ -90,9 +88,6 @@ function TrackScreen() {
         ) : (
           <div>No track.</div>
         )}
-        <Slider>
-          <div>Slider</div>
-        </Slider>
       </Wrapper>
     </div>
   );

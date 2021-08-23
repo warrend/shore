@@ -59,8 +59,8 @@ function Lesson({
         </div>
       </div>
       <Slider>
-        <div>
-          <div>{LAST_LESSON_MESSAGE}</div>
+        <div className={styles.slider}>
+          <div className={styles.message}>{LAST_LESSON_MESSAGE}</div>
           <Button name={GO_BACK_BUTTON} onClick={handleGoBack} />
         </div>
       </Slider>
